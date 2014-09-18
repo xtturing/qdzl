@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
 		419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96A19CB32770067497F /* ArcGIS.framework */; };
-		419FD96D19CB32780067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96B19CB32770067497F /* iflyMSC.framework */; };
+		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
 		41B76E7A19B37C0600C4F1DB /* DowningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B76E7819B37C0600C4F1DB /* DowningCell.m */; };
 		41B76E7B19B37C0600C4F1DB /* DowningCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41B76E7919B37C0600C4F1DB /* DowningCell.xib */; };
 		41B838C219BF49FA0089FB1B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B838C119BF49FA0089FB1B /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -142,7 +142,7 @@
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
 		419FD96A19CB32770067497F /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../nbtdt/ArcGIS.framework; sourceTree = "<group>"; };
-		419FD96B19CB32770067497F /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iflyMSC.framework; path = ../nbtdt/iflyMSC.framework; sourceTree = "<group>"; };
+		419FD96E19CB372E0067497F /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
 		41B76E7719B37C0600C4F1DB /* DowningCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DowningCell.h; sourceTree = "<group>"; };
 		41B76E7819B37C0600C4F1DB /* DowningCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DowningCell.m; sourceTree = "<group>"; };
 		41B76E7919B37C0600C4F1DB /* DowningCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DowningCell.xib; sourceTree = "<group>"; };
@@ -338,7 +338,7 @@
 				41BBA2F619A7988800C0A328 /* CoreText.framework in Frameworks */,
 				41BBA2F519A7987F00C0A328 /* CoreLocation.framework in Frameworks */,
 				41BBA2F419A7987900C0A328 /* QuartzCore.framework in Frameworks */,
-				419FD96D19CB32780067497F /* iflyMSC.framework in Frameworks */,
+				419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */,
 				41BBA2F319A7986C00C0A328 /* MediaPlayer.framework in Frameworks */,
 				41BBA2F219A7986600C0A328 /* libz.dylib in Frameworks */,
 				41BBA2F019A7984C00C0A328 /* MobileCoreServices.framework in Frameworks */,
@@ -380,8 +380,8 @@
 		39A1F1D616EF17D7001EAE76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				419FD96E19CB372E0067497F /* iflyMSC.framework */,
 				419FD96A19CB32770067497F /* ArcGIS.framework */,
-				419FD96B19CB32770067497F /* iflyMSC.framework */,
 				41B838DF19BF4E390089FB1B /* AVFoundation.framework */,
 				41B838DD19BF4E150089FB1B /* AddressBook.framework */,
 				41B838C119BF49FA0089FB1B /* AdSupport.framework */,
