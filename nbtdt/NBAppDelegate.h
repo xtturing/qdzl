@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NBMapViewController.h"
+#import "QDMapViewController.h"
 
 @interface NBAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) NBMapViewController *mapViewController;
+@property (strong, nonatomic) QDMapViewController *mapViewController;
 @property (strong, nonatomic) UINavigationController *navController;  
 
 @end
