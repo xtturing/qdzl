@@ -43,6 +43,15 @@
     
     self.navigationItem.title = @"黄岛治理";
     
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftBtn setImage:[UIImage imageNamed:@"qd_search"] forState:UIControlStateNormal];
+    leftBtn.frame = CGRectMake(0, 0, 32, 32);
+    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setImage:[UIImage imageNamed:@"qd_setting"] forState:UIControlStateNormal];
+    rightBtn.frame = CGRectMake(0, 0, 32, 32);
+    self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -72,7 +81,21 @@
         return;
     }
 }
-
+-(IBAction)search:(id)sender{
+    
+}
+-(IBAction)setting:(id)sender{
+    
+}
+-(IBAction)zoomIn:(id)sender{
+    [self.mapView zoomIn:YES];
+}
+-(IBAction)zoomOut:(id)sender{
+    [self.mapView zoomOut:YES];
+}
+-(IBAction)edit:(id)sender{
+    
+}
 
 - (void)zooMapToLevel:(int)level withCenter:(AGSPoint *)point{
     if(self.mapView.mapLayers.count > 0){
