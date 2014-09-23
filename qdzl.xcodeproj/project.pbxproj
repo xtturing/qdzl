@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41115FE919D1BFB100601BC1 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 41115FE819D1BFB100601BC1 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		41115FF119D1C7EF00601BC1 /* UINavigationBar+customBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 41115FF019D1C7EF00601BC1 /* UINavigationBar+customBar.m */; };
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
 		419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96A19CB32770067497F /* ArcGIS.framework */; };
 		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
@@ -131,6 +133,10 @@
 		39C5F39C16F8A9920061B21A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		39C5F39E16F8A9920061B21A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		39C5F3A016F8A9920061B21A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		41115FE719D1BFB100601BC1 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
+		41115FE819D1BFB100601BC1 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
+		41115FEF19D1C7EF00601BC1 /* UINavigationBar+customBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+customBar.h"; sourceTree = "<group>"; };
+		41115FF019D1C7EF00601BC1 /* UINavigationBar+customBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+customBar.m"; sourceTree = "<group>"; };
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
 		419FD96A19CB32770067497F /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../nbtdt/ArcGIS.framework; sourceTree = "<group>"; };
@@ -389,6 +395,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		41115FE619D1BF9600601BC1 /* categray */ = {
+			isa = PBXGroup;
+			children = (
+				41115FEF19D1C7EF00601BC1 /* UINavigationBar+customBar.h */,
+				41115FF019D1C7EF00601BC1 /* UINavigationBar+customBar.m */,
+				41115FE719D1BFB100601BC1 /* UIColor-Expanded.h */,
+				41115FE819D1BFB100601BC1 /* UIColor-Expanded.m */,
+			);
+			name = categray;
+			sourceTree = "<group>";
+		};
 		4148237019AA2FA100442FA7 /* GoodleMapLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,6 +596,7 @@
 		41BBA03919A78B3200C0A328 /* qdzl */ = {
 			isa = PBXGroup;
 			children = (
+				41115FE619D1BF9600601BC1 /* categray */,
 				41B3D69419CC814300FB3017 /* mapView */,
 				41BBA0FC19A78B3200C0A328 /* NBAppDelegate.h */,
 				41BBA0FD19A78B3200C0A328 /* NBAppDelegate.m */,
@@ -810,6 +828,7 @@
 				41BBA25519A78B3300C0A328 /* NBSimpleRoute.m in Sources */,
 				41BBA1C219A78B3300C0A328 /* ASIHTTPRequest.m in Sources */,
 				41BBA1C519A78B3300C0A328 /* ASINSStringAdditions.m in Sources */,
+				41115FF119D1C7EF00601BC1 /* UINavigationBar+customBar.m in Sources */,
 				41BBA1CC19A78B3300C0A328 /* DownloadItem.m in Sources */,
 				41BBA25C19A78B3300C0A328 /* NSString+SBJSON.m in Sources */,
 				41BBA1C819A78B3300C0A328 /* dataHttpManager.m in Sources */,
@@ -835,6 +854,7 @@
 				41BBA1BF19A78B3300C0A328 /* ASIDataDecompressor.m in Sources */,
 				41BBA1B319A78B3300C0A328 /* AFHTTPRequestOperation.m in Sources */,
 				41BBA25919A78B3300C0A328 /* NSDataAdditions.m in Sources */,
+				41115FE919D1BFB100601BC1 /* UIColor-Expanded.m in Sources */,
 				41BBA25319A78B3300C0A328 /* NBSegment.m in Sources */,
 				41B3D69819CC816A00FB3017 /* QDMapViewController.m in Sources */,
 				41BBA1CB19A78B3300C0A328 /* GTMBase64.m in Sources */,

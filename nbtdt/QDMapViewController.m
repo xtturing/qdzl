@@ -8,10 +8,10 @@
 
 #import "QDMapViewController.h"
 #import "Reachability.h"
-
+#import "UINavigationBar+customBar.h"
 #define BASE_MAP_URL @"http://218.58.61.50:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
-@interface QDMapViewController ()
+@interface QDMapViewController ()<UISearchBarDelegate>
 
 @property(nonatomic, strong) Reachability *reach;
 
@@ -24,6 +24,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -40,18 +41,41 @@
     [self updateInterfaceWithReachability:_reach];
     self.mapView.layerDelegate = self;
     self.mapView.calloutDelegate=self;
+    self.title = @"黄岛治理";
+//    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [leftBtn setImage:[UIImage imageNamed:@"qd_search"] forState:UIControlStateNormal];
+//    leftBtn.frame = CGRectMake(0, 0, 32, 32);
+//    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     
-    self.navigationItem.title = @"黄岛治理";
-    
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setImage:[UIImage imageNamed:@"qd_search"] forState:UIControlStateNormal];
-    leftBtn.frame = CGRectMake(0, 0, 32, 32);
-    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    float version = [[[ UIDevice currentDevice ] systemVersion ] floatValue ];
+    if ([ _searchBar respondsToSelector : @selector (barTintColor)]) {
+        float  iosversion7_1 = 7.1 ;
+        if (version >= iosversion7_1)
+        {//iOS7.1
+            [[[[ _searchBar.subviews objectAtIndex : 0 ] subviews] objectAtIndex: 0 ] removeFromSuperview];
+            
+            [ _searchBar setBackgroundColor:[ UIColor clearColor]];
+        }
+        else
+        {
+            //iOS7.0
+            [ _searchBar setBarTintColor :[ UIColor clearColor ]];
+            [ _searchBar setBackgroundColor :[ UIColor clearColor ]];
+        }
+    }
+    else
+    {
+        //iOS7.0 以下
+        [[ _searchBar.subviews objectAtIndex: 0 ] removeFromSuperview ];
+        [ _searchBar setBackgroundColor:[ UIColor clearColor ]];
+    }
+
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setImage:[UIImage imageNamed:@"qd_setting"] forState:UIControlStateNormal];
     rightBtn.frame = CGRectMake(0, 0, 32, 32);
-    self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationController.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    [self.navigationController.navigationBar customNavigationBar];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -186,4 +210,31 @@
     
     [view show];
 }
+
+#pragma mark -UISearchBarDelegate
+
+//点击键盘上的search按钮时调用
+
+- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [self doSearch];
+    
+}
+
+- (void)doSearch{
+    if(self.searchBar.text.length>0){
+        
+    }
+}
+//cancel按钮点击时调用
+
+- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
+
+{
+    searchBar.text = @"";
+    [searchBar resignFirstResponder];
+    
+}
+
 @end

@@ -7,34 +7,18 @@
 //
 
 #import "NBAppDelegate.h"
-#import "iflyMSC/iflySetting.h"
-#import "iflyMSC/IFlySpeechUtility.h"
 
 @implementation NBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //设置log等级，此处log为默认在documents目录下的msc.log文件
-    [IFlySetting setLogFile:LVL_ALL];
     
-    //输出在console的log开关
-    [IFlySetting showLogcat:YES];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachePath = [paths objectAtIndex:0];
-    //设置msc.log的保存路径
-    [IFlySetting setLogFilePath:cachePath];
-    
-    //创建语音配置
-    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@,timeout=%@",@"540f14cc",@"20000"];
-    //所有服务启动前，需要确保执行createUtility
-    
-    [IFlySpeechUtility createUtility:initString];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     _mapViewController = [[QDMapViewController alloc] initWithNibName:@"QDMapViewController" bundle:nil];
     _navController = [[UINavigationController alloc] init];
     [_navController pushViewController:_mapViewController animated:YES];

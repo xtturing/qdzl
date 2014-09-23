@@ -11,6 +11,7 @@
 @interface QDMapViewController : UIViewController<AGSMapViewLayerDelegate,AGSMapViewCalloutDelegate>
 
 @property (nonatomic, strong) IBOutlet AGSMapView *mapView;
+@property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
 
 -(IBAction)gps:(id)sender;
 -(IBAction)search:(id)sender;
