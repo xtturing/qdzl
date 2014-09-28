@@ -9,6 +9,11 @@
 #import "QDMapViewController.h"
 #import "Reachability.h"
 #import "UINavigationBar+customBar.h"
+#import "QDSearchViewController.h"
+#import "QDSettingViewController.h"
+#import "QDEditViewController.h"
+
+#define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define BASE_MAP_URL @"http://218.58.61.50:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
 @interface QDMapViewController ()<UISearchBarDelegate>
@@ -32,6 +37,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reachabilityChanged:)
                                                  name:kReachabilityChangedNotification
@@ -41,41 +49,22 @@
     [self updateInterfaceWithReachability:_reach];
     self.mapView.layerDelegate = self;
     self.mapView.calloutDelegate=self;
-    self.title = @"黄岛治理";
-//    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [leftBtn setImage:[UIImage imageNamed:@"qd_search"] forState:UIControlStateNormal];
-//    leftBtn.frame = CGRectMake(0, 0, 32, 32);
-//    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    self.title = @"返回";
     
-    float version = [[[ UIDevice currentDevice ] systemVersion ] floatValue ];
-    if ([ _searchBar respondsToSelector : @selector (barTintColor)]) {
-        float  iosversion7_1 = 7.1 ;
-        if (version >= iosversion7_1)
-        {//iOS7.1
-            [[[[ _searchBar.subviews objectAtIndex : 0 ] subviews] objectAtIndex: 0 ] removeFromSuperview];
-            
-            [ _searchBar setBackgroundColor:[ UIColor clearColor]];
-        }
-        else
-        {
-            //iOS7.0
-            [ _searchBar setBarTintColor :[ UIColor clearColor ]];
-            [ _searchBar setBackgroundColor :[ UIColor clearColor ]];
-        }
-    }
-    else
-    {
-        //iOS7.0 以下
-        [[ _searchBar.subviews objectAtIndex: 0 ] removeFromSuperview ];
-        [ _searchBar setBackgroundColor:[ UIColor clearColor ]];
-    }
-
+    self.navigationItem.title = @"黄岛治理";
+    
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftBtn setImage:[UIImage imageNamed:@"qd_search"] forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+    leftBtn.frame = CGRectMake(0, 0, 32, 32);
+    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setImage:[UIImage imageNamed:@"qd_setting"] forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(setting:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.frame = CGRectMake(0, 0, 32, 32);
-    self.navigationController.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    [self.navigationController.navigationBar customNavigationBar];
+    self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+//    [self.navigationController.navigationBar customNavigationBar];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -95,6 +84,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewDidLayoutSubviews{
+    [_editBtn setFrame:CGRectMake(137,( [UIScreen mainScreen].bounds.size.height> 480)?434:364, 48, 48)];
+}
+
 #pragma mark -IBAction
 
 -(IBAction)gps:(id)sender{
@@ -105,11 +99,13 @@
         return;
     }
 }
--(IBAction)search:(id)sender{
-    
+-(void)search:(id)sender{
+    QDSearchViewController *searchViewController = [[QDSearchViewController alloc] initWithNibName:@"QDSearchViewController" bundle:nil];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
--(IBAction)setting:(id)sender{
-    
+-(void)setting:(id)sender{
+    QDSettingViewController *settingViewController = [[QDSettingViewController alloc] initWithNibName:@"QDSettingViewController" bundle:nil];
+    [self.navigationController pushViewController:settingViewController animated:YES];
 }
 -(IBAction)zoomIn:(id)sender{
     [self.mapView zoomIn:YES];
@@ -118,7 +114,8 @@
     [self.mapView zoomOut:YES];
 }
 -(IBAction)edit:(id)sender{
-    
+    QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
+    [self.navigationController pushViewController:editViewController animated:YES];
 }
 
 - (void)zooMapToLevel:(int)level withCenter:(AGSPoint *)point{
@@ -211,30 +208,5 @@
     [view show];
 }
 
-#pragma mark -UISearchBarDelegate
-
-//点击键盘上的search按钮时调用
-
-- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [searchBar resignFirstResponder];
-    [self doSearch];
-    
-}
-
-- (void)doSearch{
-    if(self.searchBar.text.length>0){
-        
-    }
-}
-//cancel按钮点击时调用
-
-- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar
-
-{
-    searchBar.text = @"";
-    [searchBar resignFirstResponder];
-    
-}
 
 @end

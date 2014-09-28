@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		41115FE919D1BFB100601BC1 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 41115FE819D1BFB100601BC1 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41115FF119D1C7EF00601BC1 /* UINavigationBar+customBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 41115FF019D1C7EF00601BC1 /* UINavigationBar+customBar.m */; };
+		4119869E19D84BFC00507025 /* QDSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4119869C19D84BFC00507025 /* QDSearchViewController.m */; };
+		4119869F19D84BFC00507025 /* QDSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4119869D19D84BFC00507025 /* QDSearchViewController.xib */; };
+		411986A319D84C3000507025 /* QDSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411986A119D84C3000507025 /* QDSettingViewController.m */; };
+		411986A419D84C3000507025 /* QDSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 411986A219D84C3000507025 /* QDSettingViewController.xib */; };
+		411986A819D84C5F00507025 /* QDEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411986A619D84C5F00507025 /* QDEditViewController.m */; };
+		411986A919D84C5F00507025 /* QDEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 411986A719D84C5F00507025 /* QDEditViewController.xib */; };
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
 		419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96A19CB32770067497F /* ArcGIS.framework */; };
 		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
@@ -137,6 +143,15 @@
 		41115FE819D1BFB100601BC1 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		41115FEF19D1C7EF00601BC1 /* UINavigationBar+customBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+customBar.h"; sourceTree = "<group>"; };
 		41115FF019D1C7EF00601BC1 /* UINavigationBar+customBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+customBar.m"; sourceTree = "<group>"; };
+		4119869B19D84BFC00507025 /* QDSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDSearchViewController.h; sourceTree = "<group>"; };
+		4119869C19D84BFC00507025 /* QDSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDSearchViewController.m; sourceTree = "<group>"; };
+		4119869D19D84BFC00507025 /* QDSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QDSearchViewController.xib; sourceTree = "<group>"; };
+		411986A019D84C3000507025 /* QDSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDSettingViewController.h; sourceTree = "<group>"; };
+		411986A119D84C3000507025 /* QDSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDSettingViewController.m; sourceTree = "<group>"; };
+		411986A219D84C3000507025 /* QDSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QDSettingViewController.xib; sourceTree = "<group>"; };
+		411986A519D84C5F00507025 /* QDEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDEditViewController.h; sourceTree = "<group>"; };
+		411986A619D84C5F00507025 /* QDEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDEditViewController.m; sourceTree = "<group>"; };
+		411986A719D84C5F00507025 /* QDEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QDEditViewController.xib; sourceTree = "<group>"; };
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
 		419FD96A19CB32770067497F /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../nbtdt/ArcGIS.framework; sourceTree = "<group>"; };
@@ -406,6 +421,36 @@
 			name = categray;
 			sourceTree = "<group>";
 		};
+		4119868519D843D300507025 /* searchView */ = {
+			isa = PBXGroup;
+			children = (
+				4119869B19D84BFC00507025 /* QDSearchViewController.h */,
+				4119869C19D84BFC00507025 /* QDSearchViewController.m */,
+				4119869D19D84BFC00507025 /* QDSearchViewController.xib */,
+			);
+			name = searchView;
+			sourceTree = "<group>";
+		};
+		4119868619D843F700507025 /* settingView */ = {
+			isa = PBXGroup;
+			children = (
+				411986A019D84C3000507025 /* QDSettingViewController.h */,
+				411986A119D84C3000507025 /* QDSettingViewController.m */,
+				411986A219D84C3000507025 /* QDSettingViewController.xib */,
+			);
+			name = settingView;
+			sourceTree = "<group>";
+		};
+		4119869219D84A6A00507025 /* editView */ = {
+			isa = PBXGroup;
+			children = (
+				411986A519D84C5F00507025 /* QDEditViewController.h */,
+				411986A619D84C5F00507025 /* QDEditViewController.m */,
+				411986A719D84C5F00507025 /* QDEditViewController.xib */,
+			);
+			name = editView;
+			sourceTree = "<group>";
+		};
 		4148237019AA2FA100442FA7 /* GoodleMapLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -596,6 +641,9 @@
 		41BBA03919A78B3200C0A328 /* qdzl */ = {
 			isa = PBXGroup;
 			children = (
+				4119869219D84A6A00507025 /* editView */,
+				4119868619D843F700507025 /* settingView */,
+				4119868519D843D300507025 /* searchView */,
 				41115FE619D1BF9600601BC1 /* categray */,
 				41B3D69419CC814300FB3017 /* mapView */,
 				41BBA0FC19A78B3200C0A328 /* NBAppDelegate.h */,
@@ -797,12 +845,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				41B76E7B19B37C0600C4F1DB /* DowningCell.xib in Resources */,
+				411986A919D84C5F00507025 /* QDEditViewController.xib in Resources */,
+				411986A419D84C3000507025 /* QDSettingViewController.xib in Resources */,
 				41BBA24319A78B3300C0A328 /* NBDownLoadViewController.xib in Resources */,
 				41BBA24119A78B3300C0A328 /* NBDownLoadManagerViewController.xib in Resources */,
 				41B3D69919CC816A00FB3017 /* QDMapViewController.xib in Resources */,
 				41BBA1D119A78B3300C0A328 /* InfoPlist.strings in Resources */,
 				41BBA23A19A78B3300C0A328 /* Images.xcassets in Resources */,
 				41BBA26D19A78B3300C0A328 /* SVProgressHUD.bundle in Resources */,
+				4119869F19D84BFC00507025 /* QDSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,6 +882,7 @@
 				41115FF119D1C7EF00601BC1 /* UINavigationBar+customBar.m in Sources */,
 				41BBA1CC19A78B3300C0A328 /* DownloadItem.m in Sources */,
 				41BBA25C19A78B3300C0A328 /* NSString+SBJSON.m in Sources */,
+				411986A319D84C3000507025 /* QDSettingViewController.m in Sources */,
 				41BBA1C819A78B3300C0A328 /* dataHttpManager.m in Sources */,
 				41BBA26219A78B3300C0A328 /* SBJsonWriter.m in Sources */,
 				41BBA25D19A78B3300C0A328 /* NSStringAdditions.m in Sources */,
@@ -855,7 +907,9 @@
 				41BBA1B319A78B3300C0A328 /* AFHTTPRequestOperation.m in Sources */,
 				41BBA25919A78B3300C0A328 /* NSDataAdditions.m in Sources */,
 				41115FE919D1BFB100601BC1 /* UIColor-Expanded.m in Sources */,
+				411986A819D84C5F00507025 /* QDEditViewController.m in Sources */,
 				41BBA25319A78B3300C0A328 /* NBSegment.m in Sources */,
+				4119869E19D84BFC00507025 /* QDSearchViewController.m in Sources */,
 				41B3D69819CC816A00FB3017 /* QDMapViewController.m in Sources */,
 				41BBA1CB19A78B3300C0A328 /* GTMBase64.m in Sources */,
 				41BBA1B719A78B3300C0A328 /* AFPropertyListRequestOperation.m in Sources */,
