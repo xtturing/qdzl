@@ -7,8 +7,9 @@
 //
 
 #import "QDEditViewController.h"
-
-@interface QDEditViewController ()<UITableViewDelegate>
+#import "cityManagerTableViewController.h"
+#import "MessagePhotoView.h"
+@interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,MessagePhotoViewDelegate>
 
 @end
 
@@ -57,7 +58,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 3){
-        return 100;
+        return 166;
     }else if (indexPath.section == 0){
         return 60;
     }else{
@@ -117,7 +118,7 @@
         [button setTitle:@"获取位置" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont systemFontOfSize:14];
-        [button setImage:[UIImage imageNamed:@"qd_gps"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"qd_point"] forState:UIControlStateNormal];
         [button setImageEdgeInsets:UIEdgeInsetsMake(0, 5, 0, button.titleLabel.frame.size.width)];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -button.imageView.frame.size.width+30, 0, 5)];
         [button addTarget:self action:@selector(getLocation) forControlEvents:UIControlEventTouchUpInside];
@@ -137,7 +138,7 @@
         [button setTitle:@"手动输入" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont systemFontOfSize:14];
-        [button setImage:[UIImage imageNamed:@"qd_point"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"qd_pen"] forState:UIControlStateNormal];
         [button setImageEdgeInsets:UIEdgeInsetsMake(0, 5, 0, button.titleLabel.frame.size.width)];
         [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -button.imageView.frame.size.width+30, 0, 5)];
         [button addTarget:self action:@selector(getLocation) forControlEvents:UIControlEventTouchUpInside];
@@ -157,15 +158,43 @@
         cell.accessoryView = view;
         cell.accessoryType = UITableViewCellAccessoryNone;
     }else{
+        MessagePhotoView *photoView = [[MessagePhotoView alloc]initWithFrame:CGRectMake(0.0f,0.0f,CGRectGetWidth(self.view.frame), 166)];
+        photoView.delegate =self;
         
+        cell.accessoryView = photoView;
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
 
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == 0){
+        
+    }else if (indexPath.section == 1){
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        cityManagerTableViewController *tableViewController = [[cityManagerTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        tableViewController.delegate = self;
+        tableViewController.cityManagerName = cell.detailTextLabel.text;
+        [self.navigationController  pushViewController:tableViewController animated:YES];
+    }else if (indexPath.section == 2){
+        
+    }else{
+        
+    }
     
+}
+
+
+- (void)didSelectedCityManager:(NSString *)cityManagerName{
+     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    cell.detailTextLabel.text = cityManagerName;
+}
+
+//实现代理方法
+-(void)addPicker:(UIImagePickerController *)picker{
     
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 @end

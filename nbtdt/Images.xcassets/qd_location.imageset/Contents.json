@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "qd_search.png"
+      "filename" : "qd_location.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "qd_search@2x.png"
+      "filename" : "qd_location@2x.png"
     }
   ],
   "info" : {

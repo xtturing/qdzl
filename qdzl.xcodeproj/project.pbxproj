@@ -15,6 +15,25 @@
 		411986A419D84C3000507025 /* QDSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 411986A219D84C3000507025 /* QDSettingViewController.xib */; };
 		411986A819D84C5F00507025 /* QDEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411986A619D84C5F00507025 /* QDEditViewController.m */; };
 		411986A919D84C5F00507025 /* QDEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 411986A719D84C5F00507025 /* QDEditViewController.xib */; };
+		41199DD619E440F100C50382 /* cityManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41199DD519E440F100C50382 /* cityManagerTableViewController.m */; };
+		41199DDF19E4527D00C50382 /* MessagePhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41199DDA19E4527D00C50382 /* MessagePhotoView.m */; };
+		41199DE019E4527D00C50382 /* MessagePhotoMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 41199DDC19E4527D00C50382 /* MessagePhotoMenuItem.m */; };
+		41199DE119E4527D00C50382 /* ShowBigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41199DDE19E4527D00C50382 /* ShowBigViewController.m */; };
+		41199DF019E4539100C50382 /* delete-circular.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE419E4539100C50382 /* delete-circular.png */; };
+		41199DF119E4539100C50382 /* addImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE519E4539100C50382 /* addImage.png */; };
+		41199DF219E4539100C50382 /* fanhui.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE619E4539100C50382 /* fanhui.png */; };
+		41199DF319E4539100C50382 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE719E4539100C50382 /* 1.png */; };
+		41199DF419E4539100C50382 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE819E4539100C50382 /* 2.png */; };
+		41199DF519E4539100C50382 /* complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE919E4539100C50382 /* complete.png */; };
+		41199DF619E4539100C50382 /* No.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DEA19E4539100C50382 /* No.png */; };
+		41199DF719E4539100C50382 /* OK.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DEB19E4539100C50382 /* OK.png */; };
+		41199DF819E4539100C50382 /* AssetsPickerChecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DEC19E4539100C50382 /* AssetsPickerChecked@2x.png */; };
+		41199DF919E4539100C50382 /* AssetsPickerChecked~iOS6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DED19E4539100C50382 /* AssetsPickerChecked~iOS6@2x.png */; };
+		41199DFA19E4539100C50382 /* AssetsPickerLocked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DEE19E4539100C50382 /* AssetsPickerLocked@2x.png */; };
+		41199DFB19E4539100C50382 /* AssetsPickerVideo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DEF19E4539100C50382 /* AssetsPickerVideo@2x.png */; };
+		41199DFF19E453A600C50382 /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41199DFC19E453A600C50382 /* ZYQAssetPicker.Bundle */; };
+		41199E0019E453A600C50382 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41199DFE19E453A600C50382 /* ZYQAssetPickerController.m */; };
+		41199E0219E4541300C50382 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41199E0119E4541300C50382 /* AssetsLibrary.framework */; };
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
 		419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96A19CB32770067497F /* ArcGIS.framework */; };
 		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
@@ -152,6 +171,30 @@
 		411986A519D84C5F00507025 /* QDEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDEditViewController.h; sourceTree = "<group>"; };
 		411986A619D84C5F00507025 /* QDEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDEditViewController.m; sourceTree = "<group>"; };
 		411986A719D84C5F00507025 /* QDEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QDEditViewController.xib; sourceTree = "<group>"; };
+		41199DD419E440F100C50382 /* cityManagerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cityManagerTableViewController.h; sourceTree = "<group>"; };
+		41199DD519E440F100C50382 /* cityManagerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cityManagerTableViewController.m; sourceTree = "<group>"; };
+		41199DD919E4527D00C50382 /* MessagePhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePhotoView.h; sourceTree = "<group>"; };
+		41199DDA19E4527D00C50382 /* MessagePhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePhotoView.m; sourceTree = "<group>"; };
+		41199DDB19E4527D00C50382 /* MessagePhotoMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePhotoMenuItem.h; sourceTree = "<group>"; };
+		41199DDC19E4527D00C50382 /* MessagePhotoMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePhotoMenuItem.m; sourceTree = "<group>"; };
+		41199DDD19E4527D00C50382 /* ShowBigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowBigViewController.h; sourceTree = "<group>"; };
+		41199DDE19E4527D00C50382 /* ShowBigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowBigViewController.m; sourceTree = "<group>"; };
+		41199DE419E4539100C50382 /* delete-circular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete-circular.png"; sourceTree = "<group>"; };
+		41199DE519E4539100C50382 /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
+		41199DE619E4539100C50382 /* fanhui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fanhui.png; sourceTree = "<group>"; };
+		41199DE719E4539100C50382 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		41199DE819E4539100C50382 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		41199DE919E4539100C50382 /* complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = complete.png; sourceTree = "<group>"; };
+		41199DEA19E4539100C50382 /* No.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = No.png; sourceTree = "<group>"; };
+		41199DEB19E4539100C50382 /* OK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OK.png; sourceTree = "<group>"; };
+		41199DEC19E4539100C50382 /* AssetsPickerChecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AssetsPickerChecked@2x.png"; sourceTree = "<group>"; };
+		41199DED19E4539100C50382 /* AssetsPickerChecked~iOS6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AssetsPickerChecked~iOS6@2x.png"; sourceTree = "<group>"; };
+		41199DEE19E4539100C50382 /* AssetsPickerLocked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AssetsPickerLocked@2x.png"; sourceTree = "<group>"; };
+		41199DEF19E4539100C50382 /* AssetsPickerVideo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AssetsPickerVideo@2x.png"; sourceTree = "<group>"; };
+		41199DFC19E453A600C50382 /* ZYQAssetPicker.Bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZYQAssetPicker.Bundle; sourceTree = "<group>"; };
+		41199DFD19E453A600C50382 /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
+		41199DFE19E453A600C50382 /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
+		41199E0119E4541300C50382 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
 		419FD96A19CB32770067497F /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../nbtdt/ArcGIS.framework; sourceTree = "<group>"; };
@@ -320,6 +363,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41199E0219E4541300C50382 /* AssetsLibrary.framework in Frameworks */,
 				41B838E019BF4E390089FB1B /* AVFoundation.framework in Frameworks */,
 				41BBA2F119A7985D00C0A328 /* AudioToolbox.framework in Frameworks */,
 				41B838DE19BF4E150089FB1B /* AddressBook.framework in Frameworks */,
@@ -380,6 +424,7 @@
 		39A1F1D616EF17D7001EAE76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41199E0119E4541300C50382 /* AssetsLibrary.framework */,
 				419FD96E19CB372E0067497F /* iflyMSC.framework */,
 				419FD96A19CB32770067497F /* ArcGIS.framework */,
 				41B838DF19BF4E390089FB1B /* AVFoundation.framework */,
@@ -444,11 +489,57 @@
 		4119869219D84A6A00507025 /* editView */ = {
 			isa = PBXGroup;
 			children = (
+				41199DD819E4527000C50382 /* MessagePhotoView */,
 				411986A519D84C5F00507025 /* QDEditViewController.h */,
 				411986A619D84C5F00507025 /* QDEditViewController.m */,
 				411986A719D84C5F00507025 /* QDEditViewController.xib */,
+				41199DD419E440F100C50382 /* cityManagerTableViewController.h */,
+				41199DD519E440F100C50382 /* cityManagerTableViewController.m */,
 			);
 			name = editView;
+			sourceTree = "<group>";
+		};
+		41199DD819E4527000C50382 /* MessagePhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				41199DD919E4527D00C50382 /* MessagePhotoView.h */,
+				41199DDA19E4527D00C50382 /* MessagePhotoView.m */,
+				41199DDB19E4527D00C50382 /* MessagePhotoMenuItem.h */,
+				41199DDC19E4527D00C50382 /* MessagePhotoMenuItem.m */,
+				41199DDD19E4527D00C50382 /* ShowBigViewController.h */,
+				41199DDE19E4527D00C50382 /* ShowBigViewController.m */,
+			);
+			name = MessagePhotoView;
+			sourceTree = "<group>";
+		};
+		41199DE219E4536D00C50382 /* ZYQAssetPickerController */ = {
+			isa = PBXGroup;
+			children = (
+				41199DFC19E453A600C50382 /* ZYQAssetPicker.Bundle */,
+				41199DFD19E453A600C50382 /* ZYQAssetPickerController.h */,
+				41199DFE19E453A600C50382 /* ZYQAssetPickerController.m */,
+				41199DE319E4537E00C50382 /* Images */,
+			);
+			name = ZYQAssetPickerController;
+			sourceTree = "<group>";
+		};
+		41199DE319E4537E00C50382 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				41199DE419E4539100C50382 /* delete-circular.png */,
+				41199DE519E4539100C50382 /* addImage.png */,
+				41199DE619E4539100C50382 /* fanhui.png */,
+				41199DE719E4539100C50382 /* 1.png */,
+				41199DE819E4539100C50382 /* 2.png */,
+				41199DE919E4539100C50382 /* complete.png */,
+				41199DEA19E4539100C50382 /* No.png */,
+				41199DEB19E4539100C50382 /* OK.png */,
+				41199DEC19E4539100C50382 /* AssetsPickerChecked@2x.png */,
+				41199DED19E4539100C50382 /* AssetsPickerChecked~iOS6@2x.png */,
+				41199DEE19E4539100C50382 /* AssetsPickerLocked@2x.png */,
+				41199DEF19E4539100C50382 /* AssetsPickerVideo@2x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		4148237019AA2FA100442FA7 /* GoodleMapLayer */ = {
@@ -506,6 +597,7 @@
 		4148237519AA301100442FA7 /* KIT */ = {
 			isa = PBXGroup;
 			children = (
+				41199DE219E4536D00C50382 /* ZYQAssetPickerController */,
 				4148237719AA309B00442FA7 /* SBJson */,
 				4148237C19AA311A00442FA7 /* PullRefreshTableViewController */,
 				4148237B19AA311300442FA7 /* Reachability */,
@@ -849,11 +941,24 @@
 				411986A419D84C3000507025 /* QDSettingViewController.xib in Resources */,
 				41BBA24319A78B3300C0A328 /* NBDownLoadViewController.xib in Resources */,
 				41BBA24119A78B3300C0A328 /* NBDownLoadManagerViewController.xib in Resources */,
+				41199DF819E4539100C50382 /* AssetsPickerChecked@2x.png in Resources */,
+				41199DFF19E453A600C50382 /* ZYQAssetPicker.Bundle in Resources */,
+				41199DFA19E4539100C50382 /* AssetsPickerLocked@2x.png in Resources */,
 				41B3D69919CC816A00FB3017 /* QDMapViewController.xib in Resources */,
 				41BBA1D119A78B3300C0A328 /* InfoPlist.strings in Resources */,
+				41199DF019E4539100C50382 /* delete-circular.png in Resources */,
+				41199DF519E4539100C50382 /* complete.png in Resources */,
+				41199DFB19E4539100C50382 /* AssetsPickerVideo@2x.png in Resources */,
+				41199DF219E4539100C50382 /* fanhui.png in Resources */,
+				41199DF619E4539100C50382 /* No.png in Resources */,
 				41BBA23A19A78B3300C0A328 /* Images.xcassets in Resources */,
 				41BBA26D19A78B3300C0A328 /* SVProgressHUD.bundle in Resources */,
 				4119869F19D84BFC00507025 /* QDSearchViewController.xib in Resources */,
+				41199DF419E4539100C50382 /* 2.png in Resources */,
+				41199DF119E4539100C50382 /* addImage.png in Resources */,
+				41199DF319E4539100C50382 /* 1.png in Resources */,
+				41199DF719E4539100C50382 /* OK.png in Resources */,
+				41199DF919E4539100C50382 /* AssetsPickerChecked~iOS6@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,6 +994,7 @@
 				41BBA25A19A78B3300C0A328 /* NSDictionaryAdditions.m in Sources */,
 				41BBA1CF19A78B3300C0A328 /* DownloadStoreManager.m in Sources */,
 				41BBA26019A78B3300C0A328 /* SBJsonBase.m in Sources */,
+				41199E0019E453A600C50382 /* ZYQAssetPickerController.m in Sources */,
 				41BBA1C719A78B3300C0A328 /* CLLocation+Sino.m in Sources */,
 				41BBA1CE19A78B3300C0A328 /* DownloadManager.m in Sources */,
 				41BBA1C419A78B3300C0A328 /* ASINetworkQueue.m in Sources */,
@@ -901,6 +1007,7 @@
 				41BBA23C19A78B3300C0A328 /* main.m in Sources */,
 				41B76E7A19B37C0600C4F1DB /* DowningCell.m in Sources */,
 				41BBA1C319A78B3300C0A328 /* ASIInputStream.m in Sources */,
+				41199DE019E4527D00C50382 /* MessagePhotoMenuItem.m in Sources */,
 				41BBA1D519A78B3300C0A328 /* GoogleMapTileOperation.m in Sources */,
 				41BBA1B419A78B3300C0A328 /* AFImageRequestOperation.m in Sources */,
 				41BBA1BF19A78B3300C0A328 /* ASIDataDecompressor.m in Sources */,
@@ -923,6 +1030,7 @@
 				41BBA1B519A78B3300C0A328 /* AFJSONRequestOperation.m in Sources */,
 				41BBA1BE19A78B3300C0A328 /* ASIDataCompressor.m in Sources */,
 				41BBA1B219A78B3300C0A328 /* AFHTTPClient.m in Sources */,
+				41199DE119E4527D00C50382 /* ShowBigViewController.m in Sources */,
 				41BBA1C119A78B3300C0A328 /* ASIFormDataRequest.m in Sources */,
 				41BBA24D19A78B3300C0A328 /* NBRoute.m in Sources */,
 				41BBA1BA19A78B3300C0A328 /* UIImageView+AFNetworking.m in Sources */,
@@ -931,8 +1039,10 @@
 				41BBA26E19A78B3300C0A328 /* SVProgressHUD.m in Sources */,
 				41BBA27219A78B3300C0A328 /* Utility.m in Sources */,
 				41BBA25F19A78B3300C0A328 /* Reachability.m in Sources */,
+				41199DDF19E4527D00C50382 /* MessagePhotoView.m in Sources */,
 				41BBA24219A78B3300C0A328 /* NBDownLoadViewController.m in Sources */,
 				41BBA25719A78B3300C0A328 /* NBStationStart.m in Sources */,
+				41199DD619E440F100C50382 /* cityManagerTableViewController.m in Sources */,
 				41BBA1CD19A78B3300C0A328 /* DownloadItemEntity.m in Sources */,
 				41BBA1BB19A78B3300C0A328 /* AGSGoogleMapLayer.m in Sources */,
 				41BBA24F19A78B3300C0A328 /* NBSearch.m in Sources */,
