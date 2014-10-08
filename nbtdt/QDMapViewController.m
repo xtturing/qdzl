@@ -14,7 +14,7 @@
 #import "QDEditViewController.h"
 
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
-#define BASE_MAP_URL @"http://218.58.61.50:6080/arcgis/rest/services/QD/SJDT/MapServer"
+#define BASE_MAP_URL @"http://27.223.74.180:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
 @interface QDMapViewController ()<UISearchBarDelegate>
 

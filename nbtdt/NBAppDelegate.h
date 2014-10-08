@@ -11,8 +11,6 @@
 
 @interface NBAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) QDMapViewController *mapViewController;
-@property (strong, nonatomic) UINavigationController *navController;  
+@property (strong, nonatomic) UIWindow *window;  
 
 @end

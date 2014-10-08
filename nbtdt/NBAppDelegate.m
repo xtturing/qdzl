@@ -7,7 +7,7 @@
 //
 
 #import "NBAppDelegate.h"
-
+#import "ASViewController.h"
 @implementation NBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -19,10 +19,9 @@
     [self.window makeKeyAndVisible];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
      [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    _mapViewController = [[QDMapViewController alloc] initWithNibName:@"QDMapViewController" bundle:nil];
-    _navController = [[UINavigationController alloc] init];
-    [_navController pushViewController:_mapViewController animated:YES];
-    [self.window setRootViewController:_navController];
+
+    ASViewController *start = [[ASViewController alloc] init];
+    [self.window setRootViewController:start];
     return YES;
 }
 
