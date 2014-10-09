@@ -44,8 +44,6 @@
 		41199DF019E4539100C50382 /* delete-circular.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE419E4539100C50382 /* delete-circular.png */; };
 		41199DF119E4539100C50382 /* addImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE519E4539100C50382 /* addImage.png */; };
 		41199DF219E4539100C50382 /* fanhui.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE619E4539100C50382 /* fanhui.png */; };
-		41199DF319E4539100C50382 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE719E4539100C50382 /* 1.png */; };
-		41199DF419E4539100C50382 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE819E4539100C50382 /* 2.png */; };
 		41199DF519E4539100C50382 /* complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DE919E4539100C50382 /* complete.png */; };
 		41199DF619E4539100C50382 /* No.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DEA19E4539100C50382 /* No.png */; };
 		41199DF719E4539100C50382 /* OK.png in Resources */ = {isa = PBXBuildFile; fileRef = 41199DEB19E4539100C50382 /* OK.png */; };
@@ -56,6 +54,10 @@
 		41199DFF19E453A600C50382 /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41199DFC19E453A600C50382 /* ZYQAssetPicker.Bundle */; };
 		41199E0019E453A600C50382 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41199DFE19E453A600C50382 /* ZYQAssetPickerController.m */; };
 		41199E0219E4541300C50382 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41199E0119E4541300C50382 /* AssetsLibrary.framework */; };
+		4153D11019E6F00D00DE06E3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */; };
+		4153D11119E6F00D00DE06E3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10E19E6F00D00DE06E3 /* Default.png */; };
+		4153D11219E6F00D00DE06E3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10F19E6F00D00DE06E3 /* Default@2x.png */; };
+		4153D11419E6F04300DE06E3 /* qidong.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D11319E6F04300DE06E3 /* qidong.png */; };
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
 		419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96A19CB32770067497F /* ArcGIS.framework */; };
 		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
@@ -232,8 +234,6 @@
 		41199DE419E4539100C50382 /* delete-circular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete-circular.png"; sourceTree = "<group>"; };
 		41199DE519E4539100C50382 /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
 		41199DE619E4539100C50382 /* fanhui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fanhui.png; sourceTree = "<group>"; };
-		41199DE719E4539100C50382 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		41199DE819E4539100C50382 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		41199DE919E4539100C50382 /* complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = complete.png; sourceTree = "<group>"; };
 		41199DEA19E4539100C50382 /* No.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = No.png; sourceTree = "<group>"; };
 		41199DEB19E4539100C50382 /* OK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OK.png; sourceTree = "<group>"; };
@@ -245,6 +245,10 @@
 		41199DFD19E453A600C50382 /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
 		41199DFE19E453A600C50382 /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
 		41199E0119E4541300C50382 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "image/Default-568h@2x.png"; sourceTree = "<group>"; };
+		4153D10E19E6F00D00DE06E3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = image/Default.png; sourceTree = "<group>"; };
+		4153D10F19E6F00D00DE06E3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "image/Default@2x.png"; sourceTree = "<group>"; };
+		4153D11319E6F04300DE06E3 /* qidong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qidong.png; path = image/qidong.png; sourceTree = "<group>"; };
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
 		419FD96A19CB32770067497F /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../nbtdt/ArcGIS.framework; sourceTree = "<group>"; };
@@ -628,8 +632,6 @@
 				41199DE419E4539100C50382 /* delete-circular.png */,
 				41199DE519E4539100C50382 /* addImage.png */,
 				41199DE619E4539100C50382 /* fanhui.png */,
-				41199DE719E4539100C50382 /* 1.png */,
-				41199DE819E4539100C50382 /* 2.png */,
 				41199DE919E4539100C50382 /* complete.png */,
 				41199DEA19E4539100C50382 /* No.png */,
 				41199DEB19E4539100C50382 /* OK.png */,
@@ -814,6 +816,10 @@
 		4148238119AA31BD00442FA7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				4153D11319E6F04300DE06E3 /* qidong.png */,
+				4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */,
+				4153D10E19E6F00D00DE06E3 /* Default.png */,
+				4153D10F19E6F00D00DE06E3 /* Default@2x.png */,
 				41BBA08219A78B3200C0A328 /* InfoPlist.strings */,
 				41BBA0F719A78B3200C0A328 /* main.m */,
 				41BBA15719A78B3200C0A328 /* qdzl-Info.plist */,
@@ -1038,6 +1044,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4153D11419E6F04300DE06E3 /* qidong.png in Resources */,
 				410E856C19E58E2400A4D02C /* login_button.png in Resources */,
 				41B76E7B19B37C0600C4F1DB /* DowningCell.xib in Resources */,
 				411986A919D84C5F00507025 /* QDEditViewController.xib in Resources */,
@@ -1045,6 +1052,7 @@
 				41BBA24319A78B3300C0A328 /* NBDownLoadViewController.xib in Resources */,
 				41BBA24119A78B3300C0A328 /* NBDownLoadManagerViewController.xib in Resources */,
 				41199DF819E4539100C50382 /* AssetsPickerChecked@2x.png in Resources */,
+				4153D11119E6F00D00DE06E3 /* Default.png in Resources */,
 				410E856819E58E2400A4D02C /* password_icon.png in Resources */,
 				41199DFF19E453A600C50382 /* ZYQAssetPicker.Bundle in Resources */,
 				41199DFA19E4539100C50382 /* AssetsPickerLocked@2x.png in Resources */,
@@ -1066,11 +1074,11 @@
 				41BBA26D19A78B3300C0A328 /* SVProgressHUD.bundle in Resources */,
 				4119869F19D84BFC00507025 /* QDSearchViewController.xib in Resources */,
 				410E856D19E58E2400A4D02C /* login_button@2x.png in Resources */,
-				41199DF419E4539100C50382 /* 2.png in Resources */,
 				410E856119E58E1600A4D02C /* text_field@2x.png in Resources */,
 				41199DF119E4539100C50382 /* addImage.png in Resources */,
-				41199DF319E4539100C50382 /* 1.png in Resources */,
 				41199DF719E4539100C50382 /* OK.png in Resources */,
+				4153D11219E6F00D00DE06E3 /* Default@2x.png in Resources */,
+				4153D11019E6F00D00DE06E3 /* Default-568h@2x.png in Resources */,
 				410E854919E578AA00A4D02C /* mic_talk_358x358@2x.png in Resources */,
 				410E855119E582DD00A4D02C /* textInputViewController.xib in Resources */,
 				410E854A19E578AA00A4D02C /* wave70x117@2x.png in Resources */,
@@ -1291,6 +1299,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1334,6 +1343,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

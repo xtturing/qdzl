@@ -134,7 +134,7 @@
     DownloadItem *downItem = [_downlist.allValues objectAtIndex:indexPath.row];
 
     NSString *url=[downItem.url description];
-    NSString *name = [[url componentsSeparatedByString:@"="] objectAtIndex:1];
+    NSString *name = [downItem.tpk.name description];
 
     static NSString *cellIdentity=@"DowningCell";
     DowningCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentity];

@@ -16,6 +16,8 @@
 #import "DowningCell.h"
 #import "Utility.h"
 
+#define HTTP_TPK @"http://27.223.74.180:8089/HDZZ.tpk"
+
 @interface NBDownLoadViewController ()<dataHttpDelegate>
 
 @property (nonatomic ,strong) NSMutableDictionary *tpkList;
@@ -44,10 +46,29 @@
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"下载管理" style:UIBarButtonItemStylePlain target:self action:@selector(downloadManager)];
     self.navigationItem.rightBarButtonItem = right;
     self.navigationItem.rightBarButtonItem.enabled = YES;
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letDoTpkList];
-    });
+    self.tpkList = [[NSMutableDictionary alloc] initWithCapacity:0];
+    NBTpk *tpk = [[NBTpk alloc] init];
+    tpk.name = @"HDZZ.tpk";
+    tpk.title = @"黄岛区离线地图包";
+    DownloadItem *downItem=[[DownloadItem alloc] init];
+    downItem.tpk = tpk;
+    NSURL  *url = [NSURL URLWithString:HTTP_TPK];
+    downItem.url=url;
+    DownloadItem *task=[[DownloadManager sharedInstance] getDownloadItemByUrl:[downItem.url description]];
+    downItem.downloadPercent=task.downloadPercent;
+    if(task)
+    {
+        downItem.downloadState=task.downloadState;
+    }
+    else
+    {
+        downItem.downloadState=DownloadNotStart;
+    }
+    [self.tpkList setObject:downItem forKey:[downItem.url description]];
+//    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [[dataHttpManager getInstance] letDoTpkList];
+//    });
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(downloadNotification:) name:kDownloadManagerNotification object:nil];
     // Do any additional setup after loading the view from its nib.
 }
@@ -79,7 +100,7 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
-    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"天地图宁波" message:@"离线下载发生异常" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:@"离线下载发生异常" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [view show];
 }
 
@@ -144,7 +165,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     DownloadItem *downItem = [_tpkList.allValues objectAtIndex:indexPath.row];
     NSString *url=[downItem.url description];
-    NSString *name = [[url componentsSeparatedByString:@"="] objectAtIndex:1];
+    NSString *name = [downItem.tpk.name description];
     static NSString *cellIdentity=@"DowningCell";
     DowningCell *cell=[tableView dequeueReusableCellWithIdentifier:cellIdentity];
     if(cell==nil)
