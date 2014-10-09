@@ -9,8 +9,11 @@
 #import "ASViewController.h"
 #import "ASTextField.h"
 #import "QDMapViewController.h"
+#import "dataHttpManager.h"
+#import "SVProgressHUD.h"
+#import "MyMD5.h"
 
-@interface ASViewController ()
+@interface ASViewController ()<dataHttpDelegate>
 
 @property (nonatomic,retain) NSMutableArray *cellArray;
 @property (strong, nonatomic) QDMapViewController *mapViewController;
@@ -34,13 +37,18 @@
     [super viewDidLoad];
     //bake a cellArray to contain all cells
     self.cellArray = [NSMutableArray arrayWithObjects: _usernameCell, _passwordCell, _doneCell, nil];
-    
-    
     //setup text field with respective icons
     [_usernameField setupTextFieldWithIconName:@"user_name_icon"];
     [_passwordField setupTextFieldWithIconName:@"password_icon"];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
+}
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [dataHttpManager getInstance].delegate =  nil;
+}
 #pragma mark - tableview deleagate datasource stuff
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -79,17 +87,39 @@
 
 - (IBAction)letMeIn:(id)sender {
     [self resignAllResponders];
-    _mapViewController = [[QDMapViewController alloc] initWithNibName:@"QDMapViewController" bundle:nil];
-    _navController = [[UINavigationController alloc] init];
-    [_navController pushViewController:_mapViewController animated:YES];
-    [self presentViewController:_navController animated:YES completion:^{
-        
-    }];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letPublicUserLogin:_usernameField.text password:[MyMD5 md5:_passwordField.text]];
+    });
+    
+}
+
+- (void)didGetPublicUserLogin:(BOOL)success{
+    [SVProgressHUD dismiss];
+    if(success){
+        _mapViewController = [[QDMapViewController alloc] initWithNibName:@"QDMapViewController" bundle:nil];
+        _navController = [[UINavigationController alloc] init];
+        [_navController pushViewController:_mapViewController animated:YES];
+        [self presentViewController:_navController animated:YES completion:^{
+            
+        }];
+    }else{
+        [self showMessageWithAlert:@"用户登录失败"];
+    }
+}
+
+- (void)didGetFailed{
+    [SVProgressHUD dismiss];
+    [self showMessageWithAlert:@"用户登录异常"];
 }
 
 - (void)resignAllResponders{
     [_usernameField resignFirstResponder];
     [_passwordField resignFirstResponder];
 }
-
+- (void)showMessageWithAlert:(NSString *)message{
+    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    
+    [view show];
+}
 @end

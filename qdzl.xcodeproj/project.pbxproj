@@ -109,15 +109,6 @@
 		41BBA24119A78B3300C0A328 /* NBDownLoadManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BBA10019A78B3200C0A328 /* NBDownLoadManagerViewController.xib */; };
 		41BBA24219A78B3300C0A328 /* NBDownLoadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA10219A78B3200C0A328 /* NBDownLoadViewController.m */; };
 		41BBA24319A78B3300C0A328 /* NBDownLoadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BBA10319A78B3200C0A328 /* NBDownLoadViewController.xib */; };
-		41BBA24619A78B3300C0A328 /* NBLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA10819A78B3200C0A328 /* NBLine.m */; };
-		41BBA24D19A78B3300C0A328 /* NBRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA11419A78B3200C0A328 /* NBRoute.m */; };
-		41BBA24E19A78B3300C0A328 /* NBRouteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA11619A78B3200C0A328 /* NBRouteItem.m */; };
-		41BBA24F19A78B3300C0A328 /* NBSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA11819A78B3200C0A328 /* NBSearch.m */; };
-		41BBA25319A78B3300C0A328 /* NBSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA11F19A78B3200C0A328 /* NBSegment.m */; };
-		41BBA25419A78B3300C0A328 /* NBSegmentLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA12119A78B3200C0A328 /* NBSegmentLine.m */; };
-		41BBA25519A78B3300C0A328 /* NBSimpleRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA12319A78B3200C0A328 /* NBSimpleRoute.m */; };
-		41BBA25619A78B3300C0A328 /* NBStationEnd.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA12519A78B3200C0A328 /* NBStationEnd.m */; };
-		41BBA25719A78B3300C0A328 /* NBStationStart.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA12719A78B3200C0A328 /* NBStationStart.m */; };
 		41BBA25919A78B3300C0A328 /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA12B19A78B3200C0A328 /* NSDataAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41BBA25A19A78B3300C0A328 /* NSDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA12D19A78B3200C0A328 /* NSDictionaryAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41BBA25B19A78B3300C0A328 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA12F19A78B3200C0A328 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -348,24 +339,6 @@
 		41BBA10119A78B3200C0A328 /* NBDownLoadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBDownLoadViewController.h; sourceTree = "<group>"; };
 		41BBA10219A78B3200C0A328 /* NBDownLoadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBDownLoadViewController.m; sourceTree = "<group>"; };
 		41BBA10319A78B3200C0A328 /* NBDownLoadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NBDownLoadViewController.xib; sourceTree = "<group>"; };
-		41BBA10719A78B3200C0A328 /* NBLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBLine.h; sourceTree = "<group>"; };
-		41BBA10819A78B3200C0A328 /* NBLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBLine.m; sourceTree = "<group>"; };
-		41BBA11319A78B3200C0A328 /* NBRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBRoute.h; sourceTree = "<group>"; };
-		41BBA11419A78B3200C0A328 /* NBRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBRoute.m; sourceTree = "<group>"; };
-		41BBA11519A78B3200C0A328 /* NBRouteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBRouteItem.h; sourceTree = "<group>"; };
-		41BBA11619A78B3200C0A328 /* NBRouteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBRouteItem.m; sourceTree = "<group>"; };
-		41BBA11719A78B3200C0A328 /* NBSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSearch.h; sourceTree = "<group>"; };
-		41BBA11819A78B3200C0A328 /* NBSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSearch.m; sourceTree = "<group>"; };
-		41BBA11E19A78B3200C0A328 /* NBSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSegment.h; sourceTree = "<group>"; };
-		41BBA11F19A78B3200C0A328 /* NBSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSegment.m; sourceTree = "<group>"; };
-		41BBA12019A78B3200C0A328 /* NBSegmentLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSegmentLine.h; sourceTree = "<group>"; };
-		41BBA12119A78B3200C0A328 /* NBSegmentLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSegmentLine.m; sourceTree = "<group>"; };
-		41BBA12219A78B3200C0A328 /* NBSimpleRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBSimpleRoute.h; sourceTree = "<group>"; };
-		41BBA12319A78B3200C0A328 /* NBSimpleRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBSimpleRoute.m; sourceTree = "<group>"; };
-		41BBA12419A78B3200C0A328 /* NBStationEnd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBStationEnd.h; sourceTree = "<group>"; };
-		41BBA12519A78B3200C0A328 /* NBStationEnd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBStationEnd.m; sourceTree = "<group>"; };
-		41BBA12619A78B3200C0A328 /* NBStationStart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBStationStart.h; sourceTree = "<group>"; };
-		41BBA12719A78B3200C0A328 /* NBStationStart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBStationStart.m; sourceTree = "<group>"; };
 		41BBA12A19A78B3200C0A328 /* NSDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataAdditions.h; sourceTree = "<group>"; };
 		41BBA12B19A78B3200C0A328 /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
 		41BBA12C19A78B3200C0A328 /* NSDictionaryAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionaryAdditions.h; sourceTree = "<group>"; };
@@ -718,24 +691,6 @@
 		4148237619AA303900442FA7 /* dataModel */ = {
 			isa = PBXGroup;
 			children = (
-				41BBA10719A78B3200C0A328 /* NBLine.h */,
-				41BBA10819A78B3200C0A328 /* NBLine.m */,
-				41BBA11319A78B3200C0A328 /* NBRoute.h */,
-				41BBA11419A78B3200C0A328 /* NBRoute.m */,
-				41BBA11519A78B3200C0A328 /* NBRouteItem.h */,
-				41BBA11619A78B3200C0A328 /* NBRouteItem.m */,
-				41BBA11719A78B3200C0A328 /* NBSearch.h */,
-				41BBA11819A78B3200C0A328 /* NBSearch.m */,
-				41BBA11E19A78B3200C0A328 /* NBSegment.h */,
-				41BBA11F19A78B3200C0A328 /* NBSegment.m */,
-				41BBA12019A78B3200C0A328 /* NBSegmentLine.h */,
-				41BBA12119A78B3200C0A328 /* NBSegmentLine.m */,
-				41BBA12219A78B3200C0A328 /* NBSimpleRoute.h */,
-				41BBA12319A78B3200C0A328 /* NBSimpleRoute.m */,
-				41BBA12419A78B3200C0A328 /* NBStationEnd.h */,
-				41BBA12519A78B3200C0A328 /* NBStationEnd.m */,
-				41BBA12619A78B3200C0A328 /* NBStationStart.h */,
-				41BBA12719A78B3200C0A328 /* NBStationStart.m */,
 				4162EB3D19B361FA00A9E12F /* NBTpk.h */,
 				4162EB3E19B361FA00A9E12F /* NBTpk.m */,
 			);
@@ -1107,7 +1062,6 @@
 				41BBA24019A78B3300C0A328 /* NBDownLoadManagerViewController.m in Sources */,
 				41BBA1CA19A78B3300C0A328 /* DesEncrypt.m in Sources */,
 				41BBA1B819A78B3300C0A328 /* AFURLConnectionOperation.m in Sources */,
-				41BBA25519A78B3300C0A328 /* NBSimpleRoute.m in Sources */,
 				41BBA1C219A78B3300C0A328 /* ASIHTTPRequest.m in Sources */,
 				41BBA1C519A78B3300C0A328 /* ASINSStringAdditions.m in Sources */,
 				410E855919E58E0000A4D02C /* ASTextField.m in Sources */,
@@ -1130,8 +1084,6 @@
 				41BBA1C619A78B3300C0A328 /* NSHTTPCookieAdditions.m in Sources */,
 				4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */,
 				41BBA28D19A78B3300C0A328 /* XMLReader.m in Sources */,
-				41BBA24E19A78B3300C0A328 /* NBRouteItem.m in Sources */,
-				41BBA25619A78B3300C0A328 /* NBStationEnd.m in Sources */,
 				41BBA1D419A78B3300C0A328 /* GoogleMapSchema.m in Sources */,
 				41BBA23C19A78B3300C0A328 /* main.m in Sources */,
 				41B76E7A19B37C0600C4F1DB /* DowningCell.m in Sources */,
@@ -1144,7 +1096,6 @@
 				41BBA25919A78B3300C0A328 /* NSDataAdditions.m in Sources */,
 				41115FE919D1BFB100601BC1 /* UIColor-Expanded.m in Sources */,
 				411986A819D84C5F00507025 /* QDEditViewController.m in Sources */,
-				41BBA25319A78B3300C0A328 /* NBSegment.m in Sources */,
 				4119869E19D84BFC00507025 /* QDSearchViewController.m in Sources */,
 				41B3D69819CC816A00FB3017 /* QDMapViewController.m in Sources */,
 				41BBA1CB19A78B3300C0A328 /* GTMBase64.m in Sources */,
@@ -1156,28 +1107,23 @@
 				41BBA1C019A78B3300C0A328 /* ASIDownloadCache.m in Sources */,
 				41BBA26119A78B3300C0A328 /* SBJsonParser.m in Sources */,
 				410E854319E5789000A4D02C /* LCVoice.m in Sources */,
-				41BBA25419A78B3300C0A328 /* NBSegmentLine.m in Sources */,
 				41BBA1B519A78B3300C0A328 /* AFJSONRequestOperation.m in Sources */,
 				41BBA1BE19A78B3300C0A328 /* ASIDataCompressor.m in Sources */,
 				41BBA1B219A78B3300C0A328 /* AFHTTPClient.m in Sources */,
 				41199DE119E4527D00C50382 /* ShowBigViewController.m in Sources */,
 				41BBA1C119A78B3300C0A328 /* ASIFormDataRequest.m in Sources */,
-				41BBA24D19A78B3300C0A328 /* NBRoute.m in Sources */,
 				41BBA1BA19A78B3300C0A328 /* UIImageView+AFNetworking.m in Sources */,
 				41BBA1B619A78B3300C0A328 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				410E855019E582DD00A4D02C /* textInputViewController.m in Sources */,
-				41BBA24619A78B3300C0A328 /* NBLine.m in Sources */,
 				41BBA26E19A78B3300C0A328 /* SVProgressHUD.m in Sources */,
 				41BBA27219A78B3300C0A328 /* Utility.m in Sources */,
 				41BBA25F19A78B3300C0A328 /* Reachability.m in Sources */,
 				41199DDF19E4527D00C50382 /* MessagePhotoView.m in Sources */,
 				41BBA24219A78B3300C0A328 /* NBDownLoadViewController.m in Sources */,
 				410E855519E58CDE00A4D02C /* MyMD5.m in Sources */,
-				41BBA25719A78B3300C0A328 /* NBStationStart.m in Sources */,
 				41199DD619E440F100C50382 /* cityManagerTableViewController.m in Sources */,
 				41BBA1CD19A78B3300C0A328 /* DownloadItemEntity.m in Sources */,
 				41BBA1BB19A78B3300C0A328 /* AGSGoogleMapLayer.m in Sources */,
-				41BBA24F19A78B3300C0A328 /* NBSearch.m in Sources */,
 				41BBA1BD19A78B3300C0A328 /* ASIAuthenticationDialog.m in Sources */,
 				41BBA1D019A78B3300C0A328 /* DwonloadModel.xcdatamodeld in Sources */,
 				41BBA23B19A78B3300C0A328 /* JSONKit.m in Sources */,

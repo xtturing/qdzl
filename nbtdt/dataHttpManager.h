@@ -9,25 +9,15 @@
 #import "ASIHTTPRequestDelegate.h"
 #import "StringUtil.h"
 #import "NSStringAdditions.h"
-#import "NBRoute.h"
-#import "NBLine.h"
 
-#define HTTP_URL              @"http://api.map.baidu.com/place/v2/search"
-#define HTTP_SEARCH_URL       @"http://api.tianditu.com/api/api-new"
-#define HTTP_ERRORURL         @"http://60.190.2.120:10087/mobile/new/"
-#define HTTP_SEARCH           @"http://60.190.2.120:10087/baiduQuery"
-#define HTTP_DOWNLOAD         @"http://www.nbmap.gov.cn/tpkService/"
-#define HTTP_NBQUERY          @"http://60.190.2.120:10087/nbQuery"
+#define HTTP_LOGIN_URL              @"http://27.223.74.180:8080/esys/plugin/urbanadmin"
+
 #define REQUEST_TYPE          @"requestType"
 
 typedef enum {
-    AAGetSearchList = 0,           //获取当前区域列表
-    AAGetRadiusList,
-    AAPostError,
-    AAGetLineSearch,
-    AAGetBusSearch,
-    AAGetTpkList,
-    AAGetHttpType,
+    AAPublicUserRegister = 0,
+    AAPublicUserLogin,
+    AAChangePassword,
     //继续添加
     
 }DataRequestType;
@@ -39,23 +29,14 @@ typedef enum {
 //Delegate
 @protocol dataHttpDelegate <NSObject>
 @optional
-//
--(void)didGetFailed;
-//获取到当前区域列表
--(void)didGetSearchList:(NSArray*)searchList;
-//
--(void)didGetRadiusSearchList:(NSArray *)radiusList;
-//
-- (void)didPostError:(NSString *)string;
-//
--(void)didGetRoute:(NBRoute *)route;
 
-//
--(void)didGetBusLines:(NSArray *)lineList;
+- (void)didGetFailed;
 
-//
+- (void)didGetPublicUserRegister:(BOOL)success;
 
--(void)didgetTpkList:(NSMutableDictionary *)tokList;
+- (void)didGetPublicUserLogin:(BOOL)success;
+
+- (void)didGetChangePassword:(BOOL)success;
 
 //继续添加
 @end
@@ -75,27 +56,12 @@ typedef enum {
 - (void)pause;
 - (void)resume;
 - (void)cancel;
-//获取当前区域列表
--(void)letDoSearchWithQuery:(NSString *)query region:(NSString *)region searchType:(int)type pageSize:(int)size pageNum:(int)num;
 
-//
--(void)letDoRadiusSearchWithQuery:(NSString *)query location:(NSString *)location  radius:(int)radius scope:(int)scope pageSize:(int)size pageNum:(int)num;
+- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd;
 
-//
-- (void)letDoPostErrorWithMessage:(NSString *)message plottingScale:(NSString *)plottingScale point:(NSString *)point;
+- (void)letPublicUserLogin:(NSString *)userName password:(NSString *)pwd;
 
-//
+- (void)letChangePassword:(NSString *)userName password:(NSString *)pwd;
 
--(void)letDoLineSearchWithOrig:(NSString *)orig dest:(NSString *)dest style:(NSString *)style;
-
-//
-
--(void)letDoBusSearchWithStartposition:(NSString *)startposition endposition:(NSString *)endposition linetype:(NSString *)linetype;
-
-//
-
--(void)letDoTpkList;
-
--(void)letDoHttpTypeQuery;
 //继续添加
 @end

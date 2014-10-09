@@ -10,7 +10,6 @@
 #import "ASINetworkQueue.h"
 #import "ASIFormDataRequest.h"
 #import "JSON.h"
-#import "NBSearch.h"
 #import "XMLReader.h"
 #import "NBTpk.h"
 #import "DownloadItem.h"
@@ -88,152 +87,76 @@ static dataHttpManager * instance=nil;
 	}
 }
 #pragma mark - Http Operate
-
--(void)letDoHttpTypeQuery{
-    NSURL  *url = [NSURL URLWithString:HTTP_NBQUERY];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    NSLog(@"url=%@",url);
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    [self setGetUserInfo:request withRequestType:AAGetHttpType];
-    [_requestQueue addOperation:request];
-}
-
-//获取当前区域列表
--(void)letDoSearchWithQuery:(NSString *)query region:(NSString *)region  searchType:(int)type  pageSize:(int)size pageNum:(int)num{
-    NSString *q = [NSString stringWithFormat:@"%@",query];
-    NSString *r = [NSString stringWithFormat:@"%@",region];
-    NSString *s = [NSString stringWithFormat:@"%d",size];
-    NSString *n = [NSString stringWithFormat:@"%d",num];
-    NSMutableDictionary     *params = nil;
-    NSString *baseUrl = nil;
-    if(_type == 2){
-        params = [NSMutableDictionary dictionaryWithObjectsAndKeys:  q, @"query", r,  @"region",s,  @"page_size",n,  @"page_num",@"1",  @"scope",@"1", @"paramType",nil];
-        if(_url.length > 0 && [_url hasPrefix:@"http:"]){
-            baseUrl =_url;
-        }else{
-            baseUrl =[NSString  stringWithFormat:@"%@",HTTP_URL];
-        }
-    }else{
-        params = [NSMutableDictionary dictionaryWithObjectsAndKeys:  q, @"query", r,  @"region",s,  @"page_size",n,  @"page_num",@"1",  @"scope",@"yMMBb6l8GBeG6GcHjnNuHVMy",  @"ak",@"json", @"output",nil];
-        if(_url.length > 0 && [_url hasPrefix:@"http:"]){
-            baseUrl =_url;
-        }else{
-            baseUrl =[NSString  stringWithFormat:@"%@",HTTP_URL];
-        }
-    }
-    
-    NSURL  *url = [self generateURL:baseUrl params:params];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    NSLog(@"url=%@",url);
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    [self setGetUserInfo:request withRequestType:AAGetSearchList];
-    [_requestQueue addOperation:request];
-}
-//
--(void)letDoRadiusSearchWithQuery:(NSString *)query location:(NSString *)location  radius:(int)radius scope:(int)scope pageSize:(int)size pageNum:(int)num{
-    NSString *q = [NSString stringWithFormat:@"%d",radius];
-    NSString *r = [NSString stringWithFormat:@"%d",scope];
-    NSString *s = [NSString stringWithFormat:@"%d",size];
-    NSString *n = [NSString stringWithFormat:@"%d",num];
-    NSMutableDictionary     *params = nil;
-    NSString *baseUrl = nil;
-    if(_type == 2){
-        params = [NSMutableDictionary dictionaryWithObjectsAndKeys:  query, @"query",location,  @"location",s,  @"page_size",n,  @"page_num",r,  @"scope",q,  @"radius",@"3",  @"paramType",nil];
-        if(_url.length > 0 && [_url hasPrefix:@"http:"]){
-            baseUrl =_url;
-        }else{
-            baseUrl =[NSString  stringWithFormat:@"%@",HTTP_URL];
-        }
-    }else{
-        params = [NSMutableDictionary dictionaryWithObjectsAndKeys:  query, @"query",location,  @"location",s,  @"page_size",n,  @"page_num",r,  @"scope",q,  @"radius",@"yMMBb6l8GBeG6GcHjnNuHVMy",  @"ak",@"json", @"output",nil];
-        if(_url.length > 0 && [_url hasPrefix:@"http:"]){
-            baseUrl =_url;
-        }else{
-            baseUrl =[NSString  stringWithFormat:@"%@",HTTP_URL];
-        }
-    }
-    NSURL  *url = [self generateURL:baseUrl params:params];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [self setGetUserInfo:request withRequestType:AAGetRadiusList];
-    [_requestQueue addOperation:request];
-}
-- (void)letDoPostErrorWithMessage:(NSString *)message plottingScale:(NSString *)plottingScale point:(NSString *)point{
-    NSString *m = [NSString stringWithFormat:@"%@",message];
-    NSString *s = [NSString stringWithFormat:@"%@",plottingScale];
-    NSString *p = [NSString stringWithFormat:@"%@",point];
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_ERRORURL];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:@"admin" forKey:@"errorCorrector"];
-    [request setPostValue:s forKey:@"plottingScale"];
-    [request setPostValue:m forKey:@"errorCorrectInfo"];
-    [request setPostValue:@"0" forKey:@"errorcoreectObject"];
-    [request setPostValue:@"" forKey:@"telnum"];
-    [request setPostValue:p forKey:@"point"];
-    [request setPostValue:@"1" forKey:@"region"];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setDelegate:self];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    NSLog(@"url=%@",url);
-    [self setPostUserInfo:request withRequestType:AAPostError];
-    [request startAsynchronous];
-}
-
-//
--(void)letDoLineSearchWithOrig:(NSString *)orig dest:(NSString *)dest style:(NSString *)style{
-    NSString *m = [NSString stringWithFormat:@"%@",orig];
-    NSString *s = [NSString stringWithFormat:@"%@",dest];
-    NSString *p = [NSString stringWithFormat:@"%@",style];
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@/route.do",HTTP_SEARCH_URL];
-    NSURL  *url = [NSURL URLWithString:baseUrl];
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:[NSString stringWithFormat:@"{'orig':'%@','dest':'%@','style':'%@'}",m,s,p] forKey:@"routeStr"];
-    [request setTimeOutSeconds:TIMEOUT];
-    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-    [request setResponseEncoding:NSUTF8StringEncoding];
-    [request setDelegate:self];
-     NSLog(@"url=%@",url);
-    [self setPostUserInfo:request withRequestType:AAGetLineSearch];
-    [request startAsynchronous];
-
-}
-//
--(void)letDoBusSearchWithStartposition:(NSString *)startposition endposition:(NSString *)endposition linetype:(NSString *)linetype{
-    NSString *m = [NSString stringWithFormat:@"%@",startposition];
-    NSString *s = [NSString stringWithFormat:@"%@",endposition];
-    NSString *p = [NSString stringWithFormat:@"%@",linetype];
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@/BuslineServlet.do?postStr=%@startposition:'%@',endposition:'%@',linetype:'%@'%@",HTTP_SEARCH_URL,@"%7b",m,s,p,@"%7d"];
+- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@/publicUserRegister.htm?username=%@&password=%@",HTTP_LOGIN_URL,userName,pwd];
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
     [request setTimeOutSeconds:TIMEOUT];
     [request setResponseEncoding:NSUTF8StringEncoding];
     NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AAGetBusSearch];
+    [self setGetUserInfo:request withRequestType:AAPublicUserRegister];
     [_requestQueue addOperation:request];
 }
-//
--(void)letDoTpkList{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@TpkFileList",HTTP_DOWNLOAD];
+
+- (void)letPublicUserLogin:(NSString *)userName password:(NSString *)pwd{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@/publicUserValidate.htm?username=%@&password=%@",HTTP_LOGIN_URL,userName,pwd];
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
     [request setTimeOutSeconds:TIMEOUT];
     [request setResponseEncoding:NSUTF8StringEncoding];
     NSLog(@"url=%@",url);
-    [self setGetUserInfo:request withRequestType:AAGetTpkList];
+    [self setGetUserInfo:request withRequestType:AAPublicUserLogin];
     [_requestQueue addOperation:request];
-
 }
+
+- (void)letChangePassword:(NSString *)userName password:(NSString *)pwd{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@/changePassword.htm?username=%@&password=%@",HTTP_LOGIN_URL,userName,pwd];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AAChangePassword];
+    [_requestQueue addOperation:request];
+}
+//-(void)letDoHttpTypeQuery{
+//    NSURL  *url = [NSURL URLWithString:HTTP_LOGIN_URL];
+//    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+//    NSLog(@"url=%@",url);
+//    [request setTimeOutSeconds:TIMEOUT];
+//    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+//    [request setResponseEncoding:NSUTF8StringEncoding];
+//    [self setGetUserInfo:request withRequestType:AAGetSearchList];
+//    [_requestQueue addOperation:request];
+//}
+
+
+//- (void)letDoPostErrorWithMessage:(NSString *)message plottingScale:(NSString *)plottingScale point:(NSString *)point{
+//    NSString *m = [NSString stringWithFormat:@"%@",message];
+//    NSString *s = [NSString stringWithFormat:@"%@",plottingScale];
+//    NSString *p = [NSString stringWithFormat:@"%@",point];
+//    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_LOGIN_URL];
+//    NSURL  *url = [NSURL URLWithString:baseUrl];
+//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+//    [request setPostValue:@"admin" forKey:@"errorCorrector"];
+//    [request setPostValue:s forKey:@"plottingScale"];
+//    [request setPostValue:m forKey:@"errorCorrectInfo"];
+//    [request setPostValue:@"0" forKey:@"errorcoreectObject"];
+//    [request setPostValue:@"" forKey:@"telnum"];
+//    [request setPostValue:p forKey:@"point"];
+//    [request setPostValue:@"1" forKey:@"region"];
+//    [request setTimeOutSeconds:TIMEOUT];
+//    [request setDelegate:self];
+//    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+//    [request setResponseEncoding:NSUTF8StringEncoding];
+//    NSLog(@"url=%@",url);
+//    [self setPostUserInfo:request withRequestType:AAGetSearchList];
+//    [request startAsynchronous];
+//}
+
 //继续添加
 
 #pragma mark - Operate queue
@@ -290,114 +213,42 @@ static dataHttpManager * instance=nil;
     else if ([returnObject isKindOfClass:[NSArray class]]) {
         userArr = (NSArray*)returnObject;
     }
-    else {
-        if ([_delegate respondsToSelector:@selector(didGetFailed)]) {
-            [_delegate didGetFailed];
+    
+    if(requestType == AAPublicUserRegister){
+        BOOL success = NO;
+        if([responseString isEqualToString:@"-1"]){
+            success = NO;
+        }else{
+            success = YES;
+        }
+        if ([_delegate respondsToSelector:@selector(didGetPublicUserRegister:)]) {
+            [_delegate didGetPublicUserRegister:success];
+        }
+    }
+    if(requestType == AAPublicUserLogin){
+        BOOL success = NO;
+        if([responseString isEqualToString:@"-1"]){
+            success = NO;
+        }else{
+            success = YES;
+        }
+        if ([_delegate respondsToSelector:@selector(didGetPublicUserLogin:)]) {
+            [_delegate didGetPublicUserLogin:success];
+        }
+    }
+    if(requestType == AAChangePassword){
+        BOOL success = NO;
+        if([responseString isEqualToString:@"-1"]){
+            success = NO;
+        }else{
+            success = YES;
+        }
+        if ([_delegate respondsToSelector:@selector(didGetChangePassword:)]) {
+            [_delegate didGetChangePassword:success];
         }
     }
     
     
-    //获取当前区域列表
-    if (requestType == AAGetSearchList) {
-        NSArray *arr= [userInfo objectForKey:@"results"];
-        NSMutableArray  *statuesArr = [[NSMutableArray alloc]initWithCapacity:0];
-        for(NSDictionary *item in arr){
-            if(item  && [item isKindOfClass:[NSDictionary class]]){
-                NBSearch *result = [NBSearch searchWithJsonDictionary:item];
-                [statuesArr addObject:result];
-            }
-        }
-        if ([_delegate respondsToSelector:@selector(didGetSearchList:)]) {
-            [_delegate didGetSearchList:statuesArr];
-        }
-    }
-    //
-    if (requestType == AAGetRadiusList) {
-        NSArray *arr= [userInfo objectForKey:@"results"];
-        NSMutableArray  *statuesArr = [[NSMutableArray alloc]initWithCapacity:0];
-        for(NSDictionary *item in arr){
-            if(item  && [item isKindOfClass:[NSDictionary class]]){
-                
-                NBSearch *result = [NBSearch searchWithJsonDictionary:item];
-                [statuesArr addObject:result];
-            }
-        }
-        if ([_delegate respondsToSelector:@selector(didGetRadiusSearchList:)]) {
-            [_delegate didGetRadiusSearchList:statuesArr];
-        }
-    }
-    //
-    if(requestType == AAPostError){
-        NSString *string= [userInfo objectForKey:@"success"];
-        if ([_delegate respondsToSelector:@selector(didPostError:)]) {
-            if([string isEqualToString:@"false"]){
-                [_delegate didPostError:@"提交纠错信息异常"];
-            }else{
-                [_delegate didPostError:@"提交纠错信息成功"];
-            }
-        }
-    }
-    //
-    if(requestType == AAGetLineSearch){
-        NSDictionary *arr= [userInfo objectForKey:@"result"];
-        NBRoute *route = nil;
-        if([arr count] > 0 ){
-            route = [NBRoute routeWithJsonDictionary:arr];
-        }
-        if (_delegate && [_delegate respondsToSelector:@selector(didGetRoute:)] && route) {
-            [_delegate didGetRoute:route];
-        }
-    }
-    //
-    if(requestType == AAGetBusSearch){
-        NSArray *arr= [[[userInfo objectForKey:@"results"] objectAtIndex:0] objectForKey:@"lines"];
-        NSMutableArray  *statuesArr = [[NSMutableArray alloc]initWithCapacity:0];
-        for(NSDictionary *item in arr){
-            if(item  && [item isKindOfClass:[NSDictionary class]]){
-                
-                NBLine *line = [NBLine lineWithJsonDictionary:item];
-                [statuesArr addObject:line];
-            }
-        }
-        if ([_delegate respondsToSelector:@selector(didGetBusLines:)]) {
-            [_delegate didGetBusLines:statuesArr];
-        }
-
-    }
-    
-    if(requestType == AAGetTpkList){
-        NSMutableDictionary  *statuesArr = [[NSMutableDictionary alloc] initWithCapacity:0];
-        for (NSDictionary *item in userArr) {
-            if(item && [item isKindOfClass:[NSDictionary class]]){
-                NBTpk *tpk = [NBTpk tpkWithJsonDictionary:item];
-                if(tpk.name.length >0 && [tpk.type isEqualToString:@"ios"]){
-                    DownloadItem *downItem=[[DownloadItem alloc] init];
-                    downItem.tpk = tpk;
-                    NSURL  *url = [self getURlWithName:tpk.name];
-                    downItem.url=url;
-                    DownloadItem *task=[[DownloadManager sharedInstance] getDownloadItemByUrl:[downItem.url description]];
-                    downItem.downloadPercent=task.downloadPercent;
-                    if(task)
-                    {
-                        downItem.downloadState=task.downloadState;
-                    }
-                    else
-                    {
-                        downItem.downloadState=DownloadNotStart;
-                    }
-                    [statuesArr setObject:downItem forKey:[downItem.url description]];
-                }
-            }
-        }
-        if ([_delegate respondsToSelector:@selector(didgetTpkList:)]) {
-            [_delegate didgetTpkList:statuesArr];
-        }
-    }
-    
-    if(requestType == AAGetHttpType){
-        _url = [userInfo getStringValueForKey:@"url" defaultValue:@""];
-        _type = [[userInfo getStringValueForKey:@"type" defaultValue:@""] intValue];
-    }
     //继续添加
     
     
@@ -409,10 +260,5 @@ static dataHttpManager * instance=nil;
     NSLog(@"请求将要跳转");
 }
 
-- (NSURL *)getURlWithName:(NSString *)name{
-    NSMutableDictionary  *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:  name, @"filename",nil];
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@TpkDownload",HTTP_DOWNLOAD];
-    return  [self generateURL:baseUrl params:params];
-}
 
 @end
