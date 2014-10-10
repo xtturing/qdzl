@@ -43,11 +43,57 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self registerForKeyboardNotifications];
     [dataHttpManager getInstance].delegate = self;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [dataHttpManager getInstance].delegate =  nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - keyboardHight
+
+- (void)registerForKeyboardNotifications
+{
+    //使用NSNotificationCenter 鍵盤出現時
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWasShown:)
+     
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    //使用NSNotificationCenter 鍵盤隐藏時
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(keyboardWillBeHidden:)
+     
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+    
+}
+
+
+
+//实现当键盘出现的时候计算键盘的高度大小。用于输入框显示位置
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{   //输入框位置动画加载
+    CGRect curFrame=self.view.frame;
+    curFrame.origin.y -= 40;
+    [UIView animateWithDuration:0.3f animations:^{
+        self.view.frame=curFrame;
+    }];
+}
+
+//当键盘隐藏的时候
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    CGRect curFrame=self.view.frame;
+    curFrame.origin.y += 40;
+    [UIView animateWithDuration:0.3f animations:^{
+        self.view.frame=curFrame;
+    }];
+    //do something
 }
 #pragma mark - tableview deleagate datasource stuff
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -87,9 +87,13 @@
 -(void)initlizerScrollView:(NSArray *)imgList{
     [self.photoScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     for(int i=0;i<imgList.count;i++){
-        
-        ALAsset *asset=imgList[i];
-         UIImage *tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+        UIImage *tempImg= nil;
+        if([imgList[i] isKindOfClass:[ALAsset class]]){
+            ALAsset *asset=imgList[i];
+            tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+        }else{
+            tempImg = imgList[i];
+        }
         
       //  UIImage *image = [imgList objectAtIndex:i];
         
@@ -155,8 +159,10 @@
         //设置拍照后的图片可被编辑
         picker.allowsEditing = YES;
         picker.sourceType = sourceType;
-        [self.delegate addUIImagePicker:picker];
-    
+        if(self.delegate && [self.delegate respondsToSelector:@selector(addUIImagePicker:)]){
+            
+            [self.delegate addUIImagePicker:picker];
+        }
         
     }else{
         NSLog(@"模拟其中无法打开照相机,请在真机中使用");

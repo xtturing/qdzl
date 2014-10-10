@@ -213,6 +213,9 @@
     
     [self presentViewController:picker animated:YES completion:nil];
 }
+-(void)addUIImagePicker:(UIImagePickerController *)picker{
+    [self presentViewController:picker animated:YES completion:nil];
+}
 -(void) recordStart
 {
     [self.voice startRecordWithPath:[NSString stringWithFormat:@"%@/Documents/MySound.caf", NSHomeDirectory()]];
