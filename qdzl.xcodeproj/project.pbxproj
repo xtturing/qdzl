@@ -57,7 +57,6 @@
 		4153D11019E6F00D00DE06E3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */; };
 		4153D11119E6F00D00DE06E3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10E19E6F00D00DE06E3 /* Default.png */; };
 		4153D11219E6F00D00DE06E3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10F19E6F00D00DE06E3 /* Default@2x.png */; };
-		4153D11419E6F04300DE06E3 /* qidong.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D11319E6F04300DE06E3 /* qidong.png */; };
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
 		419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96A19CB32770067497F /* ArcGIS.framework */; };
 		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
@@ -239,7 +238,6 @@
 		4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "image/Default-568h@2x.png"; sourceTree = "<group>"; };
 		4153D10E19E6F00D00DE06E3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = image/Default.png; sourceTree = "<group>"; };
 		4153D10F19E6F00D00DE06E3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "image/Default@2x.png"; sourceTree = "<group>"; };
-		4153D11319E6F04300DE06E3 /* qidong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qidong.png; path = image/qidong.png; sourceTree = "<group>"; };
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
 		419FD96A19CB32770067497F /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../nbtdt/ArcGIS.framework; sourceTree = "<group>"; };
@@ -771,7 +769,6 @@
 		4148238119AA31BD00442FA7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				4153D11319E6F04300DE06E3 /* qidong.png */,
 				4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */,
 				4153D10E19E6F00D00DE06E3 /* Default.png */,
 				4153D10F19E6F00D00DE06E3 /* Default@2x.png */,
@@ -1002,7 +999,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4153D11419E6F04300DE06E3 /* qidong.png in Resources */,
 				410E856C19E58E2400A4D02C /* login_button.png in Resources */,
 				41B76E7B19B37C0600C4F1DB /* DowningCell.xib in Resources */,
 				411986A919D84C5F00507025 /* QDEditViewController.xib in Resources */,
