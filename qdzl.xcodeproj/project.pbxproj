@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4106956B19F0100100E45E1E /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 4106956119F0100100E45E1E /* ioapi.c */; };
+		4106956C19F0100100E45E1E /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 4106956319F0100100E45E1E /* mztools.c */; };
+		4106956D19F0100100E45E1E /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 4106956519F0100100E45E1E /* unzip.c */; };
+		4106956E19F0100100E45E1E /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 4106956719F0100100E45E1E /* zip.c */; };
+		4106956F19F0100100E45E1E /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4106956A19F0100100E45E1E /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		410E854319E5789000A4D02C /* LCVoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 410E854019E5789000A4D02C /* LCVoice.m */; };
 		410E854419E5789000A4D02C /* LCVoiceHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 410E854219E5789000A4D02C /* LCVoiceHud.m */; };
 		410E854819E578AA00A4D02C /* mic_normal_358x358@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410E854519E578AA00A4D02C /* mic_normal_358x358@2x.png */; };
@@ -172,6 +177,17 @@
 		39C5F39C16F8A9920061B21A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		39C5F39E16F8A9920061B21A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		39C5F3A016F8A9920061B21A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4106956019F0100100E45E1E /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = minizip/crypt.h; sourceTree = "<group>"; };
+		4106956119F0100100E45E1E /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = minizip/ioapi.c; sourceTree = "<group>"; };
+		4106956219F0100100E45E1E /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = minizip/ioapi.h; sourceTree = "<group>"; };
+		4106956319F0100100E45E1E /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mztools.c; path = minizip/mztools.c; sourceTree = "<group>"; };
+		4106956419F0100100E45E1E /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mztools.h; path = minizip/mztools.h; sourceTree = "<group>"; };
+		4106956519F0100100E45E1E /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = minizip/unzip.c; sourceTree = "<group>"; };
+		4106956619F0100100E45E1E /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = minizip/unzip.h; sourceTree = "<group>"; };
+		4106956719F0100100E45E1E /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zip.c; path = minizip/zip.c; sourceTree = "<group>"; };
+		4106956819F0100100E45E1E /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zip.h; path = minizip/zip.h; sourceTree = "<group>"; };
+		4106956919F0100100E45E1E /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = minizip/ZipArchive.h; sourceTree = "<group>"; };
+		4106956A19F0100100E45E1E /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ZipArchive.mm; path = minizip/ZipArchive.mm; sourceTree = "<group>"; };
 		410E853F19E5789000A4D02C /* LCVoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVoice.h; sourceTree = "<group>"; };
 		410E854019E5789000A4D02C /* LCVoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCVoice.m; sourceTree = "<group>"; };
 		410E854119E5789000A4D02C /* LCVoiceHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVoiceHud.h; sourceTree = "<group>"; };
@@ -480,6 +496,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4106955F19F00FBF00E45E1E /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				4106956019F0100100E45E1E /* crypt.h */,
+				4106956119F0100100E45E1E /* ioapi.c */,
+				4106956219F0100100E45E1E /* ioapi.h */,
+				4106956319F0100100E45E1E /* mztools.c */,
+				4106956419F0100100E45E1E /* mztools.h */,
+				4106956519F0100100E45E1E /* unzip.c */,
+				4106956619F0100100E45E1E /* unzip.h */,
+				4106956719F0100100E45E1E /* zip.c */,
+				4106956819F0100100E45E1E /* zip.h */,
+				4106956919F0100100E45E1E /* ZipArchive.h */,
+				4106956A19F0100100E45E1E /* ZipArchive.mm */,
+			);
+			name = minizip;
+			sourceTree = "<group>";
+		};
 		410E853E19E5788400A4D02C /* LCVoice */ = {
 			isa = PBXGroup;
 			children = (
@@ -669,6 +703,7 @@
 		4148237519AA301100442FA7 /* KIT */ = {
 			isa = PBXGroup;
 			children = (
+				4106955F19F00FBF00E45E1E /* minizip */,
 				410E855619E58DF300A4D02C /* ASTextField */,
 				410E855219E58CC100A4D02C /* MD5 */,
 				410E853E19E5788400A4D02C /* LCVoice */,
@@ -1059,6 +1094,7 @@
 			files = (
 				41BBA25E19A78B3300C0A328 /* PullRefreshTableViewController.m in Sources */,
 				41BBA24019A78B3300C0A328 /* NBDownLoadManagerViewController.m in Sources */,
+				4106956C19F0100100E45E1E /* mztools.c in Sources */,
 				41BBA1CA19A78B3300C0A328 /* DesEncrypt.m in Sources */,
 				41BBA1B819A78B3300C0A328 /* AFURLConnectionOperation.m in Sources */,
 				41BBA1C219A78B3300C0A328 /* ASIHTTPRequest.m in Sources */,
@@ -1105,9 +1141,11 @@
 				41BBA1B919A78B3300C0A328 /* AFXMLRequestOperation.m in Sources */,
 				41BBA1C019A78B3300C0A328 /* ASIDownloadCache.m in Sources */,
 				41BBA26119A78B3300C0A328 /* SBJsonParser.m in Sources */,
+				4106956E19F0100100E45E1E /* zip.c in Sources */,
 				410E854319E5789000A4D02C /* LCVoice.m in Sources */,
 				41BBA1B519A78B3300C0A328 /* AFJSONRequestOperation.m in Sources */,
 				41BBA1BE19A78B3300C0A328 /* ASIDataCompressor.m in Sources */,
+				4106956D19F0100100E45E1E /* unzip.c in Sources */,
 				41BBA1B219A78B3300C0A328 /* AFHTTPClient.m in Sources */,
 				41199DE119E4527D00C50382 /* ShowBigViewController.m in Sources */,
 				41BBA1C119A78B3300C0A328 /* ASIFormDataRequest.m in Sources */,
@@ -1115,8 +1153,10 @@
 				41BBA1B619A78B3300C0A328 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				410E855019E582DD00A4D02C /* textInputViewController.m in Sources */,
 				41BBA26E19A78B3300C0A328 /* SVProgressHUD.m in Sources */,
+				4106956B19F0100100E45E1E /* ioapi.c in Sources */,
 				41BBA27219A78B3300C0A328 /* Utility.m in Sources */,
 				41BBA25F19A78B3300C0A328 /* Reachability.m in Sources */,
+				4106956F19F0100100E45E1E /* ZipArchive.mm in Sources */,
 				41199DDF19E4527D00C50382 /* MessagePhotoView.m in Sources */,
 				41BBA24219A78B3300C0A328 /* NBDownLoadViewController.m in Sources */,
 				410E855519E58CDE00A4D02C /* MyMD5.m in Sources */,
