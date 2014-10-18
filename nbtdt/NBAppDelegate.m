@@ -21,7 +21,10 @@
      [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     ASViewController *start = [[ASViewController alloc] init];
-    [self.window setRootViewController:start];
+    UINavigationController *navigationViewController = [[UINavigationController alloc] init];
+    [navigationViewController pushViewController:start animated:YES];
+    navigationViewController.navigationBarHidden = YES;
+    [self.window setRootViewController:navigationViewController];
     return YES;
 }
 

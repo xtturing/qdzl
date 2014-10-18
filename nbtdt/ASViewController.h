@@ -23,4 +23,6 @@
 
 - (IBAction)changeFieldBackground:(id)sender;
 - (IBAction)letMeIn:(id)sender;
+- (IBAction)letRegister:(id)sender;
+- (IBAction)letPassword:(id)sender;
 @end

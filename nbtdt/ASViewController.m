@@ -12,6 +12,8 @@
 #import "dataHttpManager.h"
 #import "SVProgressHUD.h"
 #import "MyMD5.h"
+#import "ASPasswordViewController.h"
+#import "ASRegisterViewController.h"
 
 @interface ASViewController ()<dataHttpDelegate>
 
@@ -43,12 +45,14 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
     [self registerForKeyboardNotifications];
     [dataHttpManager getInstance].delegate = self;
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [dataHttpManager getInstance].delegate =  nil;
+    self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -138,6 +142,16 @@
         [[dataHttpManager getInstance] letPublicUserLogin:_usernameField.text password:[MyMD5 md5:_passwordField.text]];
     });
     
+}
+- (IBAction)letRegister:(id)sender{
+    ASRegisterViewController *registerViewController = [[ASRegisterViewController alloc] initWithNibName:@"ASRegisterViewController" bundle:nil];
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController pushViewController:registerViewController animated:YES];
+}
+- (IBAction)letPassword:(id)sender{
+    ASPasswordViewController *passwordViewController = [[ASPasswordViewController alloc] initWithNibName:@"ASPasswordViewController" bundle:nil];
+     self.navigationController.navigationBarHidden = NO;
+    [self.navigationController pushViewController:passwordViewController animated:YES];
 }
 
 - (void)didGetPublicUserLogin:(BOOL)success{
