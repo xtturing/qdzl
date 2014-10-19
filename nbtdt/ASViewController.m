@@ -9,9 +9,6 @@
 #import "ASViewController.h"
 #import "ASTextField.h"
 #import "QDMapViewController.h"
-#import "dataHttpManager.h"
-#import "SVProgressHUD.h"
-#import "MyMD5.h"
 #import "ASPasswordViewController.h"
 #import "ASRegisterViewController.h"
 
@@ -42,12 +39,23 @@
     //setup text field with respective icons
     [_usernameField setupTextFieldWithIconName:@"user_name_icon"];
     [_passwordField setupTextFieldWithIconName:@"password_icon"];
+    _passwordField.secureTextEntry = YES;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     [self registerForKeyboardNotifications];
     [dataHttpManager getInstance].delegate = self;
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if([ud objectForKey:@"USER_NAME"] && [ud objectForKey:@"USER_PASSWORD"]){
+        _usernameField.text = [ud objectForKey:@"USER_NAME"];
+        _passwordField.text = [ud objectForKey:@"USER_PASSWORD"];
+        [self autoLoginIn];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -136,13 +144,17 @@
 }
 
 - (IBAction)letMeIn:(id)sender {
+    [self autoLoginIn];
+}
+
+- (void)autoLoginIn{
     [self resignAllResponders];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[dataHttpManager getInstance] letPublicUserLogin:_usernameField.text password:[MyMD5 md5:_passwordField.text]];
     });
-    
 }
+
 - (IBAction)letRegister:(id)sender{
     ASRegisterViewController *registerViewController = [[ASRegisterViewController alloc] initWithNibName:@"ASRegisterViewController" bundle:nil];
     self.navigationController.navigationBarHidden = NO;
@@ -161,6 +173,12 @@
         _navController = [[UINavigationController alloc] init];
         [_navController pushViewController:_mapViewController animated:YES];
         [self presentViewController:_navController animated:YES completion:^{
+            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+            if([ud objectForKey:@"USER_NAME"] == nil && [ud objectForKey:@"USER_PASSWORD"] == nil){
+                [ud setObject:_usernameField.text forKey:@"USER_NAME"];
+                [ud setObject:_passwordField.text forKey:@"USER_PASSWORD"];
+                [ud synchronize];
+            }
             
         }];
     }else{
@@ -170,7 +188,7 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
-    [self showMessageWithAlert:@"用户登录异常"];
+    [self showMessageWithAlert:@"发生了网络异常"];
 }
 
 - (void)resignAllResponders{
@@ -181,5 +199,37 @@
     UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     
     [view show];
+}
+- (IBAction)letRegisterIn:(id)sender{
+    [self resignAllResponders];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letPublicUserRegister:self.usernameField.text password:[MyMD5 md5:self.passwordField.text]];
+    });
+}
+
+- (void)didGetPublicUserRegister:(BOOL)success{
+    [SVProgressHUD dismiss];
+    if(success){
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self showMessageWithAlert:@"用户注册失败"];
+    }
+}
+- (IBAction)letPasswordIn:(id)sender{
+    [self resignAllResponders];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[dataHttpManager getInstance] letChangePassword:self.usernameField.text password:[MyMD5 md5:self.passwordField.text]];
+    });
+}
+
+- (void)didGetChangePassword:(BOOL)success{
+    [SVProgressHUD dismiss];
+    if(success){
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self showMessageWithAlert:@"修改密码失败"];
+    }
 }
 @end

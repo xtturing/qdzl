@@ -11,6 +11,8 @@
 #import "textInputViewController.h"
 #import "MessagePhotoView.h"
 #import "LCVoice.h"
+#import "QDMapLocationViewController.h"
+
 @interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,textInputViewDelegate,MessagePhotoViewDelegate>
 @property(nonatomic,strong) LCVoice * voice;
 @property (nonatomic,strong)  UIButton *rbutton;
@@ -53,7 +55,8 @@
 }
 
 - (void)getLocation{
-    
+    QDMapLocationViewController *mapLocationViewController = [[QDMapLocationViewController alloc] initWithNibName:@"QDMapLocationViewController" bundle:nil];
+    [self.navigationController pushViewController:mapLocationViewController animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

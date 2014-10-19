@@ -12,6 +12,8 @@
 		4106956D19F0100100E45E1E /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 4106956519F0100100E45E1E /* unzip.c */; };
 		4106956E19F0100100E45E1E /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 4106956719F0100100E45E1E /* zip.c */; };
 		4106956F19F0100100E45E1E /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4106956A19F0100100E45E1E /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4107C2C919F3F186000C092D /* QDMapLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4107C2C719F3F186000C092D /* QDMapLocationViewController.m */; };
+		4107C2CA19F3F186000C092D /* QDMapLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4107C2C819F3F186000C092D /* QDMapLocationViewController.xib */; };
 		410BDECE19F2A22C0080D11C /* ASRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410BDECC19F2A22C0080D11C /* ASRegisterViewController.m */; };
 		410BDECF19F2A22C0080D11C /* ASRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410BDECD19F2A22C0080D11C /* ASRegisterViewController.xib */; };
 		410BDED319F2A2450080D11C /* ASPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410BDED119F2A2450080D11C /* ASPasswordViewController.m */; };
@@ -192,6 +194,9 @@
 		4106956819F0100100E45E1E /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zip.h; path = minizip/zip.h; sourceTree = "<group>"; };
 		4106956919F0100100E45E1E /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZipArchive.h; path = minizip/ZipArchive.h; sourceTree = "<group>"; };
 		4106956A19F0100100E45E1E /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ZipArchive.mm; path = minizip/ZipArchive.mm; sourceTree = "<group>"; };
+		4107C2C619F3F186000C092D /* QDMapLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDMapLocationViewController.h; sourceTree = "<group>"; };
+		4107C2C719F3F186000C092D /* QDMapLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDMapLocationViewController.m; sourceTree = "<group>"; };
+		4107C2C819F3F186000C092D /* QDMapLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QDMapLocationViewController.xib; sourceTree = "<group>"; };
 		410BDECB19F2A22C0080D11C /* ASRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASRegisterViewController.h; sourceTree = "<group>"; };
 		410BDECC19F2A22C0080D11C /* ASRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASRegisterViewController.m; sourceTree = "<group>"; };
 		410BDECD19F2A22C0080D11C /* ASRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASRegisterViewController.xib; sourceTree = "<group>"; };
@@ -619,6 +624,9 @@
 				410E854D19E582DD00A4D02C /* textInputViewController.h */,
 				410E854E19E582DD00A4D02C /* textInputViewController.m */,
 				410E854F19E582DD00A4D02C /* textInputViewController.xib */,
+				4107C2C619F3F186000C092D /* QDMapLocationViewController.h */,
+				4107C2C719F3F186000C092D /* QDMapLocationViewController.m */,
+				4107C2C819F3F186000C092D /* QDMapLocationViewController.xib */,
 			);
 			name = editView;
 			sourceTree = "<group>";
@@ -1054,6 +1062,7 @@
 				41B76E7B19B37C0600C4F1DB /* DowningCell.xib in Resources */,
 				411986A919D84C5F00507025 /* QDEditViewController.xib in Resources */,
 				411986A419D84C3000507025 /* QDSettingViewController.xib in Resources */,
+				4107C2CA19F3F186000C092D /* QDMapLocationViewController.xib in Resources */,
 				41BBA24319A78B3300C0A328 /* NBDownLoadViewController.xib in Resources */,
 				41BBA24119A78B3300C0A328 /* NBDownLoadManagerViewController.xib in Resources */,
 				41199DF819E4539100C50382 /* AssetsPickerChecked@2x.png in Resources */,
@@ -1141,6 +1150,7 @@
 				41BBA1D419A78B3300C0A328 /* GoogleMapSchema.m in Sources */,
 				41BBA23C19A78B3300C0A328 /* main.m in Sources */,
 				41B76E7A19B37C0600C4F1DB /* DowningCell.m in Sources */,
+				4107C2C919F3F186000C092D /* QDMapLocationViewController.m in Sources */,
 				41BBA1C319A78B3300C0A328 /* ASIInputStream.m in Sources */,
 				41199DE019E4527D00C50382 /* MessagePhotoMenuItem.m in Sources */,
 				41BBA1D519A78B3300C0A328 /* GoogleMapTileOperation.m in Sources */,

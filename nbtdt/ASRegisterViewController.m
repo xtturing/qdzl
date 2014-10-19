@@ -7,7 +7,6 @@
 //
 
 #import "ASRegisterViewController.h"
-
 @interface ASRegisterViewController ()
 
 @end

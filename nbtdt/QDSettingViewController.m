@@ -9,7 +9,7 @@
 #import "QDSettingViewController.h"
 #import "NBDownLoadViewController.h"
 
-@interface QDSettingViewController ()
+@interface QDSettingViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -124,7 +124,9 @@
         if(indexPath.row == 0){
             
         }else{
-            
+            UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:@"确定退出当前用户账号" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            view.delegate = self;
+            [view show];
         }
         
     }else{
@@ -136,5 +138,19 @@
         }
     }
 
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        if([ud objectForKey:@"USER_NAME"] && [ud objectForKey:@"USER_PASSWORD"]){
+            [ud removeObjectForKey:@"USER_NAME"];
+            [ud removeObjectForKey:@"USER_PASSWORD"];
+            [ud synchronize];
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }
+    }
 }
 @end

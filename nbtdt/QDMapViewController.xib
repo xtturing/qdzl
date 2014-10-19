@@ -56,7 +56,7 @@
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KvD-8R-WS9">
                     <rect key="frame" x="268" y="252" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="qd_gps">
+                    <state key="normal" image="qd_edit">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -71,7 +71,7 @@
     </objects>
     <resources>
         <image name="colect_normal" width="135" height="135"/>
-        <image name="qd_gps" width="32" height="32"/>
+        <image name="qd_edit" width="64" height="64"/>
         <image name="qd_zoomin" width="32" height="32"/>
         <image name="qd_zoomout" width="32" height="32"/>
     </resources>

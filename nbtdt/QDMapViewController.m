@@ -171,8 +171,16 @@
 #pragma mark AGSMapViewLayerDelegate methods
 
 -(void) mapViewDidLoad:(AGSMapView*)mapView {
-    [self.mapView.gps start];
-    
+    if(self.mapView.gps.enabled){
+        [self performSelector:@selector(gpsLocation) withObject:nil afterDelay:2.0f];
+    }else {
+        [self.mapView.gps start];
+        return;
+    }
+}
+
+- (void)gpsLocation{
+    [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
 }
 
 #pragma mark -reachability
@@ -192,6 +200,7 @@
         }
         AGSTiledMapServiceLayer *tileLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:[NSURL URLWithString:BASE_MAP_URL]];
         [self.mapView addMapLayer:tileLayer withName:@"tileLayer"];
+        [self.mapView.gps start];
     }
     else
     {
