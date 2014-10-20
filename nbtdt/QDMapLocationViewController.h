@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol mapLocationDelegate <NSObject>
 
-@interface QDMapLocationViewController : UIViewController<AGSMapViewLayerDelegate,AGSMapViewCalloutDelegate>
+@optional
+- (void)didSelectedMapLocation:(AGSPoint *)point;
+
+@end
+@interface QDMapLocationViewController : UIViewController<AGSMapViewLayerDelegate,AGSMapViewCalloutDelegate,AGSMapViewTouchDelegate>
 @property (nonatomic, strong) IBOutlet AGSMapView *mapView;
+@property (nonatomic, strong) AGSGraphicsLayer *graphicsLayer;
+@property (nonatomic, strong) IBOutlet UIButton *editBtn;
+@property (nonatomic,assign) id<mapLocationDelegate> delegate;
 @end

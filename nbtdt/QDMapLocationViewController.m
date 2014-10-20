@@ -8,10 +8,13 @@
 
 #import "QDMapLocationViewController.h"
 #import "Reachability.h"
+#import "CLLocation+Sino.h"
 
 #define BASE_MAP_URL @"http://27.223.74.180:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
-@interface QDMapLocationViewController ()
+@interface QDMapLocationViewController (){
+    AGSGraphic * startGra;
+}
 @property(nonatomic, strong) Reachability *reach;
 @end
 
@@ -40,10 +43,12 @@
     [_reach startNotifier];
     [self updateInterfaceWithReachability:_reach];
     self.mapView.layerDelegate = self;
-    self.mapView.calloutDelegate=self;
-    
+    self.mapView.touchDelegate = self;
+    self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
+	[self.mapView addMapLayer:self.graphicsLayer withName:@"graphicsLayer"];
     self.navigationItem.title = @"获取位置";
-
+    UIBarButtonItem *right = [[UIBarButtonItem alloc]  initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(sendAction)];
+    self.navigationItem.rightBarButtonItem = right;
     // Do any additional setup after loading the view from its nib.
 }
 - (void)dealloc{
@@ -57,16 +62,64 @@
     }
 }
 
+-(void)viewDidLayoutSubviews{
+    [_editBtn setFrame:CGRectMake(137,( [UIScreen mainScreen].bounds.size.height> 480)?434:364, 48, 48)];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)sendAction{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    if(_delegate && [_delegate respondsToSelector:@selector(didSelectedMapLocation:)]){
+        [_delegate didSelectedMapLocation:(AGSPoint *)startGra.geometry];
+    }
+}
+
+
+-(void)addStartPoint:(AGSPoint *)mappoint{
+    if(startGra){
+        [self.graphicsLayer removeGraphic:startGra];
+        startGra = nil;
+    }
+    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"qidian"];
+    dian.size = CGSizeMake(32,47);
+    if(mappoint.x == 0 || mappoint.y == 0 ){
+        return;
+    }
+    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil infoTemplateDelegate:nil];
+    dian.yoffset=24;
+    startGra.symbol = dian;
+    [self.graphicsLayer addGraphic:startGra];
+    [self.graphicsLayer dataChanged];
+}
 -(IBAction)gps:(id)sender{
     if(self.mapView.gps.enabled){
         [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
+        
     }else {
         [self.mapView.gps start];
+        return;
+    }
+    if(self.mapView.gps.enabled){
+         [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
+        CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
+        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
+            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
+            [self addStartPoint:mappoint];
+        }
+    }else{
+        [self.mapView.gps start];
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc]
+                 initWithTitle:@"天地图宁波"
+                 message:@"周边查询需要你的位置信息,请开启GPS"
+                 delegate:nil cancelButtonTitle:nil
+                 otherButtonTitles:@"确定", nil];
+        [alert show];
         return;
     }
 }
@@ -76,7 +129,9 @@
     [self.mapView.gps start];
     
 }
-
+- (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
+    [self addStartPoint:mappoint];
+}
 #pragma mark -reachability
 
 -(void)reachabilityChanged:(NSNotification*)note

@@ -13,10 +13,14 @@
 #import "LCVoice.h"
 #import "QDMapLocationViewController.h"
 
-@interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,textInputViewDelegate,MessagePhotoViewDelegate>
+#define GET_POI @"http://27.223.74.180:6080/arcgis/rest/services/QD/getPOIModel/GPServer/getPOI"
+#define MAP_SERVER @"http://27.223.74.180:6080/arcgis/rest/services/QD/POIHD/MapServer/0"
+
+@interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,textInputViewDelegate,MessagePhotoViewDelegate,mapLocationDelegate,AGSQueryTaskDelegate,AGSGeoprocessorDelegate>
 @property(nonatomic,strong) LCVoice * voice;
 @property (nonatomic,strong)  UIButton *rbutton;
 @property (nonatomic,strong)  UIButton *lbutton;
+@property (nonatomic,strong) AGSGeoprocessor *agp;
 @end
 
 @implementation QDEditViewController
@@ -41,8 +45,14 @@
     self.navigationItem.rightBarButtonItem = right;
     self.navigationItem.rightBarButtonItem.enabled = NO;
     self.voice = [[LCVoice alloc] init];
+    self.agp =  [AGSGeoprocessor geoprocessorWithURL:[NSURL URLWithString:GET_POI]];
+    // set the delegate so we will be notified of delegate methods
+    self.agp.delegate = self;
+    self.agp.outputSpatialReference=[[AGSSpatialReference alloc] initWithWKID:4326 WKT:nil] ;
+    self.agp.processSpatialReference = [[AGSSpatialReference alloc] initWithWKID:4326 WKT:nil] ;
     // Do any additional setup after loading the view from its nib.
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -56,6 +66,7 @@
 
 - (void)getLocation{
     QDMapLocationViewController *mapLocationViewController = [[QDMapLocationViewController alloc] initWithNibName:@"QDMapLocationViewController" bundle:nil];
+    mapLocationViewController.delegate = self;
     [self.navigationController pushViewController:mapLocationViewController animated:YES];
 }
 
@@ -259,5 +270,58 @@
     }else{
         [_lbutton setTitle:@"手动输入" forState:UIControlStateNormal];
     }
+}
+- (void)didSelectedMapLocation:(AGSPoint *)point{
+    
+    AGSGraphic  *gra = [[AGSGraphic  alloc] initWithGeometry:point symbol:nil attributes:nil infoTemplateDelegate:nil];
+    AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
+	featureSet.features = [NSArray arrayWithObjects:gra, nil];
+	
+    //create input parameter
+	AGSGPParameterValue *param = [AGSGPParameterValue parameterWithName:@"InputPoint" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet];
+    NSArray *params=[NSArray arrayWithObjects:param,nil ];
+    [self.agp executeWithParameters:params];
+    
+//    AGSQueryTask *queryTask = [[AGSQueryTask alloc ] initWithURL:[NSURL URLWithString:GET_POI]];
+//    queryTask.delegate =self;
+//    AGSQuery *query = [AGSQuery query];
+//    query.outFields = [NSArray arrayWithObjects:@"*", nil];
+//    query.geometry = point;
+//	[queryTask executeWithQuery:query];
+}
+
+#pragma mark AGSQueryTaskDelegate
+
+//results are returned
+- (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation *)op didExecuteWithFeatureSetResult:(AGSFeatureSet *)featureSet {
+
+}
+
+//if there's an error with the query display it to the user
+- (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation *)op didFailWithError:(NSError *)error {
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+														message:[error localizedDescription]
+													   delegate:nil
+											  cancelButtonTitle:@"OK"
+											  otherButtonTitles:nil];
+	[alertView show];
+}
+
+//该函数在GP服务提交成功后响应
+- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation *)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages{
+    // 获取GP分析的结果
+    if (results!=nil && [results count]>0){
+        
+    }
+}
+
+// 获取GP结果成功后，调用该函数，将结果符号虎吼添加到graphicsLayer中
+- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation *)op didFailExecuteWithError:(NSError *)error{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+														message:[error localizedDescription]
+													   delegate:nil
+											  cancelButtonTitle:@"OK"
+											  otherButtonTitles:nil];
+	[alertView show];
 }
 @end
