@@ -56,6 +56,7 @@
         _passwordField.text = [ud objectForKey:@"USER_PASSWORD"];
         [self autoLoginIn];
     }
+    [self resignAllResponders];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -91,7 +92,7 @@
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {   //输入框位置动画加载
     CGRect curFrame=self.view.frame;
-    curFrame.origin.y -= 40;
+    curFrame.origin.y -= 90;
     [UIView animateWithDuration:0.3f animations:^{
         self.view.frame=curFrame;
     }];
@@ -101,7 +102,7 @@
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     CGRect curFrame=self.view.frame;
-    curFrame.origin.y += 40;
+    curFrame.origin.y += 90;
     [UIView animateWithDuration:0.3f animations:^{
         self.view.frame=curFrame;
     }];
@@ -211,7 +212,7 @@
 - (void)didGetPublicUserRegister:(BOOL)success{
     [SVProgressHUD dismiss];
     if(success){
-        [self.navigationController popViewControllerAnimated:YES];
+        [self showMessageWithAlert:@"用户注册成功"];
     }else{
         [self showMessageWithAlert:@"用户注册失败"];
     }
@@ -227,7 +228,7 @@
 - (void)didGetChangePassword:(BOOL)success{
     [SVProgressHUD dismiss];
     if(success){
-        [self.navigationController popViewControllerAnimated:YES];
+        [self showMessageWithAlert:@"修改密码成功"];
     }else{
         [self showMessageWithAlert:@"修改密码失败"];
     }

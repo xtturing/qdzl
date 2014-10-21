@@ -115,6 +115,7 @@
 }
 -(IBAction)edit:(id)sender{
     QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
+    editViewController.gpsPoint = self.mapView.gps.currentPoint;
     [self.navigationController pushViewController:editViewController animated:YES];
 }
 
@@ -143,8 +144,6 @@
         AGSLocalTiledLayer *localTileLayer = [AGSLocalTiledLayer localTiledLayerWithName:fileName];
         if(localTileLayer != nil){
             [self.mapView addMapLayer:localTileLayer withName:name];
-            [self zooMapToLevel:13 withCenter:[AGSPoint pointWithX:121.55629730245123 y:29.874820709509887 spatialReference:self.mapView.spatialReference]];
-            [self.mapView zoomIn:YES];
             // Do any additional setup after loading the view from its nib.
             
         }

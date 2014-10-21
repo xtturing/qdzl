@@ -49,6 +49,8 @@
     self.navigationItem.title = @"获取位置";
     UIBarButtonItem *right = [[UIBarButtonItem alloc]  initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(sendAction)];
     self.navigationItem.rightBarButtonItem = right;
+    self.navigationItem.backBarButtonItem = right;
+    self.navigationItem.leftBarButtonItem= right;
     // Do any additional setup after loading the view from its nib.
 }
 - (void)dealloc{
@@ -74,9 +76,16 @@
 - (void)sendAction{
     
     [self.navigationController popViewControllerAnimated:YES];
-    if(_delegate && [_delegate respondsToSelector:@selector(didSelectedMapLocation:)]){
-        [_delegate didSelectedMapLocation:(AGSPoint *)startGra.geometry];
+    if(startGra){
+        if(_delegate && [_delegate respondsToSelector:@selector(didSelectedMapLocation:)]){
+            [_delegate didSelectedMapLocation:(AGSPoint *)startGra.geometry];
+        }
+    }else{
+        if(_delegate && [_delegate respondsToSelector:@selector(didSelectedMapLocation:)]){
+            [_delegate didSelectedMapLocation:[self.mapView toMapPoint:self.mapView.center]];
+        }
     }
+    
 }
 
 
@@ -97,6 +106,10 @@
     [self.graphicsLayer dataChanged];
 }
 -(IBAction)gps:(id)sender{
+    [self getGPS];
+}
+
+-(void)getGPS{
     if(self.mapView.gps.enabled){
         [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
         
@@ -105,7 +118,7 @@
         return;
     }
     if(self.mapView.gps.enabled){
-         [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
+        [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
         CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
         if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
             AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
@@ -115,8 +128,8 @@
         [self.mapView.gps start];
         UIAlertView *alert;
         alert = [[UIAlertView alloc]
-                 initWithTitle:@"天地图宁波"
-                 message:@"周边查询需要你的位置信息,请开启GPS"
+                 initWithTitle:@"黄岛治理"
+                 message:@"需要你的位置信息,请开启GPS"
                  delegate:nil cancelButtonTitle:nil
                  otherButtonTitles:@"确定", nil];
         [alert show];
@@ -126,8 +139,7 @@
 #pragma mark AGSMapViewLayerDelegate methods
 
 -(void) mapViewDidLoad:(AGSMapView*)mapView {
-    [self.mapView.gps start];
-    
+    [self getGPS];
 }
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
     [self addStartPoint:mappoint];

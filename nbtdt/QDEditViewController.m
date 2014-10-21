@@ -21,6 +21,11 @@
 @property (nonatomic,strong)  UIButton *rbutton;
 @property (nonatomic,strong)  UIButton *lbutton;
 @property (nonatomic,strong) AGSGeoprocessor *agp;
+@property (nonatomic, strong) AGSQuery *query;
+@property (nonatomic, strong) AGSQueryTask *queryTask;
+@property (nonatomic,strong) NSString *mapLocationStr;
+@property (nonatomic,strong) NSString *textMessage;
+@property (nonatomic,strong) NSString *cityManagerName;
 @end
 
 @implementation QDEditViewController
@@ -50,9 +55,23 @@
     self.agp.delegate = self;
     self.agp.outputSpatialReference=[[AGSSpatialReference alloc] initWithWKID:4326 WKT:nil] ;
     self.agp.processSpatialReference = [[AGSSpatialReference alloc] initWithWKID:4326 WKT:nil] ;
+    self.queryTask= [[AGSQueryTask alloc ] initWithURL:[NSURL URLWithString:MAP_SERVER]];
+    self.queryTask.delegate =self;
+    self.query = [AGSQuery query];
+    self.query.outSpatialReference =[[AGSSpatialReference alloc] initWithWKID:4326 WKT:nil] ;
+    self.query.outFields = [NSArray arrayWithObjects:@"*", nil];
+    if(_gpsPoint){
+        [self getMapLocationWithPoint:_gpsPoint];
+    }else{
+        [self performSelector:@selector(getLocation) withObject:nil afterDelay:1.0f];
+    }
+    _cityManagerName = @"城市管理";
     // Do any additional setup after loading the view from its nib.
 }
-
+- (void)dealloc{
+    self.queryTask.delegate = nil;
+    self.agp.delegate =  nil;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -130,7 +149,7 @@
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
     cell.detailTextLabel.minimumScaleFactor = 0.5;
     if(indexPath.section == 0){
-        cell.textLabel.text = @"事件位于青岛胶南市海滨街道办事处 下沟附近正西方向1210米";
+        cell.textLabel.text = self.mapLocationStr;
         cell.textLabel.textColor = [UIColor lightGrayColor];
         cell.detailTextLabel.text = @"";
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -146,7 +165,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
         
     }else if (indexPath.section == 1){
-        cell.textLabel.text = @"城市管理";
+        cell.textLabel.text = _cityManagerName;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
     }else if (indexPath.section == 2){
@@ -178,7 +197,6 @@
         [_rbutton setImage:[UIImage imageNamed:@"qd_mic"] forState:UIControlStateNormal];
         [_rbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 0, _lbutton.titleLabel.frame.size.width)];
         [_rbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, -_lbutton.imageView.frame.size.width+50, 0, 5)];
-        [_rbutton addTarget:self action:@selector(getLocation) forControlEvents:UIControlEventTouchUpInside];
         _rbutton.titleLabel.numberOfLines = 1;
         _rbutton.titleLabel.adjustsFontSizeToFitWidth = YES;
         _rbutton.titleLabel.minimumScaleFactor = 0.5;
@@ -220,6 +238,8 @@
 - (void)didSelectedCityManager:(NSString *)cityManagerName{
      UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     cell.textLabel.text = cityManagerName;
+    _cityManagerName = cityManagerName;
+    [self canUpload];
 }
 
 //实现代理方法
@@ -260,19 +280,24 @@
 - (void) startTextInput{
     textInputViewController *tableViewController = [[textInputViewController alloc] init];
     tableViewController.delegate = self;
-    tableViewController.textStr = @"";
+    tableViewController.textStr = self.textMessage;
     [self.navigationController  pushViewController:tableViewController animated:YES];
 }
 
 - (void)didFinishTextInputView:(NSString *)textStr{
     if(textStr.length > 0){
+        _textMessage = textStr;
+        [self canUpload];
         [_lbutton setTitle:textStr forState:UIControlStateNormal];
     }else{
         [_lbutton setTitle:@"手动输入" forState:UIControlStateNormal];
     }
 }
 - (void)didSelectedMapLocation:(AGSPoint *)point{
-    
+    [self getMapLocationWithPoint:point];
+}
+
+- (void)getMapLocationWithPoint:(AGSPoint *)point{
     AGSGraphic  *gra = [[AGSGraphic  alloc] initWithGeometry:point symbol:nil attributes:nil infoTemplateDelegate:nil];
     AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
 	featureSet.features = [NSArray arrayWithObjects:gra, nil];
@@ -281,46 +306,74 @@
 	AGSGPParameterValue *param = [AGSGPParameterValue parameterWithName:@"InputPoint" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet];
     NSArray *params=[NSArray arrayWithObjects:param,nil ];
     [self.agp executeWithParameters:params];
-    
-//    AGSQueryTask *queryTask = [[AGSQueryTask alloc ] initWithURL:[NSURL URLWithString:GET_POI]];
-//    queryTask.delegate =self;
-//    AGSQuery *query = [AGSQuery query];
-//    query.outFields = [NSArray arrayWithObjects:@"*", nil];
-//    query.geometry = point;
-//	[queryTask executeWithQuery:query];
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+}
+
+- (void)canUpload{
+    if(self.textMessage.length > 0 && self.mapLocationStr.length > 0 && self.cityManagerName){
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }else{
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
 }
 
 #pragma mark AGSQueryTaskDelegate
 
 //results are returned
 - (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation *)op didExecuteWithFeatureSetResult:(AGSFeatureSet *)featureSet {
-
+    [SVProgressHUD dismiss];
+    if(featureSet.features != nil && [featureSet.features count] > 0){
+        AGSGraphic *graphic = [featureSet.features objectAtIndex:0];
+        NSMutableDictionary *dic = graphic.attributes;
+        NSString *mc = [dic objectForKey:@"MC"];
+        self.mapLocationStr = [NSString stringWithFormat:@"上报事件位于%@附近%@",mc,self.mapLocationStr];
+        [self canUpload];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 //if there's an error with the query display it to the user
 - (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation *)op didFailWithError:(NSError *)error {
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+    [SVProgressHUD dismiss];
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
 														message:[error localizedDescription]
 													   delegate:nil
-											  cancelButtonTitle:@"OK"
+											  cancelButtonTitle:@"确定"
 											  otherButtonTitles:nil];
 	[alertView show];
 }
 
+
 //该函数在GP服务提交成功后响应
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation *)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages{
     // 获取GP分析的结果
+    [SVProgressHUD dismiss];
     if (results!=nil && [results count]>0){
+        AGSGPParameterValue *result = [results objectAtIndex:0];
+		AGSFeatureSet *fs = result.value;
+        if(fs.features != nil && [fs.features count] > 0){
+            AGSGraphic *graphic = [fs.features objectAtIndex:0];
+            NSMutableDictionary *dic = graphic.attributes;
+            NSString *angle = [dic objectForKey:@"NEAR_ANGLE"];
+            NSString *dist = [dic objectForKey:@"NEAR_DIST"];
+            NSString *fid = [dic objectForKey:@"NEAR_FID"];
+            
+            self.query.objectIds = [NSArray arrayWithObjects:fid, nil];
+            [self.queryTask executeWithQuery:self.query];
+            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+            self.mapLocationStr = [NSString stringWithFormat:@"%d度方向,距离大约%0.2f米处",[angle intValue],[dist floatValue]*1000];
+        }
         
     }
 }
 
 // 获取GP结果成功后，调用该函数，将结果符号虎吼添加到graphicsLayer中
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation *)op didFailExecuteWithError:(NSError *)error{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+    [SVProgressHUD dismiss];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
 														message:[error localizedDescription]
 													   delegate:nil
-											  cancelButtonTitle:@"OK"
+											  cancelButtonTitle:@"确定"
 											  otherButtonTitles:nil];
 	[alertView show];
 }
