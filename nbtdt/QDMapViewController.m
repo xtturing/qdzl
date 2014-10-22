@@ -12,11 +12,14 @@
 #import "QDSearchViewController.h"
 #import "QDSettingViewController.h"
 #import "QDEditViewController.h"
+#import "CLLocation+Sino.h"
 
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define BASE_MAP_URL @"http://27.223.74.180:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
-@interface QDMapViewController ()<UISearchBarDelegate>
+@interface QDMapViewController ()<UISearchBarDelegate>{
+    AGSGraphic * startGra;
+}
 
 @property(nonatomic, strong) Reachability *reach;
 
@@ -49,6 +52,9 @@
     [self updateInterfaceWithReachability:_reach];
     self.mapView.layerDelegate = self;
     self.mapView.calloutDelegate=self;
+    self.mapView.touchDelegate = self;
+    self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
+	[self.mapView addMapLayer:self.graphicsLayer withName:@"graphicsLayer"];
     self.title = @"返回";
     
     self.navigationItem.title = @"黄岛治理";
@@ -93,9 +99,17 @@
 
 -(IBAction)gps:(id)sender{
     if(self.mapView.gps.enabled){
-        [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
+        [self gpsLocation];
     }else {
         [self.mapView.gps start];
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc]
+                 initWithTitle:@"黄岛治理"
+                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
+                 delegate:nil cancelButtonTitle:nil
+                 otherButtonTitles:@"确定", nil];
+        [alert show];
+
         return;
     }
 }
@@ -115,7 +129,7 @@
 }
 -(IBAction)edit:(id)sender{
     QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
-    editViewController.gpsPoint = self.mapView.gps.currentPoint;
+    editViewController.gpsPoint =(AGSPoint *)startGra.geometry;
     [self.navigationController pushViewController:editViewController animated:YES];
 }
 
@@ -177,11 +191,34 @@
         return;
     }
 }
-
+- (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
+    [self addStartPoint:mappoint];
+}
 - (void)gpsLocation{
     [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
+    [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
+    CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
+    if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
+        AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
+        [self addStartPoint:mappoint];
+    }
 }
-
+-(void)addStartPoint:(AGSPoint *)mappoint{
+    if(startGra){
+        [self.graphicsLayer removeGraphic:startGra];
+        startGra = nil;
+    }
+    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"qidian"];
+    dian.size = CGSizeMake(32,47);
+    if(mappoint.x == 0 || mappoint.y == 0 ){
+        return;
+    }
+    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil infoTemplateDelegate:nil];
+    dian.yoffset=24;
+    startGra.symbol = dian;
+    [self.graphicsLayer addGraphic:startGra];
+    [self.graphicsLayer dataChanged];
+}
 #pragma mark -reachability
 
 -(void)reachabilityChanged:(NSNotification*)note

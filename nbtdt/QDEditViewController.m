@@ -310,7 +310,7 @@
 }
 
 - (void)canUpload{
-    if(self.textMessage.length > 0 && self.mapLocationStr.length > 0 && self.cityManagerName){
+    if(self.mapLocationStr.length > 0 && self.cityManagerName){
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }else{
         self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -326,7 +326,7 @@
         AGSGraphic *graphic = [featureSet.features objectAtIndex:0];
         NSMutableDictionary *dic = graphic.attributes;
         NSString *mc = [dic objectForKey:@"MC"];
-        self.mapLocationStr = [NSString stringWithFormat:@"上报事件位于%@附近%@",mc,self.mapLocationStr];
+        self.mapLocationStr = [NSString stringWithFormat:@"上报事件位于:%@附近,%@",mc,self.mapLocationStr];
         [self canUpload];
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -361,7 +361,35 @@
             self.query.objectIds = [NSArray arrayWithObjects:fid, nil];
             [self.queryTask executeWithQuery:self.query];
             [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-            self.mapLocationStr = [NSString stringWithFormat:@"%d度方向,距离大约%0.2f米处",[angle intValue],[dist floatValue]*1000];
+            NSString *direction= nil;
+            if ([angle intValue] >= -20 && [angle intValue] < 20) {
+                direction = @"正西方向";
+            }
+            if ([angle intValue] >= 20 && [angle intValue] < 70) {
+                direction = @"西南方向";
+            }
+            if ([angle intValue] >= 70 && [angle intValue] < 110) {
+                direction = @"正南方向";
+            }
+            if ([angle intValue] >= 110 && [angle intValue] < 160) {
+                direction = @"西南方向";
+            }
+            if ([angle intValue] >= 160 && [angle intValue] <= 180) {
+                direction = @"正东方向";
+            }
+            if ([angle intValue] >= -70 && [angle intValue] < -20) {
+                direction = @"西北方向";
+            }
+            if ([angle intValue] >= -110 && [angle intValue] < -70) {
+                direction = @"正北方向";
+            }
+            if ([angle intValue] >= -160 && [angle intValue] < -110) {
+                direction = @"东北方向";
+            }
+            if ([angle intValue] >= -180 && [angle intValue] < -160) {
+                direction = @"正东方向";
+            }
+            self.mapLocationStr = [NSString stringWithFormat:@"%@,距离大约%0.f米处",direction,[dist floatValue]*111000];
         }
         
     }

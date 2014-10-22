@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QDMapViewController : UIViewController<AGSMapViewLayerDelegate,AGSMapViewCalloutDelegate>
+@interface QDMapViewController : UIViewController<AGSMapViewLayerDelegate,AGSMapViewCalloutDelegate,AGSMapViewTouchDelegate>
 
 @property (nonatomic, strong) IBOutlet AGSMapView *mapView;
 @property (nonatomic, strong) IBOutlet UIButton *editBtn;
+@property (nonatomic, strong) AGSGraphicsLayer *graphicsLayer;
 
 -(IBAction)gps:(id)sender;
 -(IBAction)zoomIn:(id)sender;

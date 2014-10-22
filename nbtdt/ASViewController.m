@@ -149,11 +149,15 @@
 }
 
 - (void)autoLoginIn{
-    [self resignAllResponders];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letPublicUserLogin:_usernameField.text password:[MyMD5 md5:_passwordField.text]];
-    });
+    if(_usernameField.text.length > 0 && _passwordField.text.length > 0){
+        [self resignAllResponders];
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[dataHttpManager getInstance] letPublicUserLogin:_usernameField.text password:[MyMD5 md5:_passwordField.text]];
+        });
+    }else{
+        [self showMessageWithAlert:@"请输入用户名密码！"];
+    }
 }
 
 - (IBAction)letRegister:(id)sender{
@@ -202,11 +206,16 @@
     [view show];
 }
 - (IBAction)letRegisterIn:(id)sender{
-    [self resignAllResponders];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letPublicUserRegister:self.usernameField.text password:[MyMD5 md5:self.passwordField.text]];
-    });
+    if(_usernameField.text.length > 0 && _passwordField.text.length > 0){
+        [self resignAllResponders];
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[dataHttpManager getInstance] letPublicUserRegister:self.usernameField.text password:[MyMD5 md5:self.passwordField.text]];
+        });
+        
+    }else{
+        [self showMessageWithAlert:@"请输入注册用户名密码！"];
+    }
 }
 
 - (void)didGetPublicUserRegister:(BOOL)success{
@@ -218,11 +227,16 @@
     }
 }
 - (IBAction)letPasswordIn:(id)sender{
-    [self resignAllResponders];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[dataHttpManager getInstance] letChangePassword:self.usernameField.text password:[MyMD5 md5:self.passwordField.text]];
-    });
+    if(_usernameField.text.length > 0 && _passwordField.text.length > 0){
+        [self resignAllResponders];
+        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[dataHttpManager getInstance] letChangePassword:self.usernameField.text password:[MyMD5 md5:self.passwordField.text]];
+        });
+    }else{
+        [self showMessageWithAlert:@"请输入修改用户名新密码！"];
+    }
+    
 }
 
 - (void)didGetChangePassword:(BOOL)success{
