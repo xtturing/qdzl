@@ -40,6 +40,7 @@
 		410E856D19E58E2400A4D02C /* login_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410E856719E58E2400A4D02C /* login_button@2x.png */; };
 		410E857119E58E2E00A4D02C /* ASViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410E856F19E58E2E00A4D02C /* ASViewController.m */; };
 		410E857219E58E2E00A4D02C /* ASViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410E857019E58E2E00A4D02C /* ASViewController.xib */; };
+		4111017E19F802C00045E029 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 4111017D19F802C00045E029 /* XMLDictionary.m */; };
 		41115FE919D1BFB100601BC1 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 41115FE819D1BFB100601BC1 /* UIColor-Expanded.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41115FF119D1C7EF00601BC1 /* UINavigationBar+customBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 41115FF019D1C7EF00601BC1 /* UINavigationBar+customBar.m */; };
 		4119869E19D84BFC00507025 /* QDSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4119869C19D84BFC00507025 /* QDSearchViewController.m */; };
@@ -231,6 +232,8 @@
 		410E856E19E58E2E00A4D02C /* ASViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASViewController.h; sourceTree = "<group>"; };
 		410E856F19E58E2E00A4D02C /* ASViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASViewController.m; sourceTree = "<group>"; };
 		410E857019E58E2E00A4D02C /* ASViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASViewController.xib; sourceTree = "<group>"; };
+		4111017C19F802C00045E029 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		4111017D19F802C00045E029 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		41115FE719D1BFB100601BC1 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
 		41115FE819D1BFB100601BC1 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		41115FEF19D1C7EF00601BC1 /* UINavigationBar+customBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+customBar.h"; sourceTree = "<group>"; };
@@ -581,6 +584,15 @@
 			name = ASTextField;
 			sourceTree = "<group>";
 		};
+		4111017B19F8029C0045E029 /* XMLDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				4111017C19F802C00045E029 /* XMLDictionary.h */,
+				4111017D19F802C00045E029 /* XMLDictionary.m */,
+			);
+			name = XMLDictionary;
+			sourceTree = "<group>";
+		};
 		41115FE619D1BF9600601BC1 /* categray */ = {
 			isa = PBXGroup;
 			children = (
@@ -727,6 +739,7 @@
 		4148237519AA301100442FA7 /* KIT */ = {
 			isa = PBXGroup;
 			children = (
+				4111017B19F8029C0045E029 /* XMLDictionary */,
 				4106955F19F00FBF00E45E1E /* minizip */,
 				410E855619E58DF300A4D02C /* ASTextField */,
 				410E855219E58CC100A4D02C /* MD5 */,
@@ -1152,6 +1165,7 @@
 				41B76E7A19B37C0600C4F1DB /* DowningCell.m in Sources */,
 				4107C2C919F3F186000C092D /* QDMapLocationViewController.m in Sources */,
 				41BBA1C319A78B3300C0A328 /* ASIInputStream.m in Sources */,
+				4111017E19F802C00045E029 /* XMLDictionary.m in Sources */,
 				41199DE019E4527D00C50382 /* MessagePhotoMenuItem.m in Sources */,
 				41BBA1D519A78B3300C0A328 /* GoogleMapTileOperation.m in Sources */,
 				41BBA1B419A78B3300C0A328 /* AFImageRequestOperation.m in Sources */,

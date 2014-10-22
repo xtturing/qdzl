@@ -132,7 +132,7 @@
 #pragma mark AGSMapViewLayerDelegate methods
 
 -(void) mapViewDidLoad:(AGSMapView*)mapView {
-    [self getGPS];
+    [self performSelector:@selector(getGPS) withObject:nil afterDelay:1.0f];
 }
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
     [self addStartPoint:mappoint];

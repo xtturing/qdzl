@@ -12,6 +12,7 @@
 #import "MessagePhotoView.h"
 #import "LCVoice.h"
 #import "QDMapLocationViewController.h"
+#import "XMLDictionary.h"
 
 #define GET_POI @"http://27.223.74.180:6080/arcgis/rest/services/QD/getPOIModel/GPServer/getPOI"
 #define MAP_SERVER @"http://27.223.74.180:6080/arcgis/rest/services/QD/POIHD/MapServer/0"
@@ -66,6 +67,8 @@
         [self performSelector:@selector(getLocation) withObject:nil afterDelay:1.0f];
     }
     _cityManagerName = @"城市管理";
+    _textMessage = @"";
+    _mapLocationStr =@"";
     // Do any additional setup after loading the view from its nib.
 }
 - (void)dealloc{
@@ -80,6 +83,61 @@
 }
 
 - (void)sendAction{
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if([self creatXml]){
+            [self saveHistory];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showMessageWithAlert:@"生成上报事件XML异常"];
+            });
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+    });
+    
+    
+}
+
+
+- (BOOL)creatXml{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:@"1411442841676" forKey:@"UID"];
+    [dic setObject:[ud objectForKey:@"USER_NAME"] forKey:@"YHM"];
+    [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
+    [dic setObject:self.cityManagerName forKey:@"WTLX"];
+    [dic setObject:self.textMessage forKey:@"SJMS"];
+    [dic setObject:@"" forKey:@"SSGQ"];
+    [dic setObject:@"" forKey:@"FJQY"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"X"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"Y"];
+    NSMutableDictionary *row = [NSMutableDictionary dictionaryWithCapacity:0];
+    [row setObject:dic forKey:@"ROW"];
+    NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:0];
+    [data setObject:row forKey:@"ROWDATA"];
+    NSString *xmlStr = [NSString stringWithFormat:@"%@\n%@",@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",[data XMLString]];
+    NSLog(@"%@",xmlStr);
+    //创建文件管理器
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //获取document路径,括号中属性为当前应用程序独享
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    //定义记录文件全名以及路径的字符串filePath
+    NSString *filePath = [documentDirectory stringByAppendingPathComponent:@"Data.xml"];
+    //查找文件，如果不存在，就创建一个文件
+    if (![fileManager fileExistsAtPath:filePath]) {
+        [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+    }
+    NSError *error;
+    if([xmlStr writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error]){
+        return YES;
+    }
+    return NO;
+}
+
+- (void)saveHistory{
     
 }
 
@@ -109,9 +167,9 @@
     if(section == 0){
         return @"事件位置描述:";
     }else if (section == 1){
-        return @"问题类型:";
+        return @"事件类型:";
     }else if (section == 2){
-        return @"问题描述:";
+        return @"事件描述:";
     }else{
         return @"图片上传:";
     }
@@ -252,7 +310,7 @@
 }
 -(void) recordStart
 {
-    [self.voice startRecordWithPath:[NSString stringWithFormat:@"%@/Documents/MySound.caf", NSHomeDirectory()]];
+    [self.voice startRecordWithPath:[NSString stringWithFormat:@"%@/Documents/Sound.caf", NSHomeDirectory()]];
 }
 
 -(void) recordEnd
@@ -294,6 +352,7 @@
     }
 }
 - (void)didSelectedMapLocation:(AGSPoint *)point{
+    _gpsPoint = point;
     [self getMapLocationWithPoint:point];
 }
 
@@ -310,7 +369,7 @@
 }
 
 - (void)canUpload{
-    if(self.mapLocationStr.length > 0 && self.cityManagerName){
+    if(self.textMessage.length > 0 &&self.mapLocationStr.length > 0 && self.cityManagerName){
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }else{
         self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -404,5 +463,23 @@
 											  cancelButtonTitle:@"确定"
 											  otherButtonTitles:nil];
 	[alertView show];
+}
+- (void)showMessageWithAlert:(NSString *)message{
+    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    
+    [view show];
+}
+- (NSString *)getUniqueStrByUUID
+{
+    CFUUIDRef uuidObj = CFUUIDCreate(nil);//create a new UUID
+    
+    //get the string representation of the UUID
+    
+    NSString *uuidString = (__bridge_transfer NSString *)CFUUIDCreateString(nil, uuidObj);
+    
+    CFRelease(uuidObj);
+    
+    return uuidString;
+    
 }
 @end

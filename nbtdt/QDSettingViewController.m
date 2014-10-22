@@ -102,7 +102,8 @@
     }else{
         if(indexPath.row == 0){
             cell.textLabel.text = @"离线地图";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            UISwitch *switchBtn = [[UISwitch alloc] init];
+            cell.accessoryView = switchBtn;
         }else{
             cell.textLabel.text = @"地图显示事件上报记录";
             UISwitch *switchBtn = [[UISwitch alloc] init];
