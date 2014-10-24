@@ -13,6 +13,7 @@
 #import "LCVoice.h"
 #import "QDMapLocationViewController.h"
 #import "XMLDictionary.h"
+#import "ZipArchive.h"
 
 #define GET_POI @"http://27.223.74.180:6080/arcgis/rest/services/QD/getPOIModel/GPServer/getPOI"
 #define MAP_SERVER @"http://27.223.74.180:6080/arcgis/rest/services/QD/POIHD/MapServer/0"
@@ -27,6 +28,9 @@
 @property (nonatomic,strong) NSString *mapLocationStr;
 @property (nonatomic,strong) NSString *textMessage;
 @property (nonatomic,strong) NSString *cityManagerName;
+@property (nonatomic,strong) NSString *citytype;
+@property (nonatomic,strong) NSString *uuidString;
+@property (nonatomic,strong) MessagePhotoView *photoView;
 @end
 
 @implementation QDEditViewController
@@ -43,6 +47,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //创建文件管理器
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        //获取document路径,括号中属性为当前应用程序独享
+        NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
+        NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+        [fileManager removeItemAtPath:documentDirectory error:nil];
+    });
+    self.uuidString = [self getUniqueStrByUUID];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
@@ -89,8 +102,27 @@
             [self saveHistory];
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
+                 [SVProgressHUD dismiss];
                 [self showMessageWithAlert:@"生成上报事件XML异常"];
             });
+            return ;
+        }
+        if([self saveImages]){
+            if([self saveInZip]){
+                [self sendSave];
+            }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                     [SVProgressHUD dismiss];
+                    [self showMessageWithAlert:@"压缩上报事件文件异常"];
+                });
+                return ;
+            }
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                 [SVProgressHUD dismiss];
+                [self showMessageWithAlert:@"生成上报事件图片异常"];
+            });
+            return ;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
@@ -100,11 +132,77 @@
     
 }
 
+- (BOOL)saveImages{
+    //创建文件管理器
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //获取document路径,括号中属性为当前应用程序独享
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    //定义记录文件全名以及路径的字符串filePath
+    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",self.uuidString]];
+    BOOL isDir = NO;
+    BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+        [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    for(int i=0;i<_photoView.photoMenuItems.count;i++){
+        UIImage *tempImg= nil;
+        if([_photoView.photoMenuItems[i] isKindOfClass:[ALAsset class]]){
+            ALAsset *asset=_photoView.photoMenuItems[i];
+            tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+            NSData *data;
+            data = UIImageJPEGRepresentation(tempImg, 0.0);
+            NSString *filePath = [NSString stringWithFormat:@"%@/%@.JPG",imageDir,[NSString stringWithFormat:@"%.lf",[[NSDate date] timeIntervalSince1970]*1000]];
+            //查找文件，如果不存在，就创建一个文件
+            if (![fileManager fileExistsAtPath:filePath]) {
+                [fileManager createFileAtPath:filePath contents:data attributes:nil];
+            }
+        }else{
+            return NO;
+        }
+    }
+    return YES;
+}
+- (BOOL)saveInZip{
+    //创建文件管理器
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //获取document路径,括号中属性为当前应用程序独享
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    //定义记录文件全名以及路径的字符串filePath
+    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",self.uuidString]];
+    BOOL isDir = NO;
+    BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+        return NO;
+    }
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@.zip",documentDirectory,self.uuidString];
+    ZipArchive *za = [[ZipArchive alloc] init];
+    [za CreateZipFile2:filePath];
+    NSDirectoryEnumerator *direnum = [fileManager enumeratorAtPath:imageDir];
+    NSString *filename ;
+    while (filename = [direnum nextObject]) {
+         [za addFileToZip:[NSString stringWithFormat:@"%@/%@",imageDir,filename] newname:filename];
+    }
+    if([za CloseZipFile2]){
+        return YES;
+    }
+    return NO;
+}
+- (BOOL)sendSave{
+    return YES;
+}
+
+- (BOOL)saveHistory{
+    return YES;
+}
 
 - (BOOL)creatXml{
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    [dic setObject:@"1411442841676" forKey:@"UID"];
+    [dic setObject:[NSString stringWithFormat:@"%.lf",[[NSDate date] timeIntervalSince1970]*1000] forKey:@"UID"];
     [dic setObject:[ud objectForKey:@"USER_NAME"] forKey:@"YHM"];
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
@@ -125,7 +223,14 @@
     NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
     NSString *documentDirectory = [directoryPaths objectAtIndex:0];
     //定义记录文件全名以及路径的字符串filePath
-    NSString *filePath = [documentDirectory stringByAppendingPathComponent:@"Data.xml"];
+    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",self.uuidString]];
+    BOOL isDir = NO;
+    BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+        [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    NSString *filePath = [NSString stringWithFormat:@"%@/Data.xml",imageDir];
     //查找文件，如果不存在，就创建一个文件
     if (![fileManager fileExistsAtPath:filePath]) {
         [fileManager createFileAtPath:filePath contents:nil attributes:nil];
@@ -137,9 +242,6 @@
     return NO;
 }
 
-- (void)saveHistory{
-    
-}
 
 - (void)getLocation{
     QDMapLocationViewController *mapLocationViewController = [[QDMapLocationViewController alloc] initWithNibName:@"QDMapLocationViewController" bundle:nil];
@@ -265,10 +367,11 @@
         cell.accessoryView = view;
         cell.accessoryType = UITableViewCellAccessoryNone;
     }else{
-        MessagePhotoView *photoView = [[MessagePhotoView alloc]initWithFrame:CGRectMake(0.0f,0.0f,CGRectGetWidth(self.view.frame), 166)];
-        photoView.delegate =self;
-        
-        cell.accessoryView = photoView;
+        if(!_photoView){
+            _photoView= [[MessagePhotoView alloc]initWithFrame:CGRectMake(0.0f,0.0f,CGRectGetWidth(self.view.frame), 166)];
+            _photoView.delegate =self;
+        }
+        cell.accessoryView = _photoView;
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
@@ -310,7 +413,16 @@
 }
 -(void) recordStart
 {
-    [self.voice startRecordWithPath:[NSString stringWithFormat:@"%@/Documents/Sound.caf", NSHomeDirectory()]];
+    //创建文件管理器
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir = NO;
+    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),self.uuidString];
+    BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+        [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    [self.voice startRecordWithPath:[NSString stringWithFormat:@"%@/Sound.caf", imageDir]];
 }
 
 -(void) recordEnd
