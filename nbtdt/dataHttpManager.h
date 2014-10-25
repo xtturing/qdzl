@@ -11,6 +11,8 @@
 #import "NSStringAdditions.h"
 
 #define HTTP_LOGIN_URL              @"http://27.223.74.180:8080/esys/plugin/urbanadmin"
+#define HTTP_POSTEVENT_URL          @"http://27.223.74.180:8080/esys/plugin/urbanadmin/publicUserSubmitEvent.htm"
+
 
 #define REQUEST_TYPE          @"requestType"
 
@@ -18,6 +20,7 @@ typedef enum {
     AAPublicUserRegister = 0,
     AAPublicUserLogin,
     AAChangePassword,
+    AAPostEvent,
     //继续添加
     
 }DataRequestType;
@@ -37,6 +40,8 @@ typedef enum {
 - (void)didGetPublicUserLogin:(BOOL)success;
 
 - (void)didGetChangePassword:(BOOL)success;
+
+- (void)didPostEvent:(BOOL)success;
 
 //继续添加
 @end
@@ -62,6 +67,8 @@ typedef enum {
 - (void)letPublicUserLogin:(NSString *)userName password:(NSString *)pwd;
 
 - (void)letChangePassword:(NSString *)userName password:(NSString *)pwd;
+
+- (void)letPostEvent:(NSString *)filePath fileName:(NSString *)fileName;
 
 //继续添加
 @end

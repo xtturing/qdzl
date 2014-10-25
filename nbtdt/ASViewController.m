@@ -193,7 +193,7 @@
 
 - (void)didGetFailed{
     [SVProgressHUD dismiss];
-    [self showMessageWithAlert:@"发生了网络异常"];
+    [self showMessageWithAlert:@"非常抱歉，发生了网络异常！"];
 }
 
 - (void)resignAllResponders{

@@ -43,9 +43,9 @@
     }
     self.navigationItem.title = @"离线地图";
     
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"下载管理" style:UIBarButtonItemStylePlain target:self action:@selector(downloadManager)];
-    self.navigationItem.rightBarButtonItem = right;
-    self.navigationItem.rightBarButtonItem.enabled = YES;
+//    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"下载管理" style:UIBarButtonItemStylePlain target:self action:@selector(downloadManager)];
+//    self.navigationItem.rightBarButtonItem = right;
+//    self.navigationItem.rightBarButtonItem.enabled = YES;
     self.tpkList = [[NSMutableDictionary alloc] initWithCapacity:0];
     NBTpk *tpk = [[NBTpk alloc] init];
     tpk.name = @"HDZZ.tpk";

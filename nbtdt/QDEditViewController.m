@@ -14,11 +14,12 @@
 #import "QDMapLocationViewController.h"
 #import "XMLDictionary.h"
 #import "ZipArchive.h"
+#import "dataHttpManager.h"
 
 #define GET_POI @"http://27.223.74.180:6080/arcgis/rest/services/QD/getPOIModel/GPServer/getPOI"
 #define MAP_SERVER @"http://27.223.74.180:6080/arcgis/rest/services/QD/POIHD/MapServer/0"
 
-@interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,textInputViewDelegate,MessagePhotoViewDelegate,mapLocationDelegate,AGSQueryTaskDelegate,AGSGeoprocessorDelegate>
+@interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,textInputViewDelegate,MessagePhotoViewDelegate,mapLocationDelegate,AGSQueryTaskDelegate,AGSGeoprocessorDelegate,dataHttpDelegate>
 @property(nonatomic,strong) LCVoice * voice;
 @property (nonatomic,strong)  UIButton *rbutton;
 @property (nonatomic,strong)  UIButton *lbutton;
@@ -95,14 +96,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [dataHttpManager getInstance].delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [dataHttpManager getInstance].delegate = nil;
+}
+
 - (void)sendAction{
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        if([self creatXml]){
-            [self saveHistory];
-        }else{
+        if(![self creatXml]){
             dispatch_async(dispatch_get_main_queue(), ^{
-                 [SVProgressHUD dismiss];
+                [SVProgressHUD dismiss];
                 [self showMessageWithAlert:@"生成上报事件XML异常"];
             });
             return ;
@@ -112,7 +121,7 @@
                 [self sendSave];
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [SVProgressHUD dismiss];
+                    [SVProgressHUD dismiss];
                     [self showMessageWithAlert:@"压缩上报事件文件异常"];
                 });
                 return ;
@@ -124,9 +133,6 @@
             });
             return ;
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD dismiss];
-        });
     });
     
     
@@ -192,17 +198,25 @@
     return NO;
 }
 - (BOOL)sendSave{
-    return YES;
-}
-
-- (BOOL)saveHistory{
-    return YES;
+    //创建文件管理器
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //获取document路径,括号中属性为当前应用程序独享
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@.zip",documentDirectory,self.uuidString];
+    BOOL existed = [fileManager fileExistsAtPath:filePath];
+    if(existed){
+        [[dataHttpManager getInstance] letPostEvent:filePath fileName:[NSString stringWithFormat:@"%@.zip",self.uuidString]];
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 - (BOOL)creatXml{
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
-    [dic setObject:[NSString stringWithFormat:@"%.lf",[[NSDate date] timeIntervalSince1970]*1000] forKey:@"UID"];
+    [dic setObject:self.uuidString forKey:@"UID"];
     [dic setObject:[ud objectForKey:@"USER_NAME"] forKey:@"YHM"];
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
@@ -242,6 +256,27 @@
     return NO;
 }
 
+- (void)saveHistory{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
+    [dic setObject:self.uuidString forKey:@"UID"];
+    [dic setObject:[ud objectForKey:@"USER_NAME"] forKey:@"YHM"];
+    [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
+    [dic setObject:self.cityManagerName forKey:@"WTLX"];
+    [dic setObject:self.textMessage forKey:@"SJMS"];
+    [dic setObject:@"" forKey:@"SSGQ"];
+    [dic setObject:@"" forKey:@"FJQY"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"X"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"Y"];
+    [ud setObject:dic forKey:self.uuidString];
+    NSMutableArray *uids = [ud objectForKey:@"UID"];
+    if(!uids){
+        uids = [NSMutableArray arrayWithCapacity:0];
+    }
+    [uids addObject:self.uuidString];
+    [ud setObject:uids forKey:@"UID"];
+    [ud synchronize];
+}
 
 - (void)getLocation{
     QDMapLocationViewController *mapLocationViewController = [[QDMapLocationViewController alloc] initWithNibName:@"QDMapLocationViewController" bundle:nil];
@@ -583,15 +618,25 @@
 }
 - (NSString *)getUniqueStrByUUID
 {
-    CFUUIDRef uuidObj = CFUUIDCreate(nil);//create a new UUID
+    return [NSString stringWithFormat:@"%.lf",[[NSDate date] timeIntervalSince1970]*1000];
     
-    //get the string representation of the UUID
-    
-    NSString *uuidString = (__bridge_transfer NSString *)CFUUIDCreateString(nil, uuidObj);
-    
-    CFRelease(uuidObj);
-    
-    return uuidString;
+}
+
+#pragma -mark dataManagerDelegate
+
+- (void)didPostEvent:(BOOL)success{
+    [SVProgressHUD dismiss];
+    if(success){
+        [self saveHistory];
+        [self showMessageWithAlert:@"非常感谢，事件上报成功！我们会尽快处理！"];
+    }else{
+        [self showMessageWithAlert:@"非常抱歉，事件上报失败！"];
+    }
+}
+
+- (void)didGetFailed{
+    [SVProgressHUD dismiss];
+    [self showMessageWithAlert:@"非常抱歉，发生了网络异常！"];
     
 }
 @end

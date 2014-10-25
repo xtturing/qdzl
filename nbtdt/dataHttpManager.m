@@ -122,40 +122,20 @@ static dataHttpManager * instance=nil;
     [self setGetUserInfo:request withRequestType:AAChangePassword];
     [_requestQueue addOperation:request];
 }
-//-(void)letDoHttpTypeQuery{
-//    NSURL  *url = [NSURL URLWithString:HTTP_LOGIN_URL];
-//    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
-//    NSLog(@"url=%@",url);
-//    [request setTimeOutSeconds:TIMEOUT];
-//    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-//    [request setResponseEncoding:NSUTF8StringEncoding];
-//    [self setGetUserInfo:request withRequestType:AAGetSearchList];
-//    [_requestQueue addOperation:request];
-//}
 
-
-//- (void)letDoPostErrorWithMessage:(NSString *)message plottingScale:(NSString *)plottingScale point:(NSString *)point{
-//    NSString *m = [NSString stringWithFormat:@"%@",message];
-//    NSString *s = [NSString stringWithFormat:@"%@",plottingScale];
-//    NSString *p = [NSString stringWithFormat:@"%@",point];
-//    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_LOGIN_URL];
-//    NSURL  *url = [NSURL URLWithString:baseUrl];
-//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//    [request setPostValue:@"admin" forKey:@"errorCorrector"];
-//    [request setPostValue:s forKey:@"plottingScale"];
-//    [request setPostValue:m forKey:@"errorCorrectInfo"];
-//    [request setPostValue:@"0" forKey:@"errorcoreectObject"];
-//    [request setPostValue:@"" forKey:@"telnum"];
-//    [request setPostValue:p forKey:@"point"];
-//    [request setPostValue:@"1" forKey:@"region"];
-//    [request setTimeOutSeconds:TIMEOUT];
-//    [request setDelegate:self];
-//    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-//    [request setResponseEncoding:NSUTF8StringEncoding];
-//    NSLog(@"url=%@",url);
-//    [self setPostUserInfo:request withRequestType:AAGetSearchList];
-//    [request startAsynchronous];
-//}
+- (void)letPostEvent:(NSString *)filePath fileName:(NSString *)fileName{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@",HTTP_POSTEVENT_URL];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request addData:[NSData dataWithContentsOfFile:filePath] withFileName:fileName andContentType:nil forKey:@"file"];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setDelegate:self];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setPostUserInfo:request withRequestType:AAPostEvent];
+    [request startAsynchronous];
+}
 
 //继续添加
 
@@ -216,9 +196,7 @@ static dataHttpManager * instance=nil;
     
     if(requestType == AAPublicUserRegister){
         BOOL success = NO;
-        if([responseString isEqualToString:@"-1"]){
-            success = NO;
-        }else{
+        if([responseString isEqualToString:@"0"]){
             success = YES;
         }
         if ([_delegate respondsToSelector:@selector(didGetPublicUserRegister:)]) {
@@ -238,9 +216,7 @@ static dataHttpManager * instance=nil;
     }
     if(requestType == AAChangePassword){
         BOOL success = NO;
-        if([responseString isEqualToString:@"-1"]){
-            success = NO;
-        }else{
+        if([responseString isEqualToString:@"0"]){
             success = YES;
         }
         if ([_delegate respondsToSelector:@selector(didGetChangePassword:)]) {
@@ -248,7 +224,15 @@ static dataHttpManager * instance=nil;
         }
     }
     
-    
+    if(requestType == AAPostEvent){
+        BOOL success = NO;
+        if([responseString isEqualToString:@"0"]){
+            success = YES;
+        }
+        if ([_delegate respondsToSelector:@selector(didPostEvent:)]) {
+            [_delegate didPostEvent:success];
+        }
+    }
     //继续添加
     
     
