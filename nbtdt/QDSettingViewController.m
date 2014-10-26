@@ -100,13 +100,28 @@
         }
         
     }else{
+         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         if(indexPath.row == 0){
             cell.textLabel.text = @"离线地图";
             UISwitch *switchBtn = [[UISwitch alloc] init];
+            if([[ud objectForKey:@"SHOW_DOWNLOAD"] isEqualToString:@"1"]){
+                [switchBtn setOn:YES];
+            }else{
+                [switchBtn setOn:NO];
+            }
+            switchBtn.tag = 10001;
+            [switchBtn addTarget:self action:@selector(showDownLoadInMap:) forControlEvents:UIControlEventValueChanged];
             cell.accessoryView = switchBtn;
         }else{
             cell.textLabel.text = @"地图显示事件上报记录";
             UISwitch *switchBtn = [[UISwitch alloc] init];
+            switchBtn.tag = 10002;
+            if([[ud objectForKey:@"SHOW_EVENT"] isEqualToString:@"1"]){
+                [switchBtn setOn:YES];
+            }else{
+                [switchBtn setOn:NO];
+            }
+            [switchBtn addTarget:self action:@selector(showEventInMap:) forControlEvents:UIControlEventValueChanged];
             cell.accessoryView = switchBtn;
         }
     }
@@ -154,4 +169,29 @@
         }
     }
 }
+
+- (void)showDownLoadInMap:(UISwitch *)sender{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if(sender.tag == 10001 && sender.isOn){
+        [ud setObject:@"1" forKey:@"SHOW_DOWNLOAD"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:@"HDZZ.tpk" forKey:@"name"]];
+    }else{
+        [ud setObject:@"0" forKey:@"SHOW_DOWNLOAD"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:@"HDZZ.tpk" forKey:@"name"]];
+    }
+    [ud synchronize];
+}
+
+- (void)showEventInMap:(UISwitch *)sender{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if(sender.tag == 10002 && sender.isOn){
+        [ud setObject:@"1" forKey:@"SHOW_EVENT"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowEventInMap" object:nil userInfo:nil];
+    }else{
+        [ud setObject:@"0" forKey:@"SHOW_EVENT"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveEventInMap" object:nil userInfo:nil];
+    }
+    [ud synchronize];
+}
+
 @end

@@ -151,6 +151,15 @@
     if ( !(isDir == YES && existed == YES) )
     {
         [fileManager createDirectoryAtPath:imageDir withIntermediateDirectories:YES attributes:nil error:nil];
+    }else{
+        NSDirectoryEnumerator *direnum = [fileManager enumeratorAtPath:imageDir];
+        NSString *filename ;
+        while (filename = [direnum nextObject]) {
+            if([filename.pathExtension isEqualToString:@"JPG"]){
+                [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@",imageDir,filename] error:nil];
+            }
+        }
+
     }
     for(int i=0;i<_photoView.photoMenuItems.count;i++){
         UIImage *tempImg= nil;
@@ -629,6 +638,7 @@
     if(success){
         [self saveHistory];
         [self showMessageWithAlert:@"非常感谢，事件上报成功！我们会尽快处理！"];
+        [self.navigationController popViewControllerAnimated:YES];
     }else{
         [self showMessageWithAlert:@"非常抱歉，事件上报失败！"];
     }

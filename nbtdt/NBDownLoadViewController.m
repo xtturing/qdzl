@@ -197,17 +197,17 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:indexPath];
-    DownloadItem *downItem = [_tpkList.allValues objectAtIndex:indexPath.row];
-    if([cell.btnOperate.titleLabel.text isEqualToString:@"下载完成"] && downItem.downloadPercent == 1){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }else if([cell.btnOperate.titleLabel.text isEqualToString:@"已加载"]){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
-        [self.table reloadData];
-    }else{
-        [self downloadManager];
-    }
+//    DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:indexPath];
+//    DownloadItem *downItem = [_tpkList.allValues objectAtIndex:indexPath.row];
+//    if([cell.btnOperate.titleLabel.text isEqualToString:@"下载完成"] && downItem.downloadPercent == 1){
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//    }else if([cell.btnOperate.titleLabel.text isEqualToString:@"已加载"]){
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
+//        [self.table reloadData];
+//    }else{
+//        [self downloadManager];
+//    }
 }
 
 - (BOOL)hasAddLocalLayer:(NSString *)name{

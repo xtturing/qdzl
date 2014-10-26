@@ -70,6 +70,10 @@
     [rightBtn addTarget:self action:@selector(setting:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.frame = CGRectMake(0, 0, 32, 32);
     self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowEventInMap:) name:@"ShowEventInMap" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RemoveEventInMap:) name:@"RemoveEventInMap" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addLocalTileLayer:) name:@"addLocalTileLayer" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLocalTileLayer:) name:@"removeLocalTileLayer" object:nil];
 //    [self.navigationController.navigationBar customNavigationBar];
     // Do any additional setup after loading the view from its nib.
 }
@@ -146,6 +150,14 @@
     
 }
 
+- (void)ShowEventInMap:(NSNotification *)notification{
+    [self ShowEventInMap];
+}
+
+- (void)RemoveEventInMap:(NSNotification *)notification{
+    
+}
+
 - (void)addLocalTileLayer:(NSNotification *)notification{
     NSString *fileName = [notification.userInfo objectForKey:@"name"];
     [self addLocalTileLayerWithName:fileName];
@@ -181,6 +193,10 @@
     }
     return NO;
 }
+
+- (void)ShowEventInMap{
+    
+}
 #pragma mark AGSMapViewLayerDelegate methods
 
 -(void) mapViewDidLoad:(AGSMapView*)mapView {
@@ -189,6 +205,13 @@
     }else {
         [self.mapView.gps start];
         return;
+    }
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if([[ud objectForKey:@"SHOW_EVENT"] isEqualToString:@"1"]){
+        [self ShowEventInMap];
+    }
+    if([[ud objectForKey:@"SHOW_DOWNLOAD"] isEqualToString:@"1"]){
+        [self addLocalTileLayerWithName:@"HDZZ.tpk"];
     }
 }
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{

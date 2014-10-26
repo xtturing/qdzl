@@ -12,6 +12,7 @@
 
 #define HTTP_LOGIN_URL              @"http://27.223.74.180:8080/esys/plugin/urbanadmin"
 #define HTTP_POSTEVENT_URL          @"http://27.223.74.180:8080/esys/plugin/urbanadmin/publicUserSubmitEvent.htm"
+#define HTTP_SEARCH_HISTORY         @"http://27.223.74.180:8080/esys/plugin/urbanadmin/getHistory.htm"
 
 
 #define REQUEST_TYPE          @"requestType"
@@ -21,6 +22,7 @@ typedef enum {
     AAPublicUserLogin,
     AAChangePassword,
     AAPostEvent,
+    AASearchEventHistory,
     //继续添加
     
 }DataRequestType;
@@ -42,6 +44,8 @@ typedef enum {
 - (void)didGetChangePassword:(BOOL)success;
 
 - (void)didPostEvent:(BOOL)success;
+
+- (void)didSearchEventHistory:(NSArray *)list;
 
 //继续添加
 @end
@@ -69,6 +73,8 @@ typedef enum {
 - (void)letChangePassword:(NSString *)userName password:(NSString *)pwd;
 
 - (void)letPostEvent:(NSString *)filePath fileName:(NSString *)fileName;
+
+- (void)letSearchEventHistory:(NSString *)uid;
 
 //继续添加
 @end

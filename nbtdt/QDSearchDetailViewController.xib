@@ -5,10 +5,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QDSearchViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QDSearchDetailViewController">
             <connections>
-                <outlet property="searchBar" destination="cNs-0m-OQp" id="eKO-vx-tiN"/>
-                <outlet property="tableView" destination="cFR-iG-s2G" id="Qkd-66-cut"/>
+                <outlet property="tableView" destination="AvT-r8-gHi" id="BtU-Dj-qGf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,21 +16,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cFR-iG-s2G">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="AvT-r8-gHi">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <searchBar key="tableHeaderView" contentMode="redraw" id="cNs-0m-OQp">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <textInputTraits key="textInputTraits"/>
-                        <connections>
-                            <outlet property="delegate" destination="-1" id="VgG-Y7-NWR"/>
-                        </connections>
-                    </searchBar>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="BZ6-1n-eyk"/>
-                        <outlet property="delegate" destination="-1" id="SoU-eO-lCu"/>
+                        <outlet property="dataSource" destination="-1" id="CqW-tq-h4r"/>
+                        <outlet property="delegate" destination="-1" id="sRQ-PK-3hd"/>
                     </connections>
                 </tableView>
             </subviews>

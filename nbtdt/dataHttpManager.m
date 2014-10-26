@@ -137,6 +137,17 @@ static dataHttpManager * instance=nil;
     [request startAsynchronous];
 }
 
+- (void)letSearchEventHistory:(NSString *)uid{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@?uid=%@",HTTP_SEARCH_HISTORY,uid];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AASearchEventHistory];
+    [_requestQueue addOperation:request];
+}
 //继续添加
 
 #pragma mark - Operate queue
@@ -233,6 +244,12 @@ static dataHttpManager * instance=nil;
             [_delegate didPostEvent:success];
         }
     }
+    if(requestType == AASearchEventHistory){
+        if ([_delegate respondsToSelector:@selector(didSearchEventHistory:)]) {
+            [_delegate didSearchEventHistory:userArr];
+        }
+    }
+    
     //继续添加
     
     
