@@ -14,6 +14,7 @@
 		4106956F19F0100100E45E1E /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4106956A19F0100100E45E1E /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4107C2C919F3F186000C092D /* QDMapLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4107C2C719F3F186000C092D /* QDMapLocationViewController.m */; };
 		4107C2CA19F3F186000C092D /* QDMapLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4107C2C819F3F186000C092D /* QDMapLocationViewController.xib */; };
+		410B078619FE6CBE008C7FD3 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 410B078519FE6CBE008C7FD3 /* libmp3lame.a */; };
 		410BDECE19F2A22C0080D11C /* ASRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410BDECC19F2A22C0080D11C /* ASRegisterViewController.m */; };
 		410BDECF19F2A22C0080D11C /* ASRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 410BDECD19F2A22C0080D11C /* ASRegisterViewController.xib */; };
 		410BDED319F2A2450080D11C /* ASPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410BDED119F2A2450080D11C /* ASPasswordViewController.m */; };
@@ -200,6 +201,8 @@
 		4107C2C619F3F186000C092D /* QDMapLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDMapLocationViewController.h; sourceTree = "<group>"; };
 		4107C2C719F3F186000C092D /* QDMapLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDMapLocationViewController.m; sourceTree = "<group>"; };
 		4107C2C819F3F186000C092D /* QDMapLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QDMapLocationViewController.xib; sourceTree = "<group>"; };
+		410B078419FE6CBE008C7FD3 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
+		410B078519FE6CBE008C7FD3 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		410BDECB19F2A22C0080D11C /* ASRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASRegisterViewController.h; sourceTree = "<group>"; };
 		410BDECC19F2A22C0080D11C /* ASRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASRegisterViewController.m; sourceTree = "<group>"; };
 		410BDECD19F2A22C0080D11C /* ASRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASRegisterViewController.xib; sourceTree = "<group>"; };
@@ -436,6 +439,7 @@
 				41BBA30319A79ACC00C0A328 /* libxml2.dylib in Frameworks */,
 				41BBA30119A79AB100C0A328 /* CFNetwork.framework in Frameworks */,
 				41BBA2FD19A798C600C0A328 /* Foundation.framework in Frameworks */,
+				410B078619FE6CBE008C7FD3 /* libmp3lame.a in Frameworks */,
 				41BBA2FC19A798C000C0A328 /* UIKit.framework in Frameworks */,
 				41BBA2FB19A798B400C0A328 /* CoreGraphics.framework in Frameworks */,
 				419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */,
@@ -535,6 +539,15 @@
 				4106956A19F0100100E45E1E /* ZipArchive.mm */,
 			);
 			name = minizip;
+			sourceTree = "<group>";
+		};
+		410B078319FE6CB2008C7FD3 /* lame */ = {
+			isa = PBXGroup;
+			children = (
+				410B078419FE6CBE008C7FD3 /* lame.h */,
+				410B078519FE6CBE008C7FD3 /* libmp3lame.a */,
+			);
+			name = lame;
 			sourceTree = "<group>";
 		};
 		410E853E19E5788400A4D02C /* LCVoice */ = {
@@ -747,6 +760,7 @@
 		4148237519AA301100442FA7 /* KIT */ = {
 			isa = PBXGroup;
 			children = (
+				410B078319FE6CB2008C7FD3 /* lame */,
 				4111017B19F8029C0045E029 /* XMLDictionary */,
 				4106955F19F00FBF00E45E1E /* minizip */,
 				410E855619E58DF300A4D02C /* ASTextField */,

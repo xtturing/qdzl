@@ -142,6 +142,7 @@
         }else{
             UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:@"确定退出当前用户账号" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             view.delegate = self;
+            view.tag = 10002;
             [view show];
         }
         
@@ -157,7 +158,7 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
+    if (buttonIndex == 1 && alertView.tag == 10002) {
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         if([ud objectForKey:@"USER_NAME"] && [ud objectForKey:@"USER_PASSWORD"]){
             [ud removeObjectForKey:@"USER_NAME"];
@@ -172,14 +173,28 @@
 
 - (void)showDownLoadInMap:(UISwitch *)sender{
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if(sender.tag == 10001 && sender.isOn){
-        [ud setObject:@"1" forKey:@"SHOW_DOWNLOAD"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:@"HDZZ.tpk" forKey:@"name"]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir = NO;
+    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),@"HDZZ.tpk"];
+    BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
+    if(existed){
+        if(sender.tag == 10001 && sender.isOn){
+            [ud setObject:@"1" forKey:@"SHOW_DOWNLOAD"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:@"HDZZ.tpk" forKey:@"name"]];
+        }else{
+            [ud setObject:@"0" forKey:@"SHOW_DOWNLOAD"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:@"HDZZ.tpk" forKey:@"name"]];
+        }
+        [ud synchronize];
+
     }else{
+        [sender setOn:NO];
         [ud setObject:@"0" forKey:@"SHOW_DOWNLOAD"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:@"HDZZ.tpk" forKey:@"name"]];
+        [ud synchronize];
+        UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:@"请在WIFI环境下下载离线地图包" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        view.tag = 10001;
+        [view show];
     }
-    [ud synchronize];
 }
 
 - (void)showEventInMap:(UISwitch *)sender{
@@ -193,5 +208,16 @@
     }
     [ud synchronize];
 }
+- (void)showMessageWithAlert:(NSString *)message{
+    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    
+    [view show];
+}
 
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if(alertView.tag == 10001){
+        NBDownLoadViewController *downViewController = [[NBDownLoadViewController alloc] initWithNibName:@"NBDownLoadViewController" bundle:nil];
+        [self.navigationController pushViewController:downViewController animated:YES];
+    }
+}
 @end

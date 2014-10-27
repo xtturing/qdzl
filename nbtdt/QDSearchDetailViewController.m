@@ -102,6 +102,7 @@
 
 
 - (void)didSearchEventHistory:(NSArray *)list{
+    [SVProgressHUD dismiss];
     _results = [NSMutableArray arrayWithArray:list];
     [self.tableView reloadData];
 }

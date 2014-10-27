@@ -14,12 +14,14 @@
 #import "QDMapLocationViewController.h"
 #import "XMLDictionary.h"
 #import "ZipArchive.h"
+#import "lame.h"
 #import "dataHttpManager.h"
 
-#define GET_POI @"http://27.223.74.180:6080/arcgis/rest/services/QD/getPOIModel/GPServer/getPOI"
+
+#define GET_POI @"http://27.223.74.180:6080/arcgis/rest/services/QD/getGQ/GPServer/getGQ"
 #define MAP_SERVER @"http://27.223.74.180:6080/arcgis/rest/services/QD/POIHD/MapServer/0"
 
-@interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,textInputViewDelegate,MessagePhotoViewDelegate,mapLocationDelegate,AGSQueryTaskDelegate,AGSGeoprocessorDelegate,dataHttpDelegate>
+@interface QDEditViewController ()<UITableViewDelegate,cityManagerDelegate,textInputViewDelegate,MessagePhotoViewDelegate,mapLocationDelegate,AGSQueryTaskDelegate,AGSGeoprocessorDelegate,dataHttpDelegate,UIAlertViewDelegate>
 @property(nonatomic,strong) LCVoice * voice;
 @property (nonatomic,strong)  UIButton *rbutton;
 @property (nonatomic,strong)  UIButton *lbutton;
@@ -54,7 +56,7 @@
         //获取document路径,括号中属性为当前应用程序独享
         NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
         NSString *documentDirectory = [directoryPaths objectAtIndex:0];
-        [fileManager removeItemAtPath:documentDirectory error:nil];
+        [fileManager removeItemAtPath:[documentDirectory stringByAppendingPathComponent:@"uploadEvent"] error:nil];
     });
     self.uuidString = [self getUniqueStrByUUID];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
@@ -117,6 +119,7 @@
             return ;
         }
         if([self saveImages]){
+            
             if([self saveInZip]){
                 [self sendSave];
             }else{
@@ -145,7 +148,7 @@
     NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
     NSString *documentDirectory = [directoryPaths objectAtIndex:0];
     //定义记录文件全名以及路径的字符串filePath
-    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",self.uuidString]];
+    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     BOOL isDir = NO;
     BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
     if ( !(isDir == YES && existed == YES) )
@@ -186,14 +189,14 @@
     NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
     NSString *documentDirectory = [directoryPaths objectAtIndex:0];
     //定义记录文件全名以及路径的字符串filePath
-    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",self.uuidString]];
+    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     BOOL isDir = NO;
     BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
     if ( !(isDir == YES && existed == YES) )
     {
         return NO;
     }
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@.zip",documentDirectory,self.uuidString];
+    NSString *filePath = [NSString stringWithFormat:@"%@/uploadEvent/%@.zip",documentDirectory,self.uuidString];
     ZipArchive *za = [[ZipArchive alloc] init];
     [za CreateZipFile2:filePath];
     NSDirectoryEnumerator *direnum = [fileManager enumeratorAtPath:imageDir];
@@ -212,7 +215,7 @@
     //获取document路径,括号中属性为当前应用程序独享
     NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
     NSString *documentDirectory = [directoryPaths objectAtIndex:0];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@.zip",documentDirectory,self.uuidString];
+    NSString *filePath = [NSString stringWithFormat:@"%@/uploadEvent/%@.zip",documentDirectory,self.uuidString];
     BOOL existed = [fileManager fileExistsAtPath:filePath];
     if(existed){
         [[dataHttpManager getInstance] letPostEvent:filePath fileName:[NSString stringWithFormat:@"%@.zip",self.uuidString]];
@@ -230,7 +233,7 @@
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
     [dic setObject:self.textMessage forKey:@"SJMS"];
-    [dic setObject:@"" forKey:@"SSGQ"];
+    [dic setObject:self.citytype forKey:@"SSGQ"];
     [dic setObject:@"" forKey:@"FJQY"];
     [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"X"];
     [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"Y"];
@@ -246,7 +249,7 @@
     NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
     NSString *documentDirectory = [directoryPaths objectAtIndex:0];
     //定义记录文件全名以及路径的字符串filePath
-    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",self.uuidString]];
+    NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     BOOL isDir = NO;
     BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
     if ( !(isDir == YES && existed == YES) )
@@ -273,7 +276,7 @@
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
     [dic setObject:self.textMessage forKey:@"SJMS"];
-    [dic setObject:@"" forKey:@"SSGQ"];
+    [dic setObject:self.citytype forKey:@"SSGQ"];
     [dic setObject:@"" forKey:@"FJQY"];
     [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"X"];
     [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"Y"];
@@ -460,7 +463,7 @@
     //创建文件管理器
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDir = NO;
-    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),self.uuidString];
+    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/uploadEvent/%@",NSHomeDirectory(),self.uuidString];
     BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
     if ( !(isDir == YES && existed == YES) )
     {
@@ -468,13 +471,69 @@
     }
     [self.voice startRecordWithPath:[NSString stringWithFormat:@"%@/Sound.caf", imageDir]];
 }
-
+- (void)audio_PCMtoMP3
+{
+    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/uploadEvent/%@",NSHomeDirectory(),self.uuidString];
+    NSString *cafFilePath = [imageDir stringByAppendingPathComponent:@"/Sound.caf"];
+    
+    NSString *mp3FilePath = [imageDir stringByAppendingPathComponent:@"/Sound.mp3"];
+    
+    
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    if([fileManager removeItemAtPath:mp3FilePath error:nil])
+    {
+        NSLog(@"删除");
+    }
+    
+    @try {
+        int read, write;
+        
+        FILE *pcm = fopen([cafFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
+        fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
+        FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
+        
+        const int PCM_SIZE = 8192;
+        const int MP3_SIZE = 8192;
+        short int pcm_buffer[PCM_SIZE*2];
+        unsigned char mp3_buffer[MP3_SIZE];
+        
+        lame_t lame = lame_init();
+        lame_set_in_samplerate(lame, 11025.0);
+        lame_set_VBR(lame, vbr_default);
+        lame_init_params(lame);
+        
+        do {
+            read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
+            if (read == 0)
+                write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
+            else
+                write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
+            
+            fwrite(mp3_buffer, write, 1, mp3);
+            
+        } while (read != 0);
+        
+        lame_close(lame);
+        fclose(mp3);
+        fclose(pcm);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",[exception description]);
+    }
+    @finally {
+        if([fileManager removeItemAtPath:cafFilePath error:nil])
+        {
+            NSLog(@"删除caf");
+        }
+    }
+}
 -(void) recordEnd
 {
     [self.voice stopRecordWithCompletionBlock:^{
         
         if (self.voice.recordTime > 0.0f) {
             [_rbutton setTitle:[NSString stringWithFormat:@"录音时长:%0.1f秒",self.voice.recordTime] forState:UIControlStateNormal];
+            [self audio_PCMtoMP3];
         }else{
             [_rbutton setTitle:@"按住说话" forState:UIControlStateNormal];
         }
@@ -563,9 +622,16 @@
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation *)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages{
     // 获取GP分析的结果
     [SVProgressHUD dismiss];
-    if (results!=nil && [results count]>0){
+    if (results!=nil && [results count] == 2){
         AGSGPParameterValue *result = [results objectAtIndex:0];
 		AGSFeatureSet *fs = result.value;
+        if(fs.features != nil && [fs.features count] > 0){
+            AGSGraphic *graphic = [fs.features objectAtIndex:0];
+            NSMutableDictionary *dic = graphic.attributes;
+            self.citytype = [dic objectForKey:@"社区名称"];
+        }
+        result = [results objectAtIndex:1];
+		fs = result.value;
         if(fs.features != nil && [fs.features count] > 0){
             AGSGraphic *graphic = [fs.features objectAtIndex:0];
             NSMutableDictionary *dic = graphic.attributes;
@@ -607,6 +673,8 @@
             self.mapLocationStr = [NSString stringWithFormat:@"%@,距离大约%0.f米处",direction,[dist floatValue]*111000];
         }
         
+    }else{
+        [self showMessageWithAlert:@"非常抱歉，获取事件位置失败！"];
     }
 }
 
@@ -637,8 +705,9 @@
     [SVProgressHUD dismiss];
     if(success){
         [self saveHistory];
-        [self showMessageWithAlert:@"非常感谢，事件上报成功！我们会尽快处理！"];
-        [self.navigationController popViewControllerAnimated:YES];
+        UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:@"非常感谢，事件上报成功！我们会尽快处理！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        view.tag = 10001;
+        [view show];
     }else{
         [self showMessageWithAlert:@"非常抱歉，事件上报失败！"];
     }
@@ -648,5 +717,15 @@
     [SVProgressHUD dismiss];
     [self showMessageWithAlert:@"非常抱歉，发生了网络异常！"];
     
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if(alertView.tag == 10001){
+        [self doBack];
+    }
+}
+
+- (void)doBack{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

@@ -12,7 +12,9 @@
 #import "ASPasswordViewController.h"
 #import "ASRegisterViewController.h"
 
-@interface ASViewController ()<dataHttpDelegate>
+@interface ASViewController ()<dataHttpDelegate>{
+    BOOL keybordWasShow;
+}
 
 @property (nonatomic,retain) NSMutableArray *cellArray;
 @property (strong, nonatomic) QDMapViewController *mapViewController;
@@ -34,6 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    keybordWasShow = NO;
     //bake a cellArray to contain all cells
     self.cellArray = [NSMutableArray arrayWithObjects: _usernameCell, _passwordCell, _doneCell, nil];
     //setup text field with respective icons
@@ -91,21 +94,28 @@
 //实现当键盘出现的时候计算键盘的高度大小。用于输入框显示位置
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {   //输入框位置动画加载
-    CGRect curFrame=self.view.frame;
-    curFrame.origin.y -= 90;
-    [UIView animateWithDuration:0.3f animations:^{
-        self.view.frame=curFrame;
-    }];
+    if(!keybordWasShow){
+        keybordWasShow = YES;
+        CGRect curFrame=self.view.frame;
+        curFrame.origin.y -= 90;
+        [UIView animateWithDuration:0.3f animations:^{
+            self.view.frame=curFrame;
+        }];
+    }
+    
 }
 
 //当键盘隐藏的时候
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    CGRect curFrame=self.view.frame;
-    curFrame.origin.y += 90;
-    [UIView animateWithDuration:0.3f animations:^{
-        self.view.frame=curFrame;
-    }];
+    if(keybordWasShow){
+        keybordWasShow = NO;
+        CGRect curFrame=self.view.frame;
+        curFrame.origin.y += 90;
+        [UIView animateWithDuration:0.3f animations:^{
+            self.view.frame=curFrame;
+        }];
+    }
     //do something
 }
 #pragma mark - tableview deleagate datasource stuff
