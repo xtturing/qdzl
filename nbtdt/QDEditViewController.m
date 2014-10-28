@@ -16,6 +16,7 @@
 #import "ZipArchive.h"
 #import "lame.h"
 #import "dataHttpManager.h"
+#import "MyMD5.h"
 
 
 #define GET_POI @"http://27.223.74.180:6080/arcgis/rest/services/QD/getGQ/GPServer/getGQ"
@@ -166,18 +167,23 @@
     }
     for(int i=0;i<_photoView.photoMenuItems.count;i++){
         UIImage *tempImg= nil;
+        NSData *data = nil;
+        NSString *filePath = nil;
         if([_photoView.photoMenuItems[i] isKindOfClass:[ALAsset class]]){
             ALAsset *asset=_photoView.photoMenuItems[i];
             tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-            NSData *data;
             data = UIImageJPEGRepresentation(tempImg, 0.0);
-            NSString *filePath = [NSString stringWithFormat:@"%@/%@.JPG",imageDir,[NSString stringWithFormat:@"%.lf",[[NSDate date] timeIntervalSince1970]*1000]];
-            //查找文件，如果不存在，就创建一个文件
-            if (![fileManager fileExistsAtPath:filePath]) {
-                [fileManager createFileAtPath:filePath contents:data attributes:nil];
-            }
-        }else{
-            return NO;
+            filePath = [NSString stringWithFormat:@"%@/%@.JPG",imageDir,[NSString stringWithFormat:@"%.lf",[[NSDate date] timeIntervalSince1970]*1000]];
+           
+        }else if ([_photoView.photoMenuItems[i] isKindOfClass:[UIImage class]]){
+            tempImg = _photoView.photoMenuItems[i];
+         
+            data = UIImageJPEGRepresentation(tempImg, 0.0);
+            filePath = [NSString stringWithFormat:@"%@/%@.JPG",imageDir,[NSString stringWithFormat:@"%.lf",[[NSDate date] timeIntervalSince1970]*1000]];
+        }
+        //查找文件，如果不存在，就创建一个文件
+        if (![fileManager fileExistsAtPath:filePath]) {
+            [fileManager createFileAtPath:filePath contents:data attributes:nil];
         }
     }
     return YES;
@@ -229,14 +235,14 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:self.uuidString forKey:@"UID"];
-    [dic setObject:[ud objectForKey:@"USER_NAME"] forKey:@"YHM"];
+    [dic setObject:[MyMD5 md5:[ud objectForKey:@"USER_NAME"]] forKey:@"YHM"];
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
     [dic setObject:self.textMessage forKey:@"SJMS"];
     [dic setObject:self.citytype forKey:@"SSGQ"];
     [dic setObject:@"" forKey:@"FJQY"];
-    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"X"];
-    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"Y"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"Y"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"X"];
     NSMutableDictionary *row = [NSMutableDictionary dictionaryWithCapacity:0];
     [row setObject:dic forKey:@"ROW"];
     NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -272,14 +278,14 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:self.uuidString forKey:@"UID"];
-    [dic setObject:[ud objectForKey:@"USER_NAME"] forKey:@"YHM"];
+    [dic setObject:[MyMD5 md5:[ud objectForKey:@"USER_NAME"]]  forKey:@"YHM"];
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
     [dic setObject:self.textMessage forKey:@"SJMS"];
     [dic setObject:self.citytype forKey:@"SSGQ"];
     [dic setObject:@"" forKey:@"FJQY"];
-    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"X"];
-    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"Y"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"Y"];
+    [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"X"];
     [ud setObject:dic forKey:self.uuidString];
     NSMutableArray *uids = [ud objectForKey:@"UID"];
     if(!uids){

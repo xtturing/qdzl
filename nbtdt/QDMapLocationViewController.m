@@ -132,7 +132,7 @@
 #pragma mark AGSMapViewLayerDelegate methods
 
 -(void) mapViewDidLoad:(AGSMapView*)mapView {
-    [self performSelector:@selector(getGPS) withObject:nil afterDelay:1.0f];
+    [self performSelector:@selector(getGPS) withObject:nil afterDelay:2.0f];
 }
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
     [self addStartPoint:mappoint];
@@ -154,6 +154,7 @@
         }
         AGSTiledMapServiceLayer *tileLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:[NSURL URLWithString:BASE_MAP_URL]];
         [self.mapView addMapLayer:tileLayer withName:@"tileLayer"];
+        [self.mapView.gps start];
     }
     else
     {

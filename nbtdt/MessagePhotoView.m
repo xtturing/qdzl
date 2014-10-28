@@ -90,7 +90,7 @@
         UIImage *tempImg= nil;
         if([imgList[i] isKindOfClass:[ALAsset class]]){
             ALAsset *asset=imgList[i];
-            tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+            tempImg=[UIImage imageWithCGImage:[asset thumbnail]];
         }else{
             tempImg = imgList[i];
         }
@@ -235,24 +235,24 @@
         UIImage *image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
         [self reloadDataWithImage:image];
         
-        NSData *datas;
-        if(UIImagePNGRepresentation(image)==nil){
-            datas = UIImageJPEGRepresentation(image, 1.0);
-        }else{
-            datas = UIImagePNGRepresentation(image);
-        }
-        
-        //图片保存的路径
-        //这里将图片放在沙盒的documents文件夹中
-        NSString *DocumentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-        //文件管理器
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        //把刚才图片转换的data对象拷贝至沙盒中,并保存为image.png
-        [fileManager createDirectoryAtPath:DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
-        [fileManager createFileAtPath:[DocumentsPath stringByAppendingString:@"/image.png"] contents:datas attributes:nil];
-        //得到选择后沙盒中图片的完整路径
-        filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath,@"/image.png"];
-        
+//        NSData *datas;
+//        if(UIImagePNGRepresentation(image)==nil){
+//            datas = UIImageJPEGRepresentation(image, 0.0);
+//        }else{
+//            datas = UIImagePNGRepresentation(image);
+//        }
+//        
+//        //图片保存的路径
+//        //这里将图片放在沙盒的documents文件夹中
+//        NSString *DocumentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+//        //文件管理器
+//        NSFileManager *fileManager = [NSFileManager defaultManager];
+//        //把刚才图片转换的data对象拷贝至沙盒中,并保存为image.png
+//        [fileManager createDirectoryAtPath:DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
+//        [fileManager createFileAtPath:[DocumentsPath stringByAppendingString:@"/image.png"] contents:datas attributes:nil];
+//        //得到选择后沙盒中图片的完整路径
+//        filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath,@"/image.png"];
+//        
         //创建一个选择后图片的图片放在scrollview中
         
         //加载scrollview中

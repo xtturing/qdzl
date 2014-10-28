@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"问题描述";
+    self.title = @"事件描述";
     self.textView.text = _textStr;
     self.textView.delegate = self;
     [self.textView becomeFirstResponder];
