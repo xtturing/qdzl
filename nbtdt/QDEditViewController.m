@@ -122,7 +122,10 @@
         if([self saveImages]){
             
             if([self saveInZip]){
-                [self sendSave];
+                if (![self sendSave]) {
+                    [SVProgressHUD dismiss];
+                    [self showMessageWithAlert:@"上报事件文件异常"];
+                }
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
@@ -235,7 +238,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:self.uuidString forKey:@"UID"];
-    [dic setObject:[MyMD5 md5:[ud objectForKey:@"USER_NAME"]] forKey:@"YHM"];
+    [dic setObject:[ud objectForKey:@"USER_NAME"] forKey:@"YHM"];
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
     [dic setObject:self.textMessage forKey:@"SJMS"];
@@ -278,7 +281,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:0];
     [dic setObject:self.uuidString forKey:@"UID"];
-    [dic setObject:[MyMD5 md5:[ud objectForKey:@"USER_NAME"]]  forKey:@"YHM"];
+    [dic setObject:[ud objectForKey:@"USER_NAME"]  forKey:@"YHM"];
     [dic setObject:self.mapLocationStr forKey:@"SJWZ"];
     [dic setObject:self.cityManagerName forKey:@"WTLX"];
     [dic setObject:self.textMessage forKey:@"SJMS"];
