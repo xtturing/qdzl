@@ -1356,7 +1356,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					$HOME/Library/SDKs,
@@ -1400,7 +1400,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/tdtnb",

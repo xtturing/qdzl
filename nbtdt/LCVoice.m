@@ -29,12 +29,16 @@
 
 -(void) dealloc{
     
-    if (self.recorder.isRecording) {
-        [self.recorder stop];
+    if (timer_) {
+        [timer_ invalidate];
+        timer_ = nil;
     }
-    
-    self.recorder = nil;
-    self.recordPath = nil;
+    if (_recorder) {
+        [_recorder stop];
+    }
+    _recorder.delegate = nil;
+    _recorder = nil;
+    _recordPath = nil;
     
 }
 

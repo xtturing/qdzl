@@ -56,6 +56,9 @@
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.mapView = nil;
+    if(self.mapView.gps.enabled){
+        [self.mapView.gps stop];
+    }
 }
 - (void)viewDidUnload {
     //Stop the GPS, undo the map rotation (if any)
@@ -137,6 +140,29 @@
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
     [self addStartPoint:mappoint];
 }
+- (void)addLocalTileLayerWithName:(NSString *)fileName{
+    NSString *name = [fileName stringByDeletingPathExtension];
+    NSString *extension = @"tpk";
+    if(![self hasAddLocalLayer:name] && [[fileName pathExtension] isEqualToString:extension]){
+        AGSLocalTiledLayer *localTileLayer = [AGSLocalTiledLayer localTiledLayerWithName:fileName];
+        if(localTileLayer != nil){
+            [self.mapView addMapLayer:localTileLayer withName:name];
+            // Do any additional setup after loading the view from its nib.
+            
+        }
+    }else{
+        [self.mapView removeMapLayerWithName:name];
+    }
+}
+- (BOOL)hasAddLocalLayer:(NSString *)name{
+    for(AGSTiledLayer *layer in self.mapView.mapLayers){
+        if([layer isKindOfClass:[AGSLocalTiledLayer class]] && [layer.name isEqualToString:name]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 #pragma mark -reachability
 
 -(void)reachabilityChanged:(NSNotification*)note
@@ -147,6 +173,12 @@
     
 }
 - (void) updateInterfaceWithReachability: (Reachability*) curReach{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if([[ud objectForKey:@"SHOW_DOWNLOAD"] isEqualToString:@"1"]){
+        [self addLocalTileLayerWithName:@"HDZZ.tpk"];
+        [self.mapView.gps start];
+        return;
+    }
     if([curReach isReachable])
     {
         if(![curReach isReachableViaWiFi]){

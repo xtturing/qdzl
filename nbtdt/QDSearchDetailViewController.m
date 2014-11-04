@@ -64,9 +64,12 @@
     return 4;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return _results.count;
+    return _results.count+1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == 0 && indexPath.row == 0){
+        return 60;
+    }
     return 44;
 }
 
@@ -75,34 +78,60 @@
     UITableViewCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:reuseIdetifyPoint];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdetifyPoint];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdetifyPoint];        
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.textLabel.numberOfLines = 3;
+    cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
     cell.detailTextLabel.numberOfLines = 0;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.5;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
     cell.detailTextLabel.minimumScaleFactor = 0.5;
-    NSMutableDictionary *dic = [_results objectAtIndex:indexPath.section];
-    if(indexPath.row == 0){
-        cell.textLabel.text = [NSString stringWithFormat:@"操作事件:%@",[dic objectForKey:@"CREATEDATE"]];
-    }else if (indexPath.row == 1){
-        cell.textLabel.text = [NSString stringWithFormat:@"操作人:%@",[dic objectForKey:@"PARTNAME"]];
-    }else if (indexPath.row == 2){
-        cell.textLabel.text = [NSString stringWithFormat:@"操作类型:%@",[dic objectForKey:@"TASKCNNAME"]];
+    if(indexPath.section == 0){
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSMutableDictionary *dic = [ud objectForKey:_uid];
+        if(indexPath.row == 0){
+            cell.textLabel.text = @"事件位置:";
+            cell.detailTextLabel.text = [dic objectForKey:@"SJWZ"];
+        }else if (indexPath.row == 1){
+            cell.textLabel.text = @"事件类型:";
+            cell.detailTextLabel.text = [dic objectForKey:@"WTLX"];
+        }else if (indexPath.row == 2){
+            cell.textLabel.text = @"事件描述:";
+            cell.detailTextLabel.text = [dic objectForKey:@"SJMS"];
+        }else{
+            cell.textLabel.text = @"所属管区:";
+            cell.detailTextLabel.text = [dic objectForKey:@"SSGQ"];
+        }
     }else{
-        cell.textLabel.text = [NSString stringWithFormat:@"操作内容:%@",[dic objectForKey:@"TASKDESC"]];
+        NSMutableDictionary *dic = [_results objectAtIndex:indexPath.section];
+        if(indexPath.row == 0){
+            cell.textLabel.text = @"操作事件:";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CREATEDATE"]];
+        }else if (indexPath.row == 1){
+            cell.textLabel.text = @"操作人:";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"PARTNAME"]];
+        }else if (indexPath.row == 2){
+            cell.textLabel.text = @"操作类型:";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TASKCNNAME"]];
+        }else{
+            cell.textLabel.text = @"操作内容:";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TASKDESC"]];
+        }
     }
+    
     return cell;
 }
 
 
 - (void)didSearchEventHistory:(NSArray *)list{
     [SVProgressHUD dismiss];
+    if(!list || list.count == 0){
+        [self showMessageWithAlert:@"非常抱歉，没有获取到事件处理流程信息！"];
+    }
     _results = [NSMutableArray arrayWithArray:list];
     [self.tableView reloadData];
 }

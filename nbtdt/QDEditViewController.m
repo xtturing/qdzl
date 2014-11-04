@@ -89,8 +89,13 @@
     // Do any additional setup after loading the view from its nib.
 }
 - (void)dealloc{
-    self.queryTask.delegate = nil;
-    self.agp.delegate =  nil;
+    _voice = nil;
+    _photoView.delegate =nil;
+    _photoView = nil;
+    _queryTask.delegate = nil;
+    _queryTask = nil;
+    _agp.delegate =  nil;
+    _agp = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,19 +125,30 @@
             return ;
         }
         if([self saveImages]){
-            
-            if([self saveInZip]){
-                if (![self sendSave]) {
-                    [SVProgressHUD dismiss];
-                    [self showMessageWithAlert:@"上报事件文件异常"];
+            if([self audio_PCMtoMP3]){
+                if([self saveInZip]){
+                    if (![self sendSave]) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [SVProgressHUD dismiss];
+                            [self showMessageWithAlert:@"上报事件文件异常"];
+                        });
+                        return ;
+                    }
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [SVProgressHUD dismiss];
+                        [self showMessageWithAlert:@"压缩上报事件文件异常"];
+                    });
+                    return ;
                 }
             }else{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
-                    [self showMessageWithAlert:@"压缩上报事件文件异常"];
+                    [self showMessageWithAlert:@"转码声音文件异常"];
                 });
                 return ;
             }
+            
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
                  [SVProgressHUD dismiss];
@@ -211,7 +227,7 @@
     NSDirectoryEnumerator *direnum = [fileManager enumeratorAtPath:imageDir];
     NSString *filename ;
     while (filename = [direnum nextObject]) {
-         [za addFileToZip:[NSString stringWithFormat:@"%@/%@",imageDir,filename] newname:filename];
+         [za addFileToZip:[NSString stringWithFormat:@"%@/%@",imageDir,filename] newname:[NSString stringWithFormat:@"%@/%@",self.uuidString,filename]];
     }
     if([za CloseZipFile2]){
         return YES;
@@ -480,7 +496,7 @@
     }
     [self.voice startRecordWithPath:[NSString stringWithFormat:@"%@/Sound.caf", imageDir]];
 }
-- (void)audio_PCMtoMP3
+- (BOOL)audio_PCMtoMP3
 {
     NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/uploadEvent/%@",NSHomeDirectory(),self.uuidString];
     NSString *cafFilePath = [imageDir stringByAppendingPathComponent:@"/Sound.caf"];
@@ -489,52 +505,60 @@
     
     
     NSFileManager* fileManager=[NSFileManager defaultManager];
-    if([fileManager removeItemAtPath:mp3FilePath error:nil])
-    {
-        NSLog(@"删除");
+    BOOL existed = [fileManager fileExistsAtPath:cafFilePath];
+    if(existed){
+        if([fileManager removeItemAtPath:mp3FilePath error:nil])
+        {
+            NSLog(@"删除");
+        }
+        
+        @try {
+            int read, write;
+            
+            FILE *pcm = fopen([cafFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
+            fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
+            FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
+            
+            const int PCM_SIZE = 8192;
+            const int MP3_SIZE = 8192;
+            short int pcm_buffer[PCM_SIZE*2];
+            unsigned char mp3_buffer[MP3_SIZE];
+            
+            lame_t lame = lame_init();
+            lame_set_in_samplerate(lame, 11025.0);
+            lame_set_VBR(lame, vbr_default);
+            lame_init_params(lame);
+            
+            do {
+                read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
+                if (read == 0)
+                    write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
+                else
+                    write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
+                
+                fwrite(mp3_buffer, write, 1, mp3);
+                
+            } while (read != 0);
+            
+            lame_close(lame);
+            fclose(mp3);
+            fclose(pcm);
+        }
+        @catch (NSException *exception) {
+            NSLog(@"%@",[exception description]);
+            return NO;
+        }
+        @finally {
+            if([fileManager removeItemAtPath:cafFilePath error:nil])
+            {
+                NSLog(@"删除caf");
+                return YES;
+            }
+        }
+    }else{
+        return NO;
     }
     
-    @try {
-        int read, write;
-        
-        FILE *pcm = fopen([cafFilePath cStringUsingEncoding:1], "rb");  //source 被转换的音频文件位置
-        fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
-        FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:1], "wb");  //output 输出生成的Mp3文件位置
-        
-        const int PCM_SIZE = 8192;
-        const int MP3_SIZE = 8192;
-        short int pcm_buffer[PCM_SIZE*2];
-        unsigned char mp3_buffer[MP3_SIZE];
-        
-        lame_t lame = lame_init();
-        lame_set_in_samplerate(lame, 11025.0);
-        lame_set_VBR(lame, vbr_default);
-        lame_init_params(lame);
-        
-        do {
-            read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
-            if (read == 0)
-                write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
-            else
-                write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
-            
-            fwrite(mp3_buffer, write, 1, mp3);
-            
-        } while (read != 0);
-        
-        lame_close(lame);
-        fclose(mp3);
-        fclose(pcm);
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@",[exception description]);
-    }
-    @finally {
-        if([fileManager removeItemAtPath:cafFilePath error:nil])
-        {
-            NSLog(@"删除caf");
-        }
-    }
 }
 -(void) recordEnd
 {
@@ -542,7 +566,6 @@
         
         if (self.voice.recordTime > 0.0f) {
             [_rbutton setTitle:[NSString stringWithFormat:@"录音时长:%0.1f秒",self.voice.recordTime] forState:UIControlStateNormal];
-            [self audio_PCMtoMP3];
         }else{
             [_rbutton setTitle:@"按住说话" forState:UIControlStateNormal];
         }
@@ -714,6 +737,10 @@
     [SVProgressHUD dismiss];
     if(success){
         [self saveHistory];
+         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        if([[ud objectForKey:@"SHOW_EVENT"] isEqualToString:@"1"]){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowEventInMap" object:nil userInfo:nil];
+        }
         UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:@"非常感谢，事件上报成功！我们会尽快处理！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         view.tag = 10001;
         [view show];

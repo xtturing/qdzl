@@ -13,6 +13,7 @@
 #import "QDSettingViewController.h"
 #import "QDEditViewController.h"
 #import "CLLocation+Sino.h"
+#import "QDSearchDetailViewController.h"
 
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define BASE_MAP_URL @"http://27.223.74.180:6080/arcgis/rest/services/QD/SJDT/MapServer"
@@ -155,7 +156,8 @@
 }
 
 - (void)RemoveEventInMap:(NSNotification *)notification{
-    
+    [self.graphicsLayer removeAllGraphics];
+    [self.graphicsLayer dataChanged];
 }
 
 - (void)addLocalTileLayer:(NSNotification *)notification{
@@ -164,12 +166,14 @@
 }
 
 - (void)addLocalTileLayerWithName:(NSString *)fileName{
-    NSString *name = [fileName stringByDeletingPathExtension];
+    NSString *name = @"LocalTiledLayer";
     NSString *extension = @"tpk";
     if(![self hasAddLocalLayer:name] && [[fileName pathExtension] isEqualToString:extension]){
         AGSLocalTiledLayer *localTileLayer = [AGSLocalTiledLayer localTiledLayerWithName:fileName];
         if(localTileLayer != nil){
+            [self.mapView reset];
             [self.mapView addMapLayer:localTileLayer withName:name];
+            [self.mapView zoomIn:YES];
             // Do any additional setup after loading the view from its nib.
             
         }
@@ -179,8 +183,7 @@
 }
 
 - (void)removeLocalTileLayer:(NSNotification *)notification{
-    NSString *fileName = [notification.userInfo objectForKey:@"name"];
-    NSString *name = [fileName stringByDeletingPathExtension];
+    NSString *name = @"LocalTiledLayer";
     [self.mapView removeMapLayerWithName:name];
     [self updateInterfaceWithReachability:_reach];
 }
@@ -195,7 +198,38 @@
 }
 
 - (void)ShowEventInMap{
+    [self.graphicsLayer removeAllGraphics];
+    [self.mapView removeMapLayerWithName:@"graphicsLayer"];
+    self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
+	[self.mapView addMapLayer:self.graphicsLayer withName:@"graphicsLayer"];
     
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *uids = [ud objectForKey:@"UID"];
+    if(!uids){
+        return;
+    }
+    for (NSString *uuid in uids) {
+        NSMutableDictionary *dic = [ud objectForKey:uuid];
+        if(!dic){
+            return;
+        }
+        AGSGraphic * pointgra= nil;
+        AGSPoint *point =	[AGSPoint pointWithX:[[dic objectForKey:@"Y"] floatValue]  y: [[dic objectForKey:@"X"] floatValue] spatialReference:nil];
+        if(point.x == 0 || point.y == 0 ){
+            continue;
+        }
+        NSArray *tipkey=[[NSArray alloc]initWithObjects:@"uuid",@"SJMS",@"SSGQ",@"SJWZ",nil];
+        NSArray *tipvalue=[[NSArray alloc]initWithObjects:uuid,[dic objectForKey:@"SJMS"],[dic objectForKey:@"SSGQ"],[dic objectForKey:@"SJWZ"],nil];
+        NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
+        
+        AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"gps_red"];
+        pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:tips infoTemplateDelegate:self];
+        dian.size = CGSizeMake(48,48);
+        dian.yoffset = 24;
+        pointgra.symbol = dian;
+        [self.graphicsLayer addGraphic:pointgra];
+        [self.graphicsLayer dataChanged];
+    }
 }
 #pragma mark AGSMapViewLayerDelegate methods
 
@@ -210,13 +244,31 @@
     if([[ud objectForKey:@"SHOW_EVENT"] isEqualToString:@"1"]){
         [self ShowEventInMap];
     }
-    if([[ud objectForKey:@"SHOW_DOWNLOAD"] isEqualToString:@"1"]){
-        [self addLocalTileLayerWithName:@"HDZZ.tpk"];
-    }
 }
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
     [self addStartPoint:mappoint];
 }
+#pragma mark - AGSMapViewCalloutDelegate
+
+- (BOOL)mapView:(AGSMapView *)mapView shouldShowCalloutForGraphic:(AGSGraphic *)graphic{
+    self.mapView.callout.customView = nil;
+    self.mapView.callout.title = [graphic.attributes objectForKey:@"SSGQ"];
+    self.mapView.callout.detail = [NSString stringWithFormat:@"%@:%@",[graphic.attributes objectForKey:@"SJMS"],[graphic.attributes objectForKey:@"SJWZ"]];
+    self.mapView.callout.titleColor=[UIColor whiteColor];
+    self.mapView.callout.autoAdjustWidth=NO;
+    self.mapView.callout.cornerRadius=2;
+    self.mapView.callout.accessoryButtonHidden = NO;
+    self.mapView.callout.accessoryButtonImage = [UIImage imageNamed:@"b3.png"];
+    return YES;
+}
+- (void)mapView:(AGSMapView *)mapView didClickCalloutAccessoryButtonForGraphic:(AGSGraphic *)graphic{
+    if([[graphic.attributes objectForKey:@"uuid"] length] > 0){
+        QDSearchDetailViewController *searchDetailViewController = [[QDSearchDetailViewController alloc] initWithNibName:@"QDSearchDetailViewController" bundle:nil];
+        searchDetailViewController.uid = [graphic.attributes objectForKey:@"uuid"];
+        [self.navigationController pushViewController:searchDetailViewController animated:YES];
+    }
+}
+
 - (void)gpsLocation{
     [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
     [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
@@ -252,13 +304,21 @@
     
 }
 - (void) updateInterfaceWithReachability: (Reachability*) curReach{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if([[ud objectForKey:@"SHOW_DOWNLOAD"] isEqualToString:@"1"]){
+        [self addLocalTileLayerWithName:@"HDZZ.tpk"];
+        [self.mapView.gps start];
+        return;
+    }
     if([curReach isReachable])
     {
         if(![curReach isReachableViaWiFi]){
             [self showMessageWithAlert:@"使用2G/3G 网络,会产生运营商流量费用，请选择WIFI环境使用功能"];
         }
+        [self.mapView reset];
         AGSTiledMapServiceLayer *tileLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:[NSURL URLWithString:BASE_MAP_URL]];
         [self.mapView addMapLayer:tileLayer withName:@"tileLayer"];
+        [self.mapView zoomIn:YES];
         [self.mapView.gps start];
     }
     else
