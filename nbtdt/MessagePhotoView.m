@@ -208,7 +208,7 @@
         NSLog(@"assets is %d",assets.count);
         //跳转到显示大图的页面
         ShowBigViewController *big = [[ShowBigViewController alloc]init];
-      
+        big.showButton = YES;
         big.arrayOK = [NSMutableArray arrayWithArray:assets];
     
     self.photoMenuItems = [NSMutableArray arrayWithArray:assets];

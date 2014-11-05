@@ -29,9 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
     self.navigationItem.title = @"事件查询";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     _uids = [ud objectForKey:@"UID"];

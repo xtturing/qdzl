@@ -440,7 +440,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }else{
         if(!_photoView){
-            _photoView= [[MessagePhotoView alloc]initWithFrame:CGRectMake(0.0f,0.0f,CGRectGetWidth(self.view.frame), 166)];
+            _photoView= [[MessagePhotoView alloc]initWithFrame:CGRectMake(20.0f,0.0f,CGRectGetWidth(cell.contentView.frame)-20, 166)];
             _photoView.delegate =self;
         }
         cell.accessoryView = _photoView;
@@ -556,7 +556,7 @@
             }
         }
     }else{
-        return NO;
+        return YES;
     }
     
 }

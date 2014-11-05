@@ -21,12 +21,10 @@
     UIButton        *rightbtn;
     UIScrollView    *_scrollerview;
     UIButton        *_btnOK;
-   
-    
 }
 
-
-
+@property(nonatomic) BOOL showVersion;
+@property(nonatomic) BOOL showButton;
 @property(nonatomic,strong) NSMutableArray *arrayOK;     //选中的图片数组
 
 

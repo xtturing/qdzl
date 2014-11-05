@@ -8,7 +8,7 @@
 
 #import "QDSettingViewController.h"
 #import "NBDownLoadViewController.h"
-
+#import "ShowBigViewController.h"
 @interface QDSettingViewController ()<UIAlertViewDelegate>
 
 @end
@@ -40,6 +40,9 @@
     // Dispose of any resources that can be recreated.
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if(section == 0){
+        return 1;
+    }
     return 2;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -85,9 +88,6 @@
         if(indexPath.row == 0){
             cell.textLabel.text = @"帮助";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }else{
-            cell.textLabel.text = @"反馈";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         
     }else if (indexPath.section == 1){
@@ -131,14 +131,18 @@
     
     if(indexPath.section == 0){
         if(indexPath.row == 0){
-            
-        }else{
-        
+            ShowBigViewController *big = [[ShowBigViewController alloc] init];
+            big.showButton = NO;
+            big.arrayOK = [NSMutableArray arrayWithObjects:[UIImage imageNamed:@"1"],[UIImage imageNamed:@"2"],[UIImage imageNamed:@"3"],[UIImage imageNamed:@"4"], nil];
+            [self.navigationController pushViewController:big animated:YES];
         }
-        
     }else if (indexPath.section == 1){
         if(indexPath.row == 0){
-            
+            ShowBigViewController *big = [[ShowBigViewController alloc] init];
+            big.showButton = NO;
+            big.showVersion = YES;
+            big.arrayOK = [NSMutableArray arrayWithObjects:[UIImage imageNamed:@"about"], nil];
+            [self.navigationController pushViewController:big animated:YES];
         }else{
             UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:@"确定退出当前用户账号" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             view.delegate = self;

@@ -30,12 +30,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
-                                     style:UIBarButtonItemStylePlain
-                                    target:self
-                                    action:@selector(complete:)];
-    
+    if(_showButton){
+        self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"完成", nil)
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(complete:)];
+    }else{
+        self.navigationItem.title = @"帮助";
+        if(_showVersion){
+            self.navigationItem.title = @"关于";
+        }
+    }
     [self layOut];
     
 }
@@ -49,7 +55,7 @@
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if (IOS7LATER)
     {
-          _scrollerview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 50)];
+        _scrollerview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - (_showButton?50:0))];
          _btnOK = [[UIButton alloc]initWithFrame:CGRectMake(244,  _scrollerview.frame.size.height + 9, 61, 32)];
     }
 #endif
@@ -59,7 +65,7 @@
     }
     else
     {
-        _scrollerview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height- 100)];
+        _scrollerview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height- (_showButton?100:0))];
          _btnOK = [[UIButton alloc]initWithFrame:CGRectMake(244,  _scrollerview.frame.size.height + 11, 61, 32)];
     }
     
@@ -71,13 +77,16 @@
     NSLog(@"self.arrayOK.count is %d",self.arrayOK.count);
  
     for (int i=0; i<[self.arrayOK count]; i++) {
-       ALAsset *asset=self.arrayOK[i];
-        
         UIImageView *imgview=[[UIImageView alloc] initWithFrame:CGRectMake(i*_scrollerview.frame.size.width, 0, _scrollerview.frame.size.width, _scrollerview.frame.size.height)];
-                   imgview.contentMode=UIViewContentModeScaleAspectFill;
-                    imgview.clipsToBounds=YES;
-        UIImage *tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
-        [imgview setImage:tempImg];
+        imgview.contentMode=UIViewContentModeScaleAspectFill;
+        imgview.clipsToBounds=YES;
+        if([self.arrayOK[i] isKindOfClass:[ALAsset class]]){
+            ALAsset *asset=self.arrayOK[i];
+            UIImage *tempImg=[UIImage imageWithCGImage:asset.defaultRepresentation.fullScreenImage];
+            [imgview setImage:tempImg];
+        }else{
+            [imgview setImage:(UIImage *)self.arrayOK[i]];
+        }
         [_scrollerview addSubview:imgview];
     }
     
@@ -86,15 +95,20 @@
     
     
     //点击按钮，回到主发布页面
-   
-    [_btnOK setBackgroundImage:[UIImage imageNamed:@"complete.png"] forState:UIControlStateNormal];
- 
-    [_btnOK setTitle:[NSString stringWithFormat:@"完成(%d)",self.arrayOK.count] forState:UIControlStateNormal];
-    _btnOK .titleLabel.font = [UIFont systemFontOfSize:10];
-    [_btnOK addTarget:self action:@selector(complete:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_btnOK];
-    
-    
+    if(_showButton){
+        [_btnOK setBackgroundImage:[UIImage imageNamed:@"complete.png"] forState:UIControlStateNormal];
+        
+        [_btnOK setTitle:[NSString stringWithFormat:@"完成(%d)",self.arrayOK.count] forState:UIControlStateNormal];
+        _btnOK .titleLabel.font = [UIFont systemFontOfSize:10];
+        [_btnOK addTarget:self action:@selector(complete:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_btnOK];
+    }
+    if(_showVersion){
+        [_btnOK setTitle:[NSString stringWithFormat:@"版本:%@",[NSString stringWithFormat:@"V%@", [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey]]] forState:UIControlStateNormal];
+        _btnOK .titleLabel.font = [UIFont systemFontOfSize:15];
+        _btnOK.frame = CGRectMake((CGRectGetWidth(self.view.frame)-100)/2, CGRectGetHeight(self.view.frame)*6/7, 100, 20);
+        [self.view addSubview:_btnOK];
+    }
 }
 -(void)complete:(UIButton *)sender{
     NSLog(@"完成了,跳到主发布页面");

@@ -30,9 +30,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
     self.navigationItem.title = @"事件处理流程";
     // Do any additional setup after loading the view from its nib.
 }
@@ -52,7 +49,7 @@
     if(_uid && _uid.length > 0){
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[dataHttpManager getInstance] letSearchEventHistory:_uid];
+            [[dataHttpManager getInstance] letSearchEventHistory:@"1415154418536"];
         });
     }
 }
@@ -85,7 +82,7 @@
     cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
-    cell.detailTextLabel.numberOfLines = 0;
+    cell.detailTextLabel.numberOfLines = 3;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.5;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
@@ -107,7 +104,7 @@
             cell.detailTextLabel.text = [dic objectForKey:@"SSGQ"];
         }
     }else{
-        NSMutableDictionary *dic = [_results objectAtIndex:indexPath.section];
+        NSMutableDictionary *dic = [_results objectAtIndex:(indexPath.section-1)];
         if(indexPath.row == 0){
             cell.textLabel.text = @"操作事件:";
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CREATEDATE"]];
