@@ -133,7 +133,7 @@
     
 }
 //下拉菜单的点击响应事件
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     
     if(buttonIndex == myActionSheet.cancelButtonIndex){
         NSLog(@"取消");

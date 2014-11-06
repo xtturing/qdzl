@@ -18,11 +18,12 @@
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define BASE_MAP_URL @"http://27.223.74.180:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
-@interface QDMapViewController ()<UISearchBarDelegate>{
-    AGSGraphic * startGra;
+@interface QDMapViewController ()<UISearchBarDelegate,UIActionSheetDelegate>{
+    AGSGraphic *startGra;
 }
 
 @property(nonatomic, strong) Reachability *reach;
+@property (nonatomic,strong) UILabel *tipLabel;
 
 @end
 
@@ -53,7 +54,6 @@
     [self updateInterfaceWithReachability:_reach];
     self.mapView.layerDelegate = self;
     self.mapView.calloutDelegate=self;
-    self.mapView.touchDelegate = self;
     self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
 	[self.mapView addMapLayer:self.graphicsLayer withName:@"graphicsLayer"];
     self.title = @"返回";
@@ -77,6 +77,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLocalTileLayer:) name:@"removeLocalTileLayer" object:nil];
 //    [self.navigationController.navigationBar customNavigationBar];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if(startGra){
+        [self.graphicsLayer removeGraphic:startGra];
+        startGra = nil;
+        [self.graphicsLayer dataChanged];
+    }
 }
 
 - (void)dealloc{
@@ -133,9 +142,7 @@
     [self.mapView zoomOut:YES];
 }
 -(IBAction)edit:(id)sender{
-    QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
-    editViewController.gpsPoint =(AGSPoint *)startGra.geometry;
-    [self.navigationController pushViewController:editViewController animated:YES];
+    [self openMenu];
 }
 
 - (void)zooMapToLevel:(int)level withCenter:(AGSPoint *)point{
@@ -235,10 +242,9 @@
 
 -(void) mapViewDidLoad:(AGSMapView*)mapView {
     if(self.mapView.gps.enabled){
-        [self performSelector:@selector(gpsLocation) withObject:nil afterDelay:2.0f];
+        [self performSelector:@selector(gpsLocation) withObject:nil afterDelay:1.0f];
     }else {
         [self.mapView.gps start];
-        return;
     }
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if([[ud objectForKey:@"SHOW_EVENT"] isEqualToString:@"1"]){
@@ -246,11 +252,17 @@
     }
 }
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics{
+    self.mapView.touchDelegate = nil;
     [self addStartPoint:mappoint];
+    if(_tipLabel && !_tipLabel.hidden){
+        _tipLabel.hidden = YES;
+    }
+    [self performSelector:@selector(goEditView) withObject:nil afterDelay:0.7f];
 }
 #pragma mark - AGSMapViewCalloutDelegate
 
 - (BOOL)mapView:(AGSMapView *)mapView shouldShowCalloutForGraphic:(AGSGraphic *)graphic{
+    self.mapView.touchDelegate = nil;
     self.mapView.callout.customView = nil;
     self.mapView.callout.title = [graphic.attributes objectForKey:@"SSGQ"];
     self.mapView.callout.detail = [NSString stringWithFormat:@"%@:%@",[graphic.attributes objectForKey:@"SJMS"],[graphic.attributes objectForKey:@"SJWZ"]];
@@ -262,6 +274,7 @@
     return YES;
 }
 - (void)mapView:(AGSMapView *)mapView didClickCalloutAccessoryButtonForGraphic:(AGSGraphic *)graphic{
+    self.mapView.touchDelegate = nil;
     if([[graphic.attributes objectForKey:@"uuid"] length] > 0){
         QDSearchDetailViewController *searchDetailViewController = [[QDSearchDetailViewController alloc] initWithNibName:@"QDSearchDetailViewController" bundle:nil];
         searchDetailViewController.uid = [graphic.attributes objectForKey:@"uuid"];
@@ -335,6 +348,79 @@
     
     [view show];
 }
+-(void)openMenu{
+    //在这里呼出下方菜单按钮项
+    UIActionSheet *_myActionSheet = [[UIActionSheet alloc]
+                                     initWithTitle:nil
+                                     delegate:self
+                                     cancelButtonTitle:@"取消"
+                                     destructiveButtonTitle:nil
+                                     otherButtonTitles:@"GPS定位点",@"手动选点", nil];
+    //刚才少写了这一句
+    [_myActionSheet showInView:self.view.window];
+    
+    
+}
+//下拉菜单的点击响应事件
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    
+    if(buttonIndex == actionSheet.cancelButtonIndex){
+        NSLog(@"取消");
+    }
+    switch (buttonIndex) {
+        case 0:
+            [self takeEditGps];
+            break;
+        case 1:
+            [self takeEdit];
+            break;
+        default:
+            break;
+    }
+}
 
+- (void)takeEditGps{
+    if(self.mapView.gps.enabled && self.mapView.gps.currentPoint){
+        [self goEditView];
+    }else {
+        [self.mapView.gps start];
+        UIAlertView *alert;
+        alert = [[UIAlertView alloc]
+                 initWithTitle:@"黄岛治理"
+                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
+                 delegate:nil cancelButtonTitle:nil
+                 otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+}
+
+
+-(void)takeEdit{
+    self.mapView.touchDelegate =self;
+    [self showTipView];
+}
+
+- (void)showTipView{
+    if(!_tipLabel){
+        _tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 60)];
+        _tipLabel.textColor = [UIColor orangeColor];
+        _tipLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        _tipLabel.textAlignment = NSTextAlignmentCenter;
+        _tipLabel.font =[UIFont systemFontOfSize:18];
+        _tipLabel.numberOfLines = 2;
+        _tipLabel.text = @"请用\"单个\"手指\"点击\"地图，选择你要上报的事件点位置！";
+        [self.view addSubview:_tipLabel];
+    }
+    if(_tipLabel.hidden){
+        _tipLabel.hidden = NO;
+    }
+}
+
+- (void)goEditView{
+    QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
+    editViewController.gpsPoint =(AGSPoint *)startGra.geometry;
+    [self.navigationController pushViewController:editViewController animated:YES];
+}
 
 @end

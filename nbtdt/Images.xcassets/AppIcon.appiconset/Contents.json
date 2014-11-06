@@ -21,19 +21,19 @@
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "icon-57.png",
+      "filename" : "57.png",
       "scale" : "1x"
     },
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "icon-57-1.png",
+      "filename" : "114.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon-180.png",
+      "filename" : "120.png",
       "scale" : "2x"
     }
   ],

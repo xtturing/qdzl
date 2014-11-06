@@ -635,6 +635,14 @@
         self.mapLocationStr = [NSString stringWithFormat:@"上报事件位于:%@附近,%@",mc,self.mapLocationStr];
         [self canUpload];
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
+                                                            message:@"非常抱歉，获取事件位置失败！"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil];
+        alertView.tag = 10001;
+        [alertView show];
     }
 }
 
@@ -643,9 +651,10 @@
     [SVProgressHUD dismiss];
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
 														message:[error localizedDescription]
-													   delegate:nil
+													   delegate:self
 											  cancelButtonTitle:@"确定"
 											  otherButtonTitles:nil];
+    alertView.tag = 10001;
 	[alertView show];
 }
 
@@ -703,10 +712,25 @@
                 direction = @"正东方向";
             }
             self.mapLocationStr = [NSString stringWithFormat:@"%@,距离大约%0.f米处",direction,[dist floatValue]*111000];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
+                                                                message:@"非常抱歉，获取事件位置失败！"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles:nil];
+            alertView.tag = 10001;
+            [alertView show];
         }
+
         
     }else{
-        [self showMessageWithAlert:@"非常抱歉，获取事件位置失败！"];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
+                                                            message:@"非常抱歉，获取事件位置失败！"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil];
+        alertView.tag = 10001;
+        [alertView show];
     }
 }
 
@@ -715,9 +739,10 @@
     [SVProgressHUD dismiss];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
 														message:[error localizedDescription]
-													   delegate:nil
+													   delegate:self
 											  cancelButtonTitle:@"确定"
 											  otherButtonTitles:nil];
+    alertView.tag = 10001;
 	[alertView show];
 }
 - (void)showMessageWithAlert:(NSString *)message{
@@ -764,4 +789,5 @@
 - (void)doBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 @end

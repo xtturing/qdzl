@@ -35,6 +35,14 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    UILabel *_tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 60)];
+    _tipLabel.textColor = [UIColor orangeColor];
+    _tipLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+    _tipLabel.textAlignment = NSTextAlignmentCenter;
+    _tipLabel.font =[UIFont systemFontOfSize:17];
+    _tipLabel.numberOfLines = 2;
+    _tipLabel.text = @"请在地图中\"点击\"选择你要上报事件的位置或者点击图标自动获取你当前的位置";
+    [self.view addSubview:_tipLabel];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reachabilityChanged:)
                                                  name:kReachabilityChangedNotification
@@ -49,8 +57,6 @@
     self.navigationItem.title = @"获取位置";
     UIBarButtonItem *right = [[UIBarButtonItem alloc]  initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(sendAction)];
     self.navigationItem.rightBarButtonItem = right;
-    self.navigationItem.backBarButtonItem = right;
-    self.navigationItem.leftBarButtonItem= right;
     // Do any additional setup after loading the view from its nib.
 }
 - (void)dealloc{
