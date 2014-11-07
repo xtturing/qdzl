@@ -48,7 +48,7 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44;
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -61,14 +61,24 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.textLabel.numberOfLines = 3;
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.textLabel.numberOfLines = 1;
     cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
-    cell.detailTextLabel.numberOfLines = 0;
+    cell.detailTextLabel.numberOfLines = 2;
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     cell.textLabel.minimumScaleFactor = 0.5;
     cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
     cell.detailTextLabel.minimumScaleFactor = 0.5;
-    cell.textLabel.text = [NSString stringWithFormat:@"%d,上报事件编号%@",indexPath.row+1,[_results objectAtIndex:indexPath.row]];
+    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    //用[NSDate date]可以获取系统当前时间
+    NSString *currentDateStr = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[[_results objectAtIndex:indexPath.row] doubleValue]/1000]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%d、%@ (%@)",indexPath.row+1,currentDateStr,[_results objectAtIndex:indexPath.row]];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *dic = [ud objectForKey:[_results objectAtIndex:indexPath.row]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"事件描述:%@",[dic objectForKey:@"SJMS"]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

@@ -311,6 +311,7 @@
         uids = [NSMutableArray arrayWithCapacity:0];
     }
     [uids addObject:self.uuidString];
+    [ud synchronize];
     [ud setObject:uids forKey:@"UID"];
     [ud synchronize];
 }
@@ -454,10 +455,9 @@
     if(indexPath.section == 0){
         
     }else if (indexPath.section == 1){
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cityManagerTableViewController *tableViewController = [[cityManagerTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
         tableViewController.delegate = self;
-        tableViewController.cityManagerName = cell.textLabel.text;
+        tableViewController.cityManagerName = self.cityManagerName;
         [self.navigationController  pushViewController:tableViewController animated:YES];
     }else if (indexPath.section == 2){
         
@@ -471,7 +471,7 @@
 - (void)didSelectedCityManager:(NSString *)cityManagerName{
      UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
     cell.textLabel.text = cityManagerName;
-    _cityManagerName = cityManagerName;
+    self.cityManagerName = cityManagerName;
     [self canUpload];
 }
 

@@ -49,7 +49,7 @@
     if(_uid && _uid.length > 0){
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[dataHttpManager getInstance] letSearchEventHistory:@"1415154418536"];
+            [[dataHttpManager getInstance] letSearchEventHistory:_uid];
         });
     }
 }

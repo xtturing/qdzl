@@ -20,10 +20,14 @@
 
 @interface QDMapViewController ()<UISearchBarDelegate,UIActionSheetDelegate>{
     AGSGraphic *startGra;
+    NSString *showViewId;
 }
 
 @property(nonatomic, strong) Reachability *reach;
 @property (nonatomic,strong) UILabel *tipLabel;
+@property (nonatomic,strong) UIView *showView;
+@property (nonatomic,strong) UILabel *showTitle;
+@property (nonatomic,strong) UILabel *showDetailTitle;
 
 @end
 
@@ -257,20 +261,63 @@
     if(_tipLabel && !_tipLabel.hidden){
         _tipLabel.hidden = YES;
     }
-    [self performSelector:@selector(goEditView) withObject:nil afterDelay:0.7f];
+    [self performSelector:@selector(goEditView:) withObject:(AGSPoint *)startGra.geometry afterDelay:0.7f];
+}
+
+- (UIView *)showView{
+    if(!_showView){
+        _showView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 130)];
+        _showView.backgroundColor = [UIColor clearColor];
+        UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showEvent:)];
+        [_showView addGestureRecognizer:tapGesture];
+        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"b3"]];
+        image.frame =CGRectMake(250, 10, 30, 30);
+        [_showView addSubview:image];
+    }
+    [_showView addSubview:self.showTitle];
+    [_showView addSubview:self.showDetailTitle];
+    return _showView;
+}
+
+- (UILabel *)showTitle{
+    if(!_showTitle){
+        _showTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 240, 40)];
+        _showTitle.textColor = [UIColor whiteColor];
+        _showTitle.backgroundColor = [UIColor clearColor];
+        _showTitle.textAlignment = NSTextAlignmentLeft;
+        _showTitle.font =[UIFont systemFontOfSize:16];
+        _showTitle.numberOfLines = 2;
+    }
+    return _showTitle;
+}
+
+- (UILabel *)showDetailTitle{
+    if(!_showDetailTitle){
+        _showDetailTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 45, 260, 85)];
+        _showDetailTitle.textColor = [UIColor whiteColor];
+        _showDetailTitle.backgroundColor = [UIColor clearColor];
+        _showDetailTitle.textAlignment = NSTextAlignmentLeft;
+        _showDetailTitle.font =[UIFont systemFontOfSize:13];
+        _showDetailTitle.numberOfLines = 4;
+    }
+    return _showDetailTitle;
+}
+
+- (void)showEvent:(UITapGestureRecognizer *)gesture{
+    if(showViewId && showViewId.length > 0){
+        QDSearchDetailViewController *searchDetailViewController = [[QDSearchDetailViewController alloc] initWithNibName:@"QDSearchDetailViewController" bundle:nil];
+        searchDetailViewController.uid = showViewId;
+        [self.navigationController pushViewController:searchDetailViewController animated:YES];
+    }
 }
 #pragma mark - AGSMapViewCalloutDelegate
 
 - (BOOL)mapView:(AGSMapView *)mapView shouldShowCalloutForGraphic:(AGSGraphic *)graphic{
     self.mapView.touchDelegate = nil;
-    self.mapView.callout.customView = nil;
-    self.mapView.callout.title = [graphic.attributes objectForKey:@"SSGQ"];
-    self.mapView.callout.detail = [NSString stringWithFormat:@"%@:%@",[graphic.attributes objectForKey:@"SJMS"],[graphic.attributes objectForKey:@"SJWZ"]];
-    self.mapView.callout.titleColor=[UIColor whiteColor];
-    self.mapView.callout.autoAdjustWidth=NO;
-    self.mapView.callout.cornerRadius=2;
-    self.mapView.callout.accessoryButtonHidden = NO;
-    self.mapView.callout.accessoryButtonImage = [UIImage imageNamed:@"b3.png"];
+    self.mapView.callout.customView =self.showView;
+    showViewId = [graphic.attributes objectForKey:@"uuid"];
+    self.showTitle.text = [graphic.attributes objectForKey:@"SJMS"];
+    self.showDetailTitle.text = [NSString stringWithFormat:@"事件管区:%@\n事件位置:%@",[graphic.attributes objectForKey:@"SSGQ"],[graphic.attributes objectForKey:@"SJWZ"]];
     return YES;
 }
 - (void)mapView:(AGSMapView *)mapView didClickCalloutAccessoryButtonForGraphic:(AGSGraphic *)graphic{
@@ -283,7 +330,6 @@
 }
 
 - (void)gpsLocation{
-    [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
     [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
     CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
     if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
@@ -381,7 +427,11 @@
 
 - (void)takeEditGps{
     if(self.mapView.gps.enabled && self.mapView.gps.currentPoint){
-        [self goEditView];
+        CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
+        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
+            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
+            [self goEditView:mappoint];
+        }
     }else {
         [self.mapView.gps start];
         UIAlertView *alert;
@@ -417,10 +467,12 @@
     }
 }
 
-- (void)goEditView{
-    QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
-    editViewController.gpsPoint =(AGSPoint *)startGra.geometry;
-    [self.navigationController pushViewController:editViewController animated:YES];
+- (void)goEditView:(AGSPoint *)point{
+    if(point && point.x > 0 && point.y > 0){
+        QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
+        editViewController.gpsPoint = point;
+        [self.navigationController pushViewController:editViewController animated:YES];
+    }
 }
 
 @end
