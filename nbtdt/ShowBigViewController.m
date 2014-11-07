@@ -66,7 +66,7 @@
     else
     {
         _scrollerview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height- (_showButton?100:0))];
-         _btnOK = [[UIButton alloc]initWithFrame:CGRectMake(244,  _scrollerview.frame.size.height + 11, 61, 32)];
+         _btnOK = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 76,  _scrollerview.frame.size.height + 11, 61, 32)];
     }
     
     

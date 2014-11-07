@@ -103,13 +103,13 @@
         [self.graphicsLayer removeGraphic:startGra];
         startGra = nil;
     }
-    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"qidian"];
-    dian.size = CGSizeMake(32,47);
+    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"qd_gps"];
+    dian.size = CGSizeMake(32,32);
     if(mappoint.x == 0 || mappoint.y == 0 ){
         return;
     }
     startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil infoTemplateDelegate:nil];
-    dian.yoffset=24;
+    dian.yoffset=16;
     startGra.symbol = dian;
     [self.graphicsLayer addGraphic:startGra];
     [self.graphicsLayer dataChanged];

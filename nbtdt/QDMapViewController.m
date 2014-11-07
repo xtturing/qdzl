@@ -110,7 +110,7 @@
 }
 
 -(void)viewDidLayoutSubviews{
-    [_editBtn setFrame:CGRectMake(137,( [UIScreen mainScreen].bounds.size.height> 480)?434:364, 48, 48)];
+//    [_editBtn setFrame:CGRectMake(137,( [UIScreen mainScreen].bounds.size.height> 480)?434:364, 48, 48)];
 }
 
 #pragma mark -IBAction
@@ -317,7 +317,7 @@
     self.mapView.callout.customView =self.showView;
     showViewId = [graphic.attributes objectForKey:@"uuid"];
     self.showTitle.text = [graphic.attributes objectForKey:@"SJMS"];
-    self.showDetailTitle.text = [NSString stringWithFormat:@"事件管区:%@\n事件位置:%@",[graphic.attributes objectForKey:@"SSGQ"],[graphic.attributes objectForKey:@"SJWZ"]];
+    self.showDetailTitle.text = [NSString stringWithFormat:@"上报事件管区:%@\n%@",[graphic.attributes objectForKey:@"SSGQ"],[graphic.attributes objectForKey:@"SJWZ"]];
     return YES;
 }
 - (void)mapView:(AGSMapView *)mapView didClickCalloutAccessoryButtonForGraphic:(AGSGraphic *)graphic{
@@ -342,13 +342,13 @@
         [self.graphicsLayer removeGraphic:startGra];
         startGra = nil;
     }
-    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"qidian"];
-    dian.size = CGSizeMake(32,47);
+    AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"qd_gps"];
+    dian.size = CGSizeMake(32,32);
     if(mappoint.x == 0 || mappoint.y == 0 ){
         return;
     }
     startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil infoTemplateDelegate:nil];
-    dian.yoffset=24;
+    dian.yoffset=16;
     startGra.symbol = dian;
     [self.graphicsLayer addGraphic:startGra];
     [self.graphicsLayer dataChanged];

@@ -386,13 +386,13 @@
         cell.textLabel.textColor = [UIColor lightGrayColor];
         cell.detailTextLabel.text = @"";
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0, 0, 100, 44);
+        button.frame = CGRectMake(0, 0, 120, 44);
         [button setTitle:@"获取位置" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont systemFontOfSize:14];
         [button setImage:[UIImage imageNamed:@"qd_point"] forState:UIControlStateNormal];
         [button setImageEdgeInsets:UIEdgeInsetsMake(0, 5, 0, button.titleLabel.frame.size.width)];
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -button.imageView.frame.size.width+30, 0, 5)];
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -button.imageView.frame.size.width+50, 0, 5)];
         [button addTarget:self action:@selector(getLocation) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = button;
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -411,7 +411,7 @@
         _lbutton.titleLabel.font = [UIFont systemFontOfSize:14];
         [_lbutton setImage:[UIImage imageNamed:@"qd_pen"] forState:UIControlStateNormal];
         [_lbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 0, _lbutton.titleLabel.frame.size.width)];
-        [_lbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, -_lbutton.imageView.frame.size.width+50, 0, 5)];
+        [_lbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, -_lbutton.imageView.frame.size.width+70, 0, 5)];
         [_lbutton addTarget:self action:@selector(startTextInput) forControlEvents:UIControlEventTouchUpInside];
         _lbutton.titleLabel.numberOfLines = 1;
         _lbutton.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
@@ -429,7 +429,7 @@
         _rbutton.titleLabel.font = [UIFont systemFontOfSize:14];
         [_rbutton setImage:[UIImage imageNamed:@"qd_mic"] forState:UIControlStateNormal];
         [_rbutton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 0, _lbutton.titleLabel.frame.size.width)];
-        [_rbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, -_lbutton.imageView.frame.size.width+50, 0, 5)];
+        [_rbutton setTitleEdgeInsets:UIEdgeInsetsMake(0, -_lbutton.imageView.frame.size.width+30, 0, 5)];
         _rbutton.titleLabel.numberOfLines = 1;
         _rbutton.titleLabel.adjustsFontSizeToFitWidth = YES;
         _rbutton.titleLabel.minimumScaleFactor = 0.5;
@@ -441,7 +441,7 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }else{
         if(!_photoView){
-            _photoView= [[MessagePhotoView alloc]initWithFrame:CGRectMake(20.0f,0.0f,CGRectGetWidth(cell.contentView.frame)-20, 166)];
+            _photoView= [[MessagePhotoView alloc]initWithFrame:CGRectMake(20.0f,0.0f,CGRectGetWidth(self.view.frame)-40, 166)];
             _photoView.delegate =self;
         }
         cell.accessoryView = _photoView;

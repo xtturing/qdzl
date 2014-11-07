@@ -59,12 +59,15 @@
 //        }
 //    }
 }
+- (void)layoutSubviews{
+    _photoScrollView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), 124);
+}
 
 - (void)setup{
    
     self.backgroundColor = [UIColor whiteColor];
 
-    _photoScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 124)];
+    _photoScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), 124)];
     _photoScrollView.contentSize = CGSizeMake(1024, 124);
    
     photoMenuItems = [[NSMutableArray alloc]init];
