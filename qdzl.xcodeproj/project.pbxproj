@@ -1289,8 +1289,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1309,8 +1309,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "435f5d6f-e70b-4639-ad8f-a99e7b13cd54";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "435f5d6f-e70b-4639-ad8f-a99e7b13cd54";
+				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1327,8 +1327,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1340,8 +1340,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "435f5d6f-e70b-4639-ad8f-a99e7b13cd54";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "435f5d6f-e70b-4639-ad8f-a99e7b13cd54";
+				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1356,8 +1356,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				FRAMEWORK_SEARCH_PATHS = (
 					$HOME/Library/SDKs,
 					"$(PROJECT_DIR)",
@@ -1384,8 +1384,8 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = qdzl;
-				PROVISIONING_PROFILE = "2c9cc01a-ffc6-4cd5-9d0e-ffeceb79a97f";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2c9cc01a-ffc6-4cd5-9d0e-ffeceb79a97f";
+				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
@@ -1400,8 +1400,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Moonlight QDKCY (3583N97GJD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/tdtnb",
 					"$(PROJECT_DIR)",
@@ -1427,8 +1427,8 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = qdzl;
-				PROVISIONING_PROFILE = "2c9cc01a-ffc6-4cd5-9d0e-ffeceb79a97f";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2c9cc01a-ffc6-4cd5-9d0e-ffeceb79a97f";
+				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
