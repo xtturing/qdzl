@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"事件查询";
+    self.navigationItem.title = @"处置进度";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     _uids = [ud objectForKey:@"UID"];
     _results = [NSMutableArray arrayWithArray:_uids];

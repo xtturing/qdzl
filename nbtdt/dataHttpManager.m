@@ -148,6 +148,18 @@ static dataHttpManager * instance=nil;
     [self setGetUserInfo:request withRequestType:AASearchEventHistory];
     [_requestQueue addOperation:request];
 }
+
+- (void)letAppRaise:(NSString *)uid withRaise:(NSString *)raise{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@?jlbs=%@&sjpy=%@",HTTP_APP_RAISE,uid,[raise stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURL  *url = [NSURL URLWithString:baseUrl];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
+    [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    [request setTimeOutSeconds:TIMEOUT];
+    [request setResponseEncoding:NSUTF8StringEncoding];
+    NSLog(@"url=%@",url);
+    [self setGetUserInfo:request withRequestType:AAAppRaise];
+    [_requestQueue addOperation:request];
+}
 //继续添加
 
 #pragma mark - Operate queue
@@ -244,9 +256,18 @@ static dataHttpManager * instance=nil;
             [_delegate didPostEvent:success];
         }
     }
+    if(requestType == AAAppRaise){
+        BOOL success = NO;
+        if([responseString isEqualToString:@"0"]){
+            success = YES;
+        }
+        if ([_delegate respondsToSelector:@selector(didGetAppRaise:)]) {
+            [_delegate didGetAppRaise:success];
+        }
+    }
     if(requestType == AASearchEventHistory){
         if ([_delegate respondsToSelector:@selector(didSearchEventHistory:)]) {
-            [_delegate didSearchEventHistory:userArr];
+            [_delegate didSearchEventHistory:userInfo];
         }
     }
     

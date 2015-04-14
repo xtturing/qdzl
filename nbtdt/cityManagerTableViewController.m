@@ -21,7 +21,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        _list =[NSArray arrayWithObjects:@"社会治安",@"城市管理",@"信访稳定",@"安全生产",@"其他事项", nil];
+        _list =[NSArray arrayWithObjects:@"社会治安",@"城市管理",@"信访稳定",@"安全生产",@"办事服务",@"民生服务",@"纠纷调解", nil];
     }
     return self;
 }

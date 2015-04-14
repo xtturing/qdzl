@@ -13,7 +13,7 @@
 #define HTTP_LOGIN_URL              @"http://27.223.74.180:8080/esys/plugin/urbanadmin"
 #define HTTP_POSTEVENT_URL          @"http://27.223.74.180:8080/esys/plugin/urbanadmin/publicUserSubmitEvent.htm"
 #define HTTP_SEARCH_HISTORY         @"http://27.223.74.180:8080/esys/plugin/urbanadmin/getHistory.htm"
-
+#define HTTP_APP_RAISE              @"http://27.223.74.180:8080/esys/plugin/urbanadmin/publicUserAppraise.htm"
 
 #define REQUEST_TYPE          @"requestType"
 
@@ -23,6 +23,7 @@ typedef enum {
     AAChangePassword,
     AAPostEvent,
     AASearchEventHistory,
+    AAAppRaise,
     //继续添加
     
 }DataRequestType;
@@ -45,7 +46,9 @@ typedef enum {
 
 - (void)didPostEvent:(BOOL)success;
 
-- (void)didSearchEventHistory:(NSArray *)list;
+- (void)didSearchEventHistory:(NSDictionary *)list;
+
+- (void)didGetAppRaise:(BOOL)success;
 
 //继续添加
 @end
@@ -75,6 +78,8 @@ typedef enum {
 - (void)letPostEvent:(NSString *)filePath fileName:(NSString *)fileName;
 
 - (void)letSearchEventHistory:(NSString *)uid;
+
+- (void)letAppRaise:(NSString *)uid withRaise:(NSString *)raise;
 
 //继续添加
 @end
