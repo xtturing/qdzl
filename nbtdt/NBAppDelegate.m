@@ -8,11 +8,16 @@
 
 #import "NBAppDelegate.h"
 #import "ASViewController.h"
+#define kClientID @"17VawA9qKb4w14Ch"
 @implementation NBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    NSError *error = nil;
+    BOOL valid = [AGSRuntimeEnvironment setClientID:kClientID error:&error];
+    if (!valid) {
+        NSLog(@"setClientID failed: %@", error.localizedDescription);
+    }
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];

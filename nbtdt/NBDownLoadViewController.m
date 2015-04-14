@@ -147,7 +147,7 @@
     }
     
     
-    int index=[_tpkList.allKeys indexOfObject:[downItem.url description]];
+    NSInteger index=[_tpkList.allKeys indexOfObject:[downItem.url description]];
     DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     [self updateCell:cell withDownItem:downItem];
 }

@@ -630,8 +630,7 @@
     [SVProgressHUD dismiss];
     if(featureSet.features != nil && [featureSet.features count] > 0){
         AGSGraphic *graphic = [featureSet.features objectAtIndex:0];
-        NSMutableDictionary *dic = graphic.attributes;
-        NSString *mc = [dic objectForKey:@"MC"];
+        NSString *mc = [graphic attributeForKey:@"MC"];
         self.mapLocationStr = [NSString stringWithFormat:@"上报事件位于:%@附近,%@",mc,self.mapLocationStr];
         [self canUpload];
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
@@ -668,17 +667,15 @@
 		AGSFeatureSet *fs = result.value;
         if(fs.features != nil && [fs.features count] > 0){
             AGSGraphic *graphic = [fs.features objectAtIndex:0];
-            NSMutableDictionary *dic = graphic.attributes;
-            self.citytype = [dic objectForKey:@"社区名称"];
+            self.citytype = [graphic attributeForKey:@"社区名称"];
         }
         result = [results objectAtIndex:1];
 		fs = result.value;
         if(fs.features != nil && [fs.features count] > 0){
             AGSGraphic *graphic = [fs.features objectAtIndex:0];
-            NSMutableDictionary *dic = graphic.attributes;
-            NSString *angle = [dic objectForKey:@"NEAR_ANGLE"];
-            NSString *dist = [dic objectForKey:@"NEAR_DIST"];
-            NSString *fid = [dic objectForKey:@"NEAR_FID"];
+            NSString *angle = [graphic attributeForKey:@"NEAR_ANGLE"];
+            NSString *dist = [graphic attributeForKey:@"NEAR_DIST"];
+            NSString *fid = [graphic attributeForKey:@"NEAR_FID"];
             
             self.query.objectIds = [NSArray arrayWithObjects:fid, nil];
             [self.queryTask executeWithQuery:self.query];

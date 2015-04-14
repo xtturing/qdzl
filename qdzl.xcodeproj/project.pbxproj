@@ -73,7 +73,6 @@
 		4153D11119E6F00D00DE06E3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10E19E6F00D00DE06E3 /* Default.png */; };
 		4153D11219E6F00D00DE06E3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10F19E6F00D00DE06E3 /* Default@2x.png */; };
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
-		419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96A19CB32770067497F /* ArcGIS.framework */; };
 		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
 		41B3D69819CC816A00FB3017 /* QDMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3D69619CC816A00FB3017 /* QDMapViewController.m */; };
 		41B3D69919CC816A00FB3017 /* QDMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41B3D69719CC816A00FB3017 /* QDMapViewController.xib */; };
@@ -91,7 +90,6 @@
 		41BBA1B819A78B3300C0A328 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA04919A78B3200C0A328 /* AFURLConnectionOperation.m */; };
 		41BBA1B919A78B3300C0A328 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA04B19A78B3200C0A328 /* AFXMLRequestOperation.m */; };
 		41BBA1BA19A78B3300C0A328 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA04D19A78B3200C0A328 /* UIImageView+AFNetworking.m */; };
-		41BBA1BB19A78B3300C0A328 /* AGSGoogleMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA04F19A78B3200C0A328 /* AGSGoogleMapLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41BBA1BD19A78B3300C0A328 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA05319A78B3200C0A328 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41BBA1BE19A78B3300C0A328 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA05619A78B3200C0A328 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41BBA1BF19A78B3300C0A328 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA05819A78B3200C0A328 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -113,8 +111,6 @@
 		41BBA1CF19A78B3300C0A328 /* DownloadStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA07F19A78B3200C0A328 /* DownloadStoreManager.m */; };
 		41BBA1D019A78B3300C0A328 /* DwonloadModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA08019A78B3200C0A328 /* DwonloadModel.xcdatamodeld */; };
 		41BBA1D119A78B3300C0A328 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BBA08219A78B3200C0A328 /* InfoPlist.strings */; };
-		41BBA1D419A78B3300C0A328 /* GoogleMapSchema.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA08919A78B3200C0A328 /* GoogleMapSchema.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		41BBA1D519A78B3300C0A328 /* GoogleMapTileOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA08B19A78B3200C0A328 /* GoogleMapTileOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41BBA23A19A78B3300C0A328 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41BBA0F119A78B3200C0A328 /* Images.xcassets */; };
 		41BBA23B19A78B3300C0A328 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA0F619A78B3200C0A328 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		41BBA23C19A78B3300C0A328 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BBA0F719A78B3200C0A328 /* main.m */; };
@@ -282,7 +278,6 @@
 		4153D10F19E6F00D00DE06E3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "image/Default@2x.png"; sourceTree = "<group>"; };
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
-		419FD96A19CB32770067497F /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ArcGIS.framework; path = ../nbtdt/ArcGIS.framework; sourceTree = "<group>"; };
 		419FD96E19CB372E0067497F /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
 		41B3D69519CC816A00FB3017 /* QDMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDMapViewController.h; sourceTree = "<group>"; };
 		41B3D69619CC816A00FB3017 /* QDMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDMapViewController.m; sourceTree = "<group>"; };
@@ -314,8 +309,6 @@
 		41BBA04B19A78B3200C0A328 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		41BBA04C19A78B3200C0A328 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		41BBA04D19A78B3200C0A328 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		41BBA04E19A78B3200C0A328 /* AGSGoogleMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGSGoogleMapLayer.h; sourceTree = "<group>"; };
-		41BBA04F19A78B3200C0A328 /* AGSGoogleMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGSGoogleMapLayer.m; sourceTree = "<group>"; };
 		41BBA05219A78B3200C0A328 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		41BBA05319A78B3200C0A328 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		41BBA05419A78B3200C0A328 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -362,10 +355,6 @@
 		41BBA07F19A78B3200C0A328 /* DownloadStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadStoreManager.m; sourceTree = "<group>"; };
 		41BBA08119A78B3200C0A328 /* DwonloadModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DwonloadModel.xcdatamodel; sourceTree = "<group>"; };
 		41BBA08319A78B3200C0A328 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		41BBA08819A78B3200C0A328 /* GoogleMapSchema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapSchema.h; sourceTree = "<group>"; };
-		41BBA08919A78B3200C0A328 /* GoogleMapSchema.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapSchema.m; sourceTree = "<group>"; };
-		41BBA08A19A78B3200C0A328 /* GoogleMapTileOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleMapTileOperation.h; sourceTree = "<group>"; };
-		41BBA08B19A78B3200C0A328 /* GoogleMapTileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleMapTileOperation.m; sourceTree = "<group>"; };
 		41BBA0F119A78B3200C0A328 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		41BBA0F419A78B3200C0A328 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		41BBA0F519A78B3200C0A328 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -442,7 +431,6 @@
 				410B078619FE6CBE008C7FD3 /* libmp3lame.a in Frameworks */,
 				41BBA2FC19A798C000C0A328 /* UIKit.framework in Frameworks */,
 				41BBA2FB19A798B400C0A328 /* CoreGraphics.framework in Frameworks */,
-				419FD96C19CB32770067497F /* ArcGIS.framework in Frameworks */,
 				41BBA2FA19A798AC00C0A328 /* CoreData.framework in Frameworks */,
 				41BBA2F919A798A600C0A328 /* SystemConfiguration.framework in Frameworks */,
 				41BBA2F819A7989B00C0A328 /* Security.framework in Frameworks */,
@@ -494,7 +482,6 @@
 			children = (
 				41199E0119E4541300C50382 /* AssetsLibrary.framework */,
 				419FD96E19CB372E0067497F /* iflyMSC.framework */,
-				419FD96A19CB32770067497F /* ArcGIS.framework */,
 				41B838DF19BF4E390089FB1B /* AVFoundation.framework */,
 				41B838DD19BF4E150089FB1B /* AddressBook.framework */,
 				41B838C119BF49FA0089FB1B /* AdSupport.framework */,
@@ -705,19 +692,6 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		4148237019AA2FA100442FA7 /* GoodleMapLayer */ = {
-			isa = PBXGroup;
-			children = (
-				41BBA04E19A78B3200C0A328 /* AGSGoogleMapLayer.h */,
-				41BBA04F19A78B3200C0A328 /* AGSGoogleMapLayer.m */,
-				41BBA08819A78B3200C0A328 /* GoogleMapSchema.h */,
-				41BBA08919A78B3200C0A328 /* GoogleMapSchema.m */,
-				41BBA08A19A78B3200C0A328 /* GoogleMapTileOperation.h */,
-				41BBA08B19A78B3200C0A328 /* GoogleMapTileOperation.m */,
-			);
-			name = GoodleMapLayer;
-			sourceTree = "<group>";
-		};
 		4148237119AA2FC300442FA7 /* categary */ = {
 			isa = PBXGroup;
 			children = (
@@ -773,7 +747,6 @@
 				4148237A19AA310900442FA7 /* SVProgressHUD */,
 				4148237819AA30D700442FA7 /* XMLReader */,
 				41BBA03A19A78B3200C0A328 /* AFNetworking */,
-				4148237019AA2FA100442FA7 /* GoodleMapLayer */,
 				41BBA05119A78B3200C0A328 /* ASIHTTPRequest */,
 				4148237319AA2FE900442FA7 /* JsonKit */,
 			);
@@ -1183,14 +1156,12 @@
 				4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */,
 				410BDED319F2A2450080D11C /* ASPasswordViewController.m in Sources */,
 				41BBA28D19A78B3300C0A328 /* XMLReader.m in Sources */,
-				41BBA1D419A78B3300C0A328 /* GoogleMapSchema.m in Sources */,
 				41BBA23C19A78B3300C0A328 /* main.m in Sources */,
 				41B76E7A19B37C0600C4F1DB /* DowningCell.m in Sources */,
 				4107C2C919F3F186000C092D /* QDMapLocationViewController.m in Sources */,
 				41BBA1C319A78B3300C0A328 /* ASIInputStream.m in Sources */,
 				4111017E19F802C00045E029 /* XMLDictionary.m in Sources */,
 				41199DE019E4527D00C50382 /* MessagePhotoMenuItem.m in Sources */,
-				41BBA1D519A78B3300C0A328 /* GoogleMapTileOperation.m in Sources */,
 				41BBA1B419A78B3300C0A328 /* AFImageRequestOperation.m in Sources */,
 				41BBA1BF19A78B3300C0A328 /* ASIDataDecompressor.m in Sources */,
 				41BBA1B319A78B3300C0A328 /* AFHTTPRequestOperation.m in Sources */,
@@ -1230,7 +1201,6 @@
 				410E855519E58CDE00A4D02C /* MyMD5.m in Sources */,
 				41199DD619E440F100C50382 /* cityManagerTableViewController.m in Sources */,
 				41BBA1CD19A78B3300C0A328 /* DownloadItemEntity.m in Sources */,
-				41BBA1BB19A78B3300C0A328 /* AGSGoogleMapLayer.m in Sources */,
 				41BBA1BD19A78B3300C0A328 /* ASIAuthenticationDialog.m in Sources */,
 				41BBA1D019A78B3300C0A328 /* DwonloadModel.xcdatamodeld in Sources */,
 				41BBA23B19A78B3300C0A328 /* JSONKit.m in Sources */,
@@ -1351,11 +1321,17 @@
 		39A1F1EE16EF17D7001EAE76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN_CONSTANT_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN_INT_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1364,30 +1340,39 @@
 					"$(PROJECT_DIR)/nbtdt",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					/Applications/Xcode.app/Contents/Developer/Library/Frameworks,
-					"$(HOME)/Library/SDKs/ArcGIS",
+					"$(HOME)/Library/SDKs/ArcGIS/IOS/**",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
 					/Users/xtturing/nbtdt,
 				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nbtdt/qdzl-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "nbtdt/qdzl-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/nbtdt",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
 					ArcGIS,
-					"-lstdc++",
+					"-l",
+					"c++",
 				);
 				PRODUCT_NAME = qdzl;
 				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1395,11 +1380,17 @@
 		39A1F1EF16EF17D7001EAE76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN_CONSTANT_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN_EMPTY_BODY = NO;
+				CLANG_WARN_ENUM_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN_INT_CONVERSION = "$(CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION)";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HU ZHENBIAO (XM47G55ZT2)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1410,9 +1401,17 @@
 					/Applications/Xcode.app/Contents/Developer/Library/Frameworks,
 					"$(PROJECT_DIR)/nbtdt",
 					/Users/xtturing/nbtdt,
+					"$(HOME)/Library/SDKs/ArcGIS/IOS/**",
 				);
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nbtdt/qdzl-Prefix.pch";
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				INFOPLIST_FILE = "nbtdt/qdzl-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1420,17 +1419,20 @@
 					"$(PROJECT_DIR)/nbtdt",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-framework",
 					ArcGIS,
-					"-lstdc++",
+					"-l",
+					"c++",
 				);
 				PRODUCT_NAME = qdzl;
 				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv6 armv7";
+				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

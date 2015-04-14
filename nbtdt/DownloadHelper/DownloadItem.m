@@ -170,7 +170,7 @@
     NSString *rangeString=[_responseHeaders objectForKey:@"Content-Range"];
     if(rangeString)
     {
-        int index= [rangeString rangeOfString:@"/"].location;
+        NSInteger index= [rangeString rangeOfString:@"/"].location;
         if(index!=NSNotFound)
         {
             _totalLength=[[rangeString substringFromIndex:index+1] doubleValue];

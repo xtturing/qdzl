@@ -61,16 +61,19 @@
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.mapView = nil;
-    if(self.mapView.gps.enabled){
-        [self.mapView.gps stop];
+    
+    if([self.mapView.locationDisplay isDataSourceStarted]){
+        [self.mapView.locationDisplay stopDataSource];
+        
     }
+    self.mapView = nil;
 }
 - (void)viewDidUnload {
     //Stop the GPS, undo the map rotation (if any)
-    if(self.mapView.gps.enabled){
-        [self.mapView.gps stop];
+    if([self.mapView.locationDisplay isDataSourceStarted]){
+        [self.mapView.locationDisplay stopDataSource];
     }
+    self.mapView = nil;
 }
 
 -(void)viewDidLayoutSubviews{
@@ -108,35 +111,37 @@
     if(mappoint.x == 0 || mappoint.y == 0 ){
         return;
     }
-    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil infoTemplateDelegate:nil];
-    dian.yoffset=16;
+    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil];
     startGra.symbol = dian;
     [self.graphicsLayer addGraphic:startGra];
-    [self.graphicsLayer dataChanged];
+    [self.graphicsLayer refresh];
 }
 -(IBAction)gps:(id)sender{
     [self getGPS];
 }
 
 -(void)getGPS{
-    if(self.mapView.gps.enabled){
-        [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
-        CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
-        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
-            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
-            [self addStartPoint:mappoint];
-        }
-    }else{
-        [self.mapView.gps start];
-        UIAlertView *alert;
-        alert = [[UIAlertView alloc]
-                 initWithTitle:@"黄岛治理"
-                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
-                 delegate:nil cancelButtonTitle:nil
-                 otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
-    }
+    [self.mapView.locationDisplay startDataSource];
+    self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
+    [self.mapView centerAtPoint:self.mapView.locationDisplay.mapLocation animated:YES];
+//    if(self.mapView.locationDisplay.enabled){
+//        [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
+//        CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
+//        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
+//            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
+//            [self addStartPoint:mappoint];
+//        }
+//    }else{
+//        [self.mapView.gps start];
+//        UIAlertView *alert;
+//        alert = [[UIAlertView alloc]
+//                 initWithTitle:@"黄岛治理"
+//                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
+//                 delegate:nil cancelButtonTitle:nil
+//                 otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
+//    }
 }
 #pragma mark AGSMapViewLayerDelegate methods
 
@@ -182,7 +187,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if([[ud objectForKey:@"SHOW_DOWNLOAD"] isEqualToString:@"1"]){
         [self addLocalTileLayerWithName:@"HDZZ.tpk"];
-        [self.mapView.gps start];
+        [self.mapView.locationDisplay startDataSource];
         return;
     }
     if([curReach isReachable])
@@ -192,7 +197,7 @@
         }
         AGSTiledMapServiceLayer *tileLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:[NSURL URLWithString:BASE_MAP_URL]];
         [self.mapView addMapLayer:tileLayer withName:@"tileLayer"];
-        [self.mapView.gps start];
+        [self.mapView.locationDisplay startDataSource];
     }
     else
     {

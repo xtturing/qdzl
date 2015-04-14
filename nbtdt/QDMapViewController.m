@@ -57,7 +57,7 @@
     [_reach startNotifier];
     [self updateInterfaceWithReachability:_reach];
     self.mapView.layerDelegate = self;
-    self.mapView.calloutDelegate=self;
+    self.mapView.callout.delegate=self;
     self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
 	[self.mapView addMapLayer:self.graphicsLayer withName:@"graphicsLayer"];
     self.title = @"返回";
@@ -88,7 +88,7 @@
     if(startGra){
         [self.graphicsLayer removeGraphic:startGra];
         startGra = nil;
-        [self.graphicsLayer dataChanged];
+        [self.graphicsLayer refresh];
     }
 }
 
@@ -98,8 +98,9 @@
 }
 - (void)viewDidUnload {
     //Stop the GPS, undo the map rotation (if any)
-    if(self.mapView.gps.enabled){
-        [self.mapView.gps stop];
+    if([self.mapView.locationDisplay isDataSourceStarted]){
+        [self.mapView.locationDisplay stopDataSource];
+        
     }
 }
 
@@ -116,20 +117,20 @@
 #pragma mark -IBAction
 
 -(IBAction)gps:(id)sender{
-    if(self.mapView.gps.enabled){
+//    if(self.mapView.gps.enabled){
         [self gpsLocation];
-    }else {
-        [self.mapView.gps start];
-        UIAlertView *alert;
-        alert = [[UIAlertView alloc]
-                 initWithTitle:@"黄岛治理"
-                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
-                 delegate:nil cancelButtonTitle:nil
-                 otherButtonTitles:@"确定", nil];
-        [alert show];
-
-        return;
-    }
+//    }else {
+//        [self.mapView.gps start];
+//        UIAlertView *alert;
+//        alert = [[UIAlertView alloc]
+//                 initWithTitle:@"黄岛治理"
+//                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
+//                 delegate:nil cancelButtonTitle:nil
+//                 otherButtonTitles:@"确定", nil];
+//        [alert show];
+//
+//        return;
+//    }
 }
 -(void)search:(id)sender{
     QDSearchViewController *searchViewController = [[QDSearchViewController alloc] initWithNibName:@"QDSearchViewController" bundle:nil];
@@ -168,7 +169,7 @@
 
 - (void)RemoveEventInMap:(NSNotification *)notification{
     [self.graphicsLayer removeAllGraphics];
-    [self.graphicsLayer dataChanged];
+    [self.graphicsLayer refresh];
 }
 
 - (void)addLocalTileLayer:(NSNotification *)notification{
@@ -234,22 +235,18 @@
         NSMutableDictionary * tips=[[NSMutableDictionary alloc]initWithObjects:tipvalue forKeys:tipkey];
         
         AGSPictureMarkerSymbol * dian = [AGSPictureMarkerSymbol pictureMarkerSymbolWithImageNamed:@"gps_red"];
-        pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:tips infoTemplateDelegate:self];
+        pointgra = [AGSGraphic graphicWithGeometry:point symbol:nil attributes:tips];
         dian.size = CGSizeMake(48,48);
-        dian.yoffset = 24;
         pointgra.symbol = dian;
         [self.graphicsLayer addGraphic:pointgra];
-        [self.graphicsLayer dataChanged];
+        [self.graphicsLayer refresh];
     }
 }
 #pragma mark AGSMapViewLayerDelegate methods
 
 -(void) mapViewDidLoad:(AGSMapView*)mapView {
-    if(self.mapView.gps.enabled){
-        [self performSelector:@selector(gpsLocation) withObject:nil afterDelay:1.0f];
-    }else {
-        [self.mapView.gps start];
-    }
+    [self.mapView.locationDisplay startDataSource];
+    self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if([[ud objectForKey:@"SHOW_EVENT"] isEqualToString:@"1"]){
         [self ShowEventInMap];
@@ -267,7 +264,7 @@
 - (UIView *)showView{
     if(!_showView){
         _showView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 130)];
-        _showView.backgroundColor = [UIColor clearColor];
+        _showView.backgroundColor = [UIColor whiteColor];
         UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showEvent:)];
         [_showView addGestureRecognizer:tapGesture];
         UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"b3"]];
@@ -282,7 +279,7 @@
 - (UILabel *)showTitle{
     if(!_showTitle){
         _showTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 240, 40)];
-        _showTitle.textColor = [UIColor whiteColor];
+        _showTitle.textColor = [UIColor blackColor];
         _showTitle.backgroundColor = [UIColor clearColor];
         _showTitle.textAlignment = NSTextAlignmentLeft;
         _showTitle.font =[UIFont systemFontOfSize:16];
@@ -294,7 +291,7 @@
 - (UILabel *)showDetailTitle{
     if(!_showDetailTitle){
         _showDetailTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 45, 260, 85)];
-        _showDetailTitle.textColor = [UIColor whiteColor];
+        _showDetailTitle.textColor = [UIColor lightGrayColor];
         _showDetailTitle.backgroundColor = [UIColor clearColor];
         _showDetailTitle.textAlignment = NSTextAlignmentLeft;
         _showDetailTitle.font =[UIFont systemFontOfSize:13];
@@ -312,30 +309,33 @@
 }
 #pragma mark - AGSMapViewCalloutDelegate
 
-- (BOOL)mapView:(AGSMapView *)mapView shouldShowCalloutForGraphic:(AGSGraphic *)graphic{
+-(BOOL)callout:(AGSCallout*)callout willShowForFeature:(id<AGSFeature>)feature layer:(AGSLayer<AGSHitTestable>*)layer mapPoint:(AGSPoint *)mapPoint{
+    AGSGraphic* graphic = (AGSGraphic*)feature;
     self.mapView.touchDelegate = nil;
     self.mapView.callout.customView =self.showView;
-    showViewId = [graphic.attributes objectForKey:@"uuid"];
-    self.showTitle.text = [graphic.attributes objectForKey:@"SJMS"];
-    self.showDetailTitle.text = [NSString stringWithFormat:@"上报事件管区:%@\n%@",[graphic.attributes objectForKey:@"SSGQ"],[graphic.attributes objectForKey:@"SJWZ"]];
+    showViewId = [graphic attributeForKey:@"uuid"];
+    self.showTitle.text = [graphic attributeForKey:@"SJMS"];
+    self.showDetailTitle.text = [NSString stringWithFormat:@"上报事件管区:%@\n%@",[graphic attributeForKey:@"SSGQ"],[graphic attributeForKey:@"SJWZ"]];
     return YES;
 }
-- (void)mapView:(AGSMapView *)mapView didClickCalloutAccessoryButtonForGraphic:(AGSGraphic *)graphic{
+
+- (void) didClickAccessoryButtonForCallout:(AGSCallout *)callout{
+    AGSGraphic* graphic = (AGSGraphic*)callout.representedFeature;
     self.mapView.touchDelegate = nil;
-    if([[graphic.attributes objectForKey:@"uuid"] length] > 0){
+    if([[graphic attributeForKey:@"uuid"] length] > 0){
         QDSearchDetailViewController *searchDetailViewController = [[QDSearchDetailViewController alloc] initWithNibName:@"QDSearchDetailViewController" bundle:nil];
-        searchDetailViewController.uid = [graphic.attributes objectForKey:@"uuid"];
+        searchDetailViewController.uid = [graphic attributeForKey:@"uuid"];
         [self.navigationController pushViewController:searchDetailViewController animated:YES];
     }
 }
 
 - (void)gpsLocation{
-    [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
-    CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
-    if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
-        AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
-        [self addStartPoint:mappoint];
-    }
+    [self.mapView centerAtPoint:self.mapView.locationDisplay.mapLocation animated:YES];
+//    CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
+//    if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
+//        AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
+//        [self addStartPoint:mappoint];
+//    }
 }
 -(void)addStartPoint:(AGSPoint *)mappoint{
     if(startGra){
@@ -347,11 +347,10 @@
     if(mappoint.x == 0 || mappoint.y == 0 ){
         return;
     }
-    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil infoTemplateDelegate:nil];
-    dian.yoffset=16;
+    startGra = [AGSGraphic graphicWithGeometry:mappoint symbol:nil attributes:nil];
     startGra.symbol = dian;
     [self.graphicsLayer addGraphic:startGra];
-    [self.graphicsLayer dataChanged];
+    [self.graphicsLayer refresh];
 }
 #pragma mark -reachability
 
@@ -366,7 +365,7 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if([[ud objectForKey:@"SHOW_DOWNLOAD"] isEqualToString:@"1"]){
         [self addLocalTileLayerWithName:@"HDZZ.tpk"];
-        [self.mapView.gps start];
+        [self.mapView.locationDisplay startDataSource];
         return;
     }
     if([curReach isReachable])
@@ -378,7 +377,7 @@
         AGSTiledMapServiceLayer *tileLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:[NSURL URLWithString:BASE_MAP_URL]];
         [self.mapView addMapLayer:tileLayer withName:@"tileLayer"];
         [self.mapView zoomIn:YES];
-        [self.mapView.gps start];
+        [self.mapView.locationDisplay startDataSource];
     }
     else
     {
@@ -426,22 +425,24 @@
 }
 
 - (void)takeEditGps{
-    if(self.mapView.gps.enabled && self.mapView.gps.currentPoint){
-        CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
-        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
-            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
-            [self goEditView:mappoint];
-        }
-    }else {
-        [self.mapView.gps start];
-        UIAlertView *alert;
-        alert = [[UIAlertView alloc]
-                 initWithTitle:@"黄岛治理"
-                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
-                 delegate:nil cancelButtonTitle:nil
-                 otherButtonTitles:@"确定", nil];
-        [alert show];
-        return;
+    if(self.mapView.locationDisplay.mapLocation){
+//        CLLocation *loc = [self.mapView.locationDisplay.mapLocation locationMarsFromEarth];
+//        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
+//            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
+//            [self goEditView:mappoint];
+//        }
+        [self goEditView:self.mapView.locationDisplay.mapLocation];
+    }
+    else {
+        [self.mapView.locationDisplay startDataSource];
+//        UIAlertView *alert;
+//        alert = [[UIAlertView alloc]
+//                 initWithTitle:@"黄岛治理"
+//                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
+//                 delegate:nil cancelButtonTitle:nil
+//                 otherButtonTitles:@"确定", nil];
+//        [alert show];
+//        return;
     }
 }
 
@@ -468,7 +469,7 @@
 }
 
 - (void)goEditView:(AGSPoint *)point{
-    if(point && point.x > 0 && point.y > 0){
+    if(point && fabs(point.x) > 0 && fabs(point.y) > 0){
         QDEditViewController *editViewController = [[QDEditViewController alloc] initWithNibName:@"QDEditViewController" bundle:nil];
         editViewController.gpsPoint = point;
         [self.navigationController pushViewController:editViewController animated:YES];

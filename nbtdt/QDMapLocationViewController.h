@@ -13,7 +13,7 @@
 - (void)didSelectedMapLocation:(AGSPoint *)point;
 
 @end
-@interface QDMapLocationViewController : UIViewController<AGSMapViewLayerDelegate,AGSMapViewCalloutDelegate,AGSMapViewTouchDelegate>
+@interface QDMapLocationViewController : UIViewController<AGSMapViewLayerDelegate,AGSCalloutDelegate,AGSMapViewTouchDelegate>
 @property (nonatomic, strong) IBOutlet AGSMapView *mapView;
 @property (nonatomic, strong) AGSGraphicsLayer *graphicsLayer;
 @property (nonatomic, strong) IBOutlet UIButton *editBtn;

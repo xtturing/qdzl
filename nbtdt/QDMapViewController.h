@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QDMapViewController : UIViewController<AGSMapViewLayerDelegate,AGSMapViewCalloutDelegate,AGSMapViewTouchDelegate,AGSInfoTemplateDelegate>
+@interface QDMapViewController : UIViewController<AGSMapViewLayerDelegate,AGSCalloutDelegate,AGSMapViewTouchDelegate>
 
 @property (nonatomic, strong) IBOutlet AGSMapView *mapView;
 @property (nonatomic, strong) IBOutlet UIButton *editBtn;
