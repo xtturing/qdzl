@@ -330,12 +330,12 @@
 }
 
 - (void)gpsLocation{
-    [self.mapView centerAtPoint:self.mapView.locationDisplay.mapLocation animated:YES];
-//    CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
-//    if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
-//        AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
-//        [self addStartPoint:mappoint];
-//    }
+    if(self.mapView.locationDisplay.mapLocation){
+        [self.mapView centerAtPoint:self.mapView.locationDisplay.mapLocation animated:YES];
+    }else{
+        [self.mapView.locationDisplay startDataSource];
+        self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
+    }
 }
 -(void)addStartPoint:(AGSPoint *)mappoint{
     if(startGra){
@@ -426,23 +426,10 @@
 
 - (void)takeEditGps{
     if(self.mapView.locationDisplay.mapLocation){
-//        CLLocation *loc = [self.mapView.locationDisplay.mapLocation locationMarsFromEarth];
-//        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
-//            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
-//            [self goEditView:mappoint];
-//        }
         [self goEditView:self.mapView.locationDisplay.mapLocation];
-    }
-    else {
+    }else {
         [self.mapView.locationDisplay startDataSource];
-//        UIAlertView *alert;
-//        alert = [[UIAlertView alloc]
-//                 initWithTitle:@"黄岛治理"
-//                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
-//                 delegate:nil cancelButtonTitle:nil
-//                 otherButtonTitles:@"确定", nil];
-//        [alert show];
-//        return;
+        self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
     }
 }
 

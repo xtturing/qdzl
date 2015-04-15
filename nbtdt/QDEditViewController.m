@@ -629,11 +629,11 @@
 - (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation *)op didExecuteWithFeatureSetResult:(AGSFeatureSet *)featureSet {
     [SVProgressHUD dismiss];
     if(featureSet.features != nil && [featureSet.features count] > 0){
-        AGSGraphic *graphic = [featureSet.features objectAtIndex:0];
+        AGSGraphic *graphic = (AGSGraphic*)[featureSet.features objectAtIndex:0];
         NSString *mc = [graphic attributeForKey:@"MC"];
         self.mapLocationStr = [NSString stringWithFormat:@"上报事件位于:%@附近,%@",mc,self.mapLocationStr];
         [self canUpload];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"黄岛治理"
                                                             message:@"非常抱歉，获取事件位置失败！"

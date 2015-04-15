@@ -121,27 +121,12 @@
 }
 
 -(void)getGPS{
-    [self.mapView.locationDisplay startDataSource];
-    self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
-    [self.mapView centerAtPoint:self.mapView.locationDisplay.mapLocation animated:YES];
-//    if(self.mapView.locationDisplay.enabled){
-//        [self.mapView centerAtPoint:self.mapView.gps.currentPoint animated:YES];
-//        CLLocation *loc = [self.mapView.gps.currentLocation locationMarsFromEarth];
-//        if(loc.coordinate.longitude >0 && loc.coordinate.latitude > 0){
-//            AGSPoint *mappoint = [[AGSPoint alloc] initWithX:loc.coordinate.longitude y:loc.coordinate.latitude spatialReference:self.mapView.spatialReference];
-//            [self addStartPoint:mappoint];
-//        }
-//    }else{
-//        [self.mapView.gps start];
-//        UIAlertView *alert;
-//        alert = [[UIAlertView alloc]
-//                 initWithTitle:@"黄岛治理"
-//                 message:@"需要你的位置信息,请在设置－隐私－位置－黄岛治理 开启定位服务"
-//                 delegate:nil cancelButtonTitle:nil
-//                 otherButtonTitles:@"确定", nil];
-//        [alert show];
-//        return;
-//    }
+    if(self.mapView.locationDisplay.mapLocation){
+        [self.mapView centerAtPoint:self.mapView.locationDisplay.mapLocation animated:YES];
+    }else{
+        [self.mapView.locationDisplay startDataSource];
+        self.mapView.locationDisplay.autoPanMode = AGSLocationDisplayAutoPanModeDefault;
+    }
 }
 #pragma mark AGSMapViewLayerDelegate methods
 

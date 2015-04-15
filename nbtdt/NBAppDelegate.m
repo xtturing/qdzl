@@ -8,7 +8,7 @@
 
 #import "NBAppDelegate.h"
 #import "ASViewController.h"
-#define kClientID @"17VawA9qKb4w14Ch"
+#define kClientID @"rNy3G6c9ScSDVVtg"
 @implementation NBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

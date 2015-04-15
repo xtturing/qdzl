@@ -1369,8 +1369,8 @@
 					"c++",
 				);
 				PRODUCT_NAME = qdzl;
-				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1428,8 +1428,8 @@
 					"c++",
 				);
 				PRODUCT_NAME = qdzl;
-				PROVISIONING_PROFILE = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e6bae797-e596-4cd7-8a18-578f7b4d00fd";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = "arm64 armv7 armv7s";
