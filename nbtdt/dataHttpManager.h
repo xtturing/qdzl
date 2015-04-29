@@ -69,7 +69,7 @@ typedef enum {
 - (void)resume;
 - (void)cancel;
 
-- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd;
+- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd phone:(NSString *)phone;
 
 - (void)letPublicUserLogin:(NSString *)userName password:(NSString *)pwd;
 

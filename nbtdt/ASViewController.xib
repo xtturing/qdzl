@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ASViewController">
             <connections>
                 <outlet property="doneCell" destination="rtL-Tp-vit" id="fhS-L0-MDe"/>
+                <outlet property="messageView" destination="LLL-3h-Ly5" id="4sF-sj-5mj"/>
                 <outlet property="passwordCell" destination="wr8-4F-pVg" id="Gfg-cZ-dSd"/>
                 <outlet property="passwordField" destination="60O-OE-XyH" id="rY1-Rs-WFA"/>
                 <outlet property="tableView" destination="QAL-4D-Kv3" id="HeU-Yr-x82"/>
@@ -22,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" id="QAL-4D-Kv3" userLabel="table">
-                    <rect key="frame" x="20" y="135" width="280" height="188"/>
+                    <rect key="frame" x="20" y="112" width="280" height="188"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="EYR-49-HLh"/>
@@ -30,8 +31,8 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="njV-DG-FOX">
-                    <rect key="frame" x="38" y="324" width="30" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="40" y="316" width="30" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="注册">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -41,9 +42,24 @@
                         <action selector="letRegister:" destination="-1" eventType="touchUpInside" id="rIA-zN-Mrm"/>
                     </connections>
                 </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="社会治理公众参与客户端" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ig-JM-0Fz">
+                    <rect key="frame" x="-5" y="54" width="330" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" id="LLL-3h-Ly5">
+                    <rect key="frame" x="40" y="367" width="240" height="180"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                    <string key="text">欢迎参与新区社会治理工作，您可以上报周边的安全隐患、城市管理、社会治安、矛盾纠纷等问题，也可以上报个人诉求，上报事项会及时转至相关责任单位进行办理，有价值的信息，我们将给予一定的物质奖励。紧急、突发事件请及时拨打110、120、119等电话，本平台不予受理。</string>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="QaN-HF-4Ab">
-                    <rect key="frame" x="226" y="324" width="60" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="220" y="316" width="60" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="修改密码">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -53,13 +69,6 @@
                         <action selector="letPassword:" destination="-1" eventType="touchUpInside" id="fWS-bT-fv6"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="黄岛治理" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ig-JM-0Fz">
-                    <rect key="frame" x="70" y="70" width="181" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -71,7 +80,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="277" height="39"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" id="60O-OE-XyH" customClass="ASTextField">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="60O-OE-XyH" customClass="ASTextField">
                         <rect key="frame" x="13" y="0.0" width="250" height="35"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -89,7 +98,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="277" height="39"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" minimumFontSize="17" id="R0z-fD-0ge" customClass="ASTextField">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" minimumFontSize="17" clearButtonMode="whileEditing" id="R0z-fD-0ge" customClass="ASTextField">
                         <rect key="frame" x="13" y="0.0" width="250" height="35"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>

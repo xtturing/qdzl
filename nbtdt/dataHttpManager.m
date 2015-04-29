@@ -87,8 +87,8 @@ static dataHttpManager * instance=nil;
 	}
 }
 #pragma mark - Http Operate
-- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd{
-    NSString *baseUrl =[NSString  stringWithFormat:@"%@/publicUserRegister.htm?username=%@&password=%@",HTTP_LOGIN_URL,userName,pwd];
+- (void)letPublicUserRegister:(NSString *)userName password:(NSString *)pwd phone:(NSString *)phone{
+    NSString *baseUrl =[NSString  stringWithFormat:@"%@/publicUserRegister.htm?username=%@&password=%@&tel=%@",HTTP_LOGIN_URL,userName,pwd,phone];
     NSURL  *url = [NSURL URLWithString:baseUrl];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:url];
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];

@@ -18,11 +18,15 @@
 //cells
 @property (strong, nonatomic) IBOutlet UITableViewCell *usernameCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *passwordCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *phoneCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *doneCell;
 
 //fields
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UITextField *usernameField;
+@property (strong, nonatomic) IBOutlet UITextField *phoneField;
+@property (strong, nonatomic) IBOutlet UITextView *messageView;
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
 
 - (void)resignAllResponders;
 
@@ -32,6 +36,6 @@
 - (IBAction)letRegisterIn:(id)sender;
 - (IBAction)letPassword:(id)sender;
 - (IBAction)letPasswordIn:(id)sender;
-
+- (IBAction)doBack:(id)sender;
 - (void)showMessageWithAlert:(NSString *)message;
 @end

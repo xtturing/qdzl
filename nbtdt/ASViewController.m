@@ -11,6 +11,7 @@
 #import "QDMapViewController.h"
 #import "ASPasswordViewController.h"
 #import "ASRegisterViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ASViewController ()<dataHttpDelegate>{
     BOOL keybordWasShow;
@@ -38,11 +39,22 @@
     [super viewDidLoad];
     keybordWasShow = NO;
     //bake a cellArray to contain all cells
-    self.cellArray = [NSMutableArray arrayWithObjects: _usernameCell, _passwordCell, _doneCell, nil];
+    if(_phoneCell){
+       self.cellArray = [NSMutableArray arrayWithObjects: _usernameCell, _passwordCell, _phoneCell,_doneCell, nil];
+    }else{
+       self.cellArray = [NSMutableArray arrayWithObjects: _usernameCell, _passwordCell, _doneCell, nil];
+    }
+    
     //setup text field with respective icons
     [_usernameField setupTextFieldWithIconName:@"user_name_icon"];
     [_passwordField setupTextFieldWithIconName:@"password_icon"];
+    if(_phoneField){
+        [_phoneField setupTextFieldWithIconName:@"phone"];
+    }
     _passwordField.secureTextEntry = YES;
+    _messageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    _messageView.layer.borderWidth =1.0;
+    _messageView.layer.cornerRadius =5.0;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -64,10 +76,12 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [dataHttpManager getInstance].delegate =  nil;
-    self.navigationController.navigationBarHidden = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (IBAction)doBack:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark - keyboardHight
 
 - (void)registerForKeyboardNotifications
@@ -172,13 +186,17 @@
 
 - (IBAction)letRegister:(id)sender{
     ASRegisterViewController *registerViewController = [[ASRegisterViewController alloc] initWithNibName:@"ASRegisterViewController" bundle:nil];
-    self.navigationController.navigationBarHidden = NO;
-    [self.navigationController pushViewController:registerViewController animated:YES];
+//    self.navigationController.navigationBarHidden = NO;
+    [self presentViewController:registerViewController animated:YES completion:^{
+        
+    }];
 }
 - (IBAction)letPassword:(id)sender{
     ASPasswordViewController *passwordViewController = [[ASPasswordViewController alloc] initWithNibName:@"ASPasswordViewController" bundle:nil];
-     self.navigationController.navigationBarHidden = NO;
-    [self.navigationController pushViewController:passwordViewController animated:YES];
+//     self.navigationController.navigationBarHidden = NO;
+    [self presentViewController:passwordViewController animated:YES completion:^{
+        
+    }];
 }
 
 - (void)didGetPublicUserLogin:(BOOL)success{
@@ -209,6 +227,9 @@
 - (void)resignAllResponders{
     [_usernameField resignFirstResponder];
     [_passwordField resignFirstResponder];
+    if(_phoneField){
+        [_phoneField resignFirstResponder];
+    }
 }
 - (void)showMessageWithAlert:(NSString *)message{
     UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"黄岛治理" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -220,7 +241,7 @@
         [self resignAllResponders];
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeGradient];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[dataHttpManager getInstance] letPublicUserRegister:self.usernameField.text password:[MyMD5 md5:self.passwordField.text]];
+            [[dataHttpManager getInstance] letPublicUserRegister:self.usernameField.text password:[MyMD5 md5:self.passwordField.text] phone:self.phoneField.text];
         });
         
     }else{
@@ -232,8 +253,14 @@
     [SVProgressHUD dismiss];
     if(success){
         [self showMessageWithAlert:@"用户注册成功"];
+        if(_backButton){
+            [_backButton setTitle:@"完成" forState:UIControlStateNormal];
+        }
     }else{
         [self showMessageWithAlert:@"用户注册失败"];
+        if(_backButton){
+            [_backButton setTitle:@"取消" forState:UIControlStateNormal];
+        }
     }
 }
 - (IBAction)letPasswordIn:(id)sender{
@@ -253,8 +280,14 @@
     [SVProgressHUD dismiss];
     if(success){
         [self showMessageWithAlert:@"修改密码成功"];
+        if(_backButton){
+            [_backButton setTitle:@"完成" forState:UIControlStateNormal];
+        }
     }else{
         [self showMessageWithAlert:@"修改密码失败"];
+        if(_backButton){
+            [_backButton setTitle:@"取消" forState:UIControlStateNormal];
+        }
     }
 }
 @end

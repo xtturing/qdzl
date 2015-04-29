@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ASRegisterViewController">
             <connections>
+                <outlet property="backButton" destination="U5x-Ix-T0d" id="q94-ac-ylK"/>
                 <outlet property="doneCell" destination="XGj-of-d8c" id="sJ7-FY-IKH"/>
                 <outlet property="passwordCell" destination="x3h-fG-nuo" id="4eG-rb-joU"/>
                 <outlet property="passwordField" destination="vXz-LC-vXo" id="gHh-lI-cOY"/>
+                <outlet property="phoneCell" destination="jhC-PL-cbb" id="W2M-FI-R5d"/>
+                <outlet property="phoneField" destination="j0J-Px-UfX" id="H7X-Ah-Rno"/>
                 <outlet property="tableView" destination="5zp-gQ-Rdf" id="pAs-Ew-GC9"/>
                 <outlet property="usernameCell" destination="gwn-T9-JLT" id="lMj-ar-JXl"/>
                 <outlet property="usernameField" destination="CAv-Q1-K7R" id="2So-Cm-Q0E"/>
@@ -22,20 +25,31 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" id="5zp-gQ-Rdf" userLabel="table">
-                    <rect key="frame" x="20" y="116" width="280" height="219"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                    <rect key="frame" x="20" y="164" width="280" height="273"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="42J-c9-Qm9"/>
                         <outlet property="delegate" destination="-1" id="Vc1-bJ-3il"/>
                     </connections>
                 </tableView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户注册" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="brh-wC-IGV">
-                    <rect key="frame" x="70" y="70" width="181" height="44"/>
+                    <rect key="frame" x="70" y="83" width="181" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U5x-Ix-T0d">
+                    <rect key="frame" x="10" y="28" width="55" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="doBack:" destination="-1" eventType="touchUpInside" id="4rC-9w-jle"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.15677980920000001" green="0.54845776189999995" blue="0.87442680029999997" alpha="1" colorSpace="calibratedRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -47,7 +61,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="277" height="39"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="注册密码" minimumFontSize="17" id="vXz-LC-vXo" customClass="ASTextField">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="注册密码" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="vXz-LC-vXo" customClass="ASTextField">
                         <rect key="frame" x="13" y="0.0" width="250" height="35"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -65,7 +79,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="277" height="39"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="注册用户名" minimumFontSize="17" id="CAv-Q1-K7R" customClass="ASTextField">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="注册用户名" minimumFontSize="17" clearButtonMode="whileEditing" id="CAv-Q1-K7R" customClass="ASTextField">
                         <rect key="frame" x="13" y="0.0" width="250" height="35"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -75,6 +89,25 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="jhC-PL-cbb" userLabel="phone">
+            <rect key="frame" x="0.0" y="0.0" width="277" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jhC-PL-cbb" id="vdB-Gp-rrm">
+                <rect key="frame" x="0.0" y="0.0" width="277" height="39"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="联系电话" minimumFontSize="17" clearButtonMode="whileEditing" id="j0J-Px-UfX" customClass="ASTextField">
+                        <rect key="frame" x="13" y="0.0" width="250" height="35"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
+                    </textField>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="-79.5" y="460"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="XGj-of-d8c" userLabel="done">
             <rect key="frame" x="0.0" y="0.0" width="277" height="48"/>

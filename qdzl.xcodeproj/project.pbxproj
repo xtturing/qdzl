@@ -69,6 +69,8 @@
 		41199DFF19E453A600C50382 /* ZYQAssetPicker.Bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41199DFC19E453A600C50382 /* ZYQAssetPicker.Bundle */; };
 		41199E0019E453A600C50382 /* ZYQAssetPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41199DFE19E453A600C50382 /* ZYQAssetPickerController.m */; };
 		41199E0219E4541300C50382 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41199E0119E4541300C50382 /* AssetsLibrary.framework */; };
+		414385461AF1269B00C22060 /* phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 414385441AF1269B00C22060 /* phone.png */; };
+		414385471AF1269B00C22060 /* phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414385451AF1269B00C22060 /* phone@2x.png */; };
 		4153D11019E6F00D00DE06E3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */; };
 		4153D11119E6F00D00DE06E3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10E19E6F00D00DE06E3 /* Default.png */; };
 		4153D11219E6F00D00DE06E3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10F19E6F00D00DE06E3 /* Default@2x.png */; };
@@ -274,6 +276,8 @@
 		41199DFD19E453A600C50382 /* ZYQAssetPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYQAssetPickerController.h; sourceTree = "<group>"; };
 		41199DFE19E453A600C50382 /* ZYQAssetPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYQAssetPickerController.m; sourceTree = "<group>"; };
 		41199E0119E4541300C50382 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		414385441AF1269B00C22060 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
+		414385451AF1269B00C22060 /* phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone@2x.png"; sourceTree = "<group>"; };
 		4153D10D19E6F00D00DE06E3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "image/Default-568h@2x.png"; sourceTree = "<group>"; };
 		4153D10E19E6F00D00DE06E3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = image/Default.png; sourceTree = "<group>"; };
 		4153D10F19E6F00D00DE06E3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "image/Default@2x.png"; sourceTree = "<group>"; };
@@ -568,6 +572,8 @@
 		410E855619E58DF300A4D02C /* ASTextField */ = {
 			isa = PBXGroup;
 			children = (
+				414385441AF1269B00C22060 /* phone.png */,
+				414385451AF1269B00C22060 /* phone@2x.png */,
 				410E856E19E58E2E00A4D02C /* ASViewController.h */,
 				410E856F19E58E2E00A4D02C /* ASViewController.m */,
 				410E857019E58E2E00A4D02C /* ASViewController.xib */,
@@ -1075,6 +1081,7 @@
 				411986A919D84C5F00507025 /* QDEditViewController.xib in Resources */,
 				411986A419D84C3000507025 /* QDSettingViewController.xib in Resources */,
 				4107C2CA19F3F186000C092D /* QDMapLocationViewController.xib in Resources */,
+				414385471AF1269B00C22060 /* phone@2x.png in Resources */,
 				41BBA24319A78B3300C0A328 /* NBDownLoadViewController.xib in Resources */,
 				41BBA24119A78B3300C0A328 /* NBDownLoadManagerViewController.xib in Resources */,
 				41199DF819E4539100C50382 /* AssetsPickerChecked@2x.png in Resources */,
@@ -1102,6 +1109,7 @@
 				41BBA26D19A78B3300C0A328 /* SVProgressHUD.bundle in Resources */,
 				4119869F19D84BFC00507025 /* QDSearchViewController.xib in Resources */,
 				410E856D19E58E2400A4D02C /* login_button@2x.png in Resources */,
+				414385461AF1269B00C22060 /* phone.png in Resources */,
 				4118BF1519FD3B3E000FB71E /* QDSearchDetailViewController.xib in Resources */,
 				410E856119E58E1600A4D02C /* text_field@2x.png in Resources */,
 				41199DF119E4539100C50382 /* addImage.png in Resources */,
