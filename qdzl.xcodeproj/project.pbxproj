@@ -73,6 +73,7 @@
 		4153D11119E6F00D00DE06E3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10E19E6F00D00DE06E3 /* Default.png */; };
 		4153D11219E6F00D00DE06E3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4153D10F19E6F00D00DE06E3 /* Default@2x.png */; };
 		4162EB3F19B361FA00A9E12F /* NBTpk.m in Sources */ = {isa = PBXBuildFile; fileRef = 4162EB3E19B361FA00A9E12F /* NBTpk.m */; };
+		416C71201ADEA3C700F12FEA /* ArcGIS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 416C711F1ADEA3C700F12FEA /* ArcGIS.framework */; };
 		419FD96F19CB372E0067497F /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419FD96E19CB372E0067497F /* iflyMSC.framework */; };
 		41B3D69819CC816A00FB3017 /* QDMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B3D69619CC816A00FB3017 /* QDMapViewController.m */; };
 		41B3D69919CC816A00FB3017 /* QDMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41B3D69719CC816A00FB3017 /* QDMapViewController.xib */; };
@@ -278,6 +279,7 @@
 		4153D10F19E6F00D00DE06E3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "image/Default@2x.png"; sourceTree = "<group>"; };
 		4162EB3D19B361FA00A9E12F /* NBTpk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBTpk.h; sourceTree = "<group>"; };
 		4162EB3E19B361FA00A9E12F /* NBTpk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBTpk.m; sourceTree = "<group>"; };
+		416C711F1ADEA3C700F12FEA /* ArcGIS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ArcGIS.framework; sourceTree = "<group>"; };
 		419FD96E19CB372E0067497F /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
 		41B3D69519CC816A00FB3017 /* QDMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDMapViewController.h; sourceTree = "<group>"; };
 		41B3D69619CC816A00FB3017 /* QDMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QDMapViewController.m; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 				41BBA2FC19A798C000C0A328 /* UIKit.framework in Frameworks */,
 				41BBA2FB19A798B400C0A328 /* CoreGraphics.framework in Frameworks */,
 				41BBA2FA19A798AC00C0A328 /* CoreData.framework in Frameworks */,
+				416C71201ADEA3C700F12FEA /* ArcGIS.framework in Frameworks */,
 				41BBA2F919A798A600C0A328 /* SystemConfiguration.framework in Frameworks */,
 				41BBA2F819A7989B00C0A328 /* Security.framework in Frameworks */,
 				41BBA2F719A7989300C0A328 /* libstdc++.dylib in Frameworks */,
@@ -480,6 +483,7 @@
 		39A1F1D616EF17D7001EAE76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				416C711F1ADEA3C700F12FEA /* ArcGIS.framework */,
 				41199E0119E4541300C50382 /* AssetsLibrary.framework */,
 				419FD96E19CB372E0067497F /* iflyMSC.framework */,
 				41B838DF19BF4E390089FB1B /* AVFoundation.framework */,
