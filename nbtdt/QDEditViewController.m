@@ -86,6 +86,7 @@
     _cityManagerName = @"城市管理";
     _textMessage = @"";
     _mapLocationStr =@"";
+    _citytype = @"";
     // Do any additional setup after loading the view from its nib.
 }
 - (void)dealloc{
@@ -306,13 +307,13 @@
     [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.x] forKey:@"Y"];
     [dic setObject:[NSString stringWithFormat:@"%lf",self.gpsPoint.y] forKey:@"X"];
     [ud setObject:dic forKey:self.uuidString];
-    NSMutableArray *uids = [ud objectForKey:@"UID"];
+    NSMutableArray *uids = [NSMutableArray arrayWithArray:[ud objectForKey:[ud objectForKey:@"USER_NAME"]]];
     if(!uids){
         uids = [NSMutableArray arrayWithCapacity:0];
     }
     [uids addObject:self.uuidString];
     [ud synchronize];
-    [ud setObject:uids forKey:@"UID"];
+    [ud setObject:uids forKey:[ud objectForKey:@"USER_NAME"]];
     [ud synchronize];
 }
 
@@ -604,7 +605,7 @@
 }
 
 - (void)getMapLocationWithPoint:(AGSPoint *)point{
-    AGSGraphic  *gra = [[AGSGraphic  alloc] initWithGeometry:point symbol:nil attributes:nil infoTemplateDelegate:nil];
+    AGSGraphic  *gra = [[AGSGraphic  alloc] initWithGeometry:point symbol:nil attributes:nil];
     AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
 	featureSet.features = [NSArray arrayWithObjects:gra, nil];
 	

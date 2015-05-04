@@ -202,16 +202,16 @@
 - (void)didGetPublicUserLogin:(BOOL)success{
     [SVProgressHUD dismiss];
     if(success){
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        if([ud objectForKey:@"USER_NAME"] == nil && [ud objectForKey:@"USER_PASSWORD"] == nil){
+            [ud setObject:_usernameField.text forKey:@"USER_NAME"];
+            [ud setObject:_passwordField.text forKey:@"USER_PASSWORD"];
+            [ud synchronize];
+        }
         _mapViewController = [[QDMapViewController alloc] initWithNibName:@"QDMapViewController" bundle:nil];
         _navController = [[UINavigationController alloc] init];
         [_navController pushViewController:_mapViewController animated:YES];
         [self presentViewController:_navController animated:YES completion:^{
-            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-            if([ud objectForKey:@"USER_NAME"] == nil && [ud objectForKey:@"USER_PASSWORD"] == nil){
-                [ud setObject:_usernameField.text forKey:@"USER_NAME"];
-                [ud setObject:_passwordField.text forKey:@"USER_PASSWORD"];
-                [ud synchronize];
-            }
             
         }];
     }else{

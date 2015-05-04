@@ -216,7 +216,7 @@
 	[self.mapView addMapLayer:self.graphicsLayer withName:@"graphicsLayer"];
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *uids = [ud objectForKey:@"UID"];
+    NSMutableArray *uids = [NSMutableArray arrayWithArray:[ud objectForKey:[ud objectForKey:@"USER_NAME"]]];
     if(!uids){
         return;
     }

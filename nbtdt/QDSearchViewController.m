@@ -31,8 +31,8 @@
     [super viewDidLoad];
     self.navigationItem.title = @"处置进度";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    _uids = [ud objectForKey:@"UID"];
-    _results = [NSMutableArray arrayWithArray:_uids];
+    self.uids = [NSMutableArray arrayWithArray:[ud objectForKey:[ud objectForKey:@"USER_NAME"]]];
+    self.results = [NSMutableArray arrayWithArray:_uids];
     // Do any additional setup after loading the view from its nib.
 }
 
