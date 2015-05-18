@@ -52,8 +52,10 @@
 
 -(void)monitorDownloadProgress:(NSTimer *)timer
 {
+    if(self == nil || timer == nil){
+        return;
+    }
     [self notifyItemProgressChanged];
-    
     //update db in background
     dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
         [[DownloadStoreManager sharedInstance]updateDownloadTask:self];
@@ -153,11 +155,16 @@
     //delete db in background
     dispatch_async(dispatch_get_global_queue(0, 0), ^(void){
         [[DownloadStoreManager sharedInstance]deleteDownloadTask:[self.url description]];
-        NSString *name =[[[self.url description] componentsSeparatedByString:@"="] objectAtIndex:1];
-        NSString *desPath=[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:name];
+        NSString *name =@"HDZZ.tpk";
+        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:name];
         NSError *error = nil;
 
         [DownloadItem removeFileAtPath:desPath error:&error];
+        
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        [ud setObject:@"0" forKey:@"SHOW_DOWNLOAD"];
+        [ud synchronize];
     });
     [self pauseDownloadTask];
     self.downloadState=DownloadNotStart;

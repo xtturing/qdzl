@@ -55,8 +55,8 @@
         //创建文件管理器
         NSFileManager *fileManager = [NSFileManager defaultManager];
         //获取document路径,括号中属性为当前应用程序独享
-        NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
-        NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+        NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,      NSUserDomainMask, YES);
+        NSString *documentDirectory = [[directoryPaths objectAtIndex:0] stringByAppendingFormat:@"/Caches"];
         [fileManager removeItemAtPath:[documentDirectory stringByAppendingPathComponent:@"uploadEvent"] error:nil];
     });
     self.uuidString = [self getUniqueStrByUUID];
@@ -166,8 +166,8 @@
     //创建文件管理器
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //获取document路径,括号中属性为当前应用程序独享
-    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
-    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [[directoryPaths objectAtIndex:0] stringByAppendingFormat:@"/Caches"];
     //定义记录文件全名以及路径的字符串filePath
     NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     BOOL isDir = NO;
@@ -212,8 +212,8 @@
     //创建文件管理器
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //获取document路径,括号中属性为当前应用程序独享
-    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
-    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [[directoryPaths objectAtIndex:0] stringByAppendingFormat:@"/Caches"];
     //定义记录文件全名以及路径的字符串filePath
     NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     BOOL isDir = NO;
@@ -239,8 +239,8 @@
     //创建文件管理器
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //获取document路径,括号中属性为当前应用程序独享
-    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
-    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [[directoryPaths objectAtIndex:0] stringByAppendingFormat:@"/Caches"];
     NSString *filePath = [NSString stringWithFormat:@"%@/uploadEvent/%@.zip",documentDirectory,self.uuidString];
     BOOL existed = [fileManager fileExistsAtPath:filePath];
     if(existed){
@@ -272,8 +272,8 @@
     //创建文件管理器
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //获取document路径,括号中属性为当前应用程序独享
-    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,      NSUserDomainMask, YES);
-    NSString *documentDirectory = [directoryPaths objectAtIndex:0];
+    NSArray *directoryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,      NSUserDomainMask, YES);
+    NSString *documentDirectory = [[directoryPaths objectAtIndex:0] stringByAppendingFormat:@"/Caches"];
     //定义记录文件全名以及路径的字符串filePath
     NSString *imageDir = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     BOOL isDir = NO;
@@ -489,7 +489,8 @@
     //创建文件管理器
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDir = NO;
-    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/uploadEvent/%@",NSHomeDirectory(),self.uuidString];
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *imageDir=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
     if ( !(isDir == YES && existed == YES) )
     {
@@ -499,7 +500,8 @@
 }
 - (BOOL)audio_PCMtoMP3
 {
-    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/uploadEvent/%@",NSHomeDirectory(),self.uuidString];
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *imageDir=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:[NSString stringWithFormat:@"uploadEvent/%@",self.uuidString]];
     NSString *cafFilePath = [imageDir stringByAppendingPathComponent:@"/Sound.caf"];
     
     NSString *mp3FilePath = [imageDir stringByAppendingPathComponent:@"/Sound.mp3"];

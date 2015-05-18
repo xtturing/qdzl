@@ -18,7 +18,7 @@
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 #define BASE_MAP_URL @"http://27.223.74.180:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
-@interface QDMapViewController ()<UISearchBarDelegate,UIActionSheetDelegate>{
+@interface QDMapViewController ()<UISearchBarDelegate,UIActionSheetDelegate,AGSLayerDelegate>{
     AGSGraphic *startGra;
     NSString *showViewId;
 }
@@ -178,10 +178,13 @@
 }
 
 - (void)addLocalTileLayerWithName:(NSString *)fileName{
-    NSString *name = @"LocalTiledLayer";
+    NSString *name = [fileName stringByDeletingPathExtension];
     NSString *extension = @"tpk";
     if(![self hasAddLocalLayer:name] && [[fileName pathExtension] isEqualToString:extension]){
-        AGSLocalTiledLayer *localTileLayer = [AGSLocalTiledLayer localTiledLayerWithName:fileName];
+        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:fileName];
+        AGSLocalTiledLayer *localTileLayer = [[AGSLocalTiledLayer alloc] initWithPath:desPath];
+        localTileLayer.delegate =self;
         if(localTileLayer != nil){
             [self.mapView reset];
             [self.mapView addMapLayer:localTileLayer withName:name];
@@ -195,8 +198,10 @@
 }
 
 - (void)removeLocalTileLayer:(NSNotification *)notification{
-    NSString *name = @"LocalTiledLayer";
+    NSString *fileName = [notification.userInfo objectForKey:@"name"];
+    NSString *name = [fileName stringByDeletingPathExtension];
     [self.mapView removeMapLayerWithName:name];
+     [self showMessageWithAlert:@"关闭离线地图成功"];
     [self updateInterfaceWithReachability:_reach];
 }
 
@@ -208,7 +213,23 @@
     }
     return NO;
 }
+-(void)layerDidLoad:(AGSLayer *)layer{
+    if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
+        [self showMessageWithAlert:@"加载离线地图成功"];
+    }
+}
 
+
+-(void)layer:(AGSLayer *)layer didFailToLoadWithError:(NSError *)error{
+    if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
+        [self showMessageWithAlert:@"加载离线地图失败"];
+        [self.mapView reset];
+        AGSTiledMapServiceLayer *tileLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:[NSURL URLWithString:BASE_MAP_URL]];
+        [self.mapView addMapLayer:tileLayer withName:@"tileLayer"];
+        [self.mapView zoomIn:YES];
+        [self.mapView.locationDisplay startDataSource];
+    }
+}
 - (void)ShowEventInMap{
     [self.graphicsLayer removeAllGraphics];
     [self.mapView removeMapLayerWithName:@"graphicsLayer"];

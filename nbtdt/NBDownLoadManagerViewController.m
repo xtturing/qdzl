@@ -78,7 +78,7 @@
     DownloadItem *findItem=[_tpkList objectForKey:[downItem.url description]];
     if(findItem.tpk.title.length > 0 ){
         cell.lblTitle.text=[findItem.tpk.title description];
-        cell.lblPercent.text=[NSString stringWithFormat:@"大小:%0.2fMB  进度:%0.2f%@",[findItem.tpk.size doubleValue]/(1024*1024),downItem.downloadPercent*100,@"%"];
+        cell.lblPercent.text=[NSString stringWithFormat:@"大小:%0.2fMB  进度:%0.2f%@",downItem.totalLength/(1024*1024),downItem.downloadPercent*100,@"%"];
         [cell.btnOperate setTitle:downItem.downloadStateDescription forState:UIControlStateNormal];
     }else{
         cell.lblTitle.text=[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1];
@@ -148,7 +148,8 @@
                 [[DownloadManager sharedInstance]pauseDownload:url];
                 return;
             }
-            NSString *desPath=[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:name];
+            NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+            NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:name];
             [[DownloadManager sharedInstance]startDownload:url withLocalPath:desPath];
         };
         cell.DowningCellCancelClick=^(DowningCell *cell)
@@ -170,12 +171,12 @@
     DowningCell *cell=(DowningCell *)[self.table cellForRowAtIndexPath:indexPath];
     DownloadItem *downItem = [_downlist.allValues objectAtIndex:indexPath.row];
     if([cell.btnOperate.titleLabel.text isEqualToString:@"下载完成"] && downItem.downloadPercent == 1){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:downItem.tpk.name forKey:@"name"]];
         [self.navigationController popToRootViewControllerAnimated:YES];
         
     }
     if([cell.btnOperate.titleLabel.text isEqualToString:@"已加载"]){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:[[[downItem.url description] componentsSeparatedByString:@"="] objectAtIndex:1] forKey:@"name"]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLocalTileLayer" object:nil userInfo:[NSDictionary dictionaryWithObject:downItem.tpk.name forKey:@"name"]];
         [self.table reloadData];
     }
 }

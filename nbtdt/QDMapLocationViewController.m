@@ -12,7 +12,7 @@
 
 #define BASE_MAP_URL @"http://27.223.74.180:6080/arcgis/rest/services/QD/SJDT/MapServer"
 
-@interface QDMapLocationViewController (){
+@interface QDMapLocationViewController ()<AGSLayerDelegate>{
     AGSGraphic * startGra;
 }
 @property(nonatomic, strong) Reachability *reach;
@@ -140,7 +140,10 @@
     NSString *name = [fileName stringByDeletingPathExtension];
     NSString *extension = @"tpk";
     if(![self hasAddLocalLayer:name] && [[fileName pathExtension] isEqualToString:extension]){
-        AGSLocalTiledLayer *localTileLayer = [AGSLocalTiledLayer localTiledLayerWithName:fileName];
+        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        NSString *desPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"]  stringByAppendingPathComponent:fileName];
+        AGSLocalTiledLayer *localTileLayer = [[AGSLocalTiledLayer alloc] initWithPath:desPath];
+        localTileLayer.delegate = self;
         if(localTileLayer != nil){
             [self.mapView addMapLayer:localTileLayer withName:name];
             // Do any additional setup after loading the view from its nib.
@@ -148,6 +151,15 @@
         }
     }else{
         [self.mapView removeMapLayerWithName:name];
+    }
+}
+-(void)layer:(AGSLayer *)layer didFailToLoadWithError:(NSError *)error{
+    if([layer isKindOfClass:[AGSLocalTiledLayer class]]){
+        [self.mapView reset];
+        AGSTiledMapServiceLayer *tileLayer = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:[NSURL URLWithString:BASE_MAP_URL]];
+        [self.mapView addMapLayer:tileLayer withName:@"tileLayer"];
+        [self.mapView zoomIn:YES];
+        [self.mapView.locationDisplay startDataSource];
     }
 }
 - (BOOL)hasAddLocalLayer:(NSString *)name{

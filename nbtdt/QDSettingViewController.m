@@ -179,7 +179,8 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isDir = NO;
-    NSString *imageDir = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),@"HDZZ.tpk"];
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *imageDir=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:@"HDZZ.tpk"];
     BOOL existed = [fileManager fileExistsAtPath:imageDir isDirectory:&isDir];
     if(existed){
         if(sender.tag == 10001 && sender.isOn){

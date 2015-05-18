@@ -143,6 +143,9 @@ static DownloadStoreManager *_instance;
 
 -(void)updateDownloadTask:(DownloadItem *)item
 {
+    if(!item){
+        return;
+    }
     DownloadItemEntity *entity=[self queryEntityByUrl:[item.url description]];
     if(entity)
     {

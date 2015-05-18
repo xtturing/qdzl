@@ -52,7 +52,8 @@ static CoreDataManager *_instance;
     if(_persisentStoreCoordinator==nil)
     {
         _persisentStoreCoordinator=[[NSPersistentStoreCoordinator alloc]initWithManagedObjectModel:[self getManagedObjectModel]];
-        NSString *dbPath=[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"download.db"];
+        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        NSString *dbPath=[[[paths objectAtIndex:0] stringByAppendingFormat:@"/Caches"] stringByAppendingPathComponent:@"download.db"];
         
         NSError *error=nil;
         NSPersistentStore *store= [_persisentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[NSURL fileURLWithPath:dbPath] options:nil error:&error];
